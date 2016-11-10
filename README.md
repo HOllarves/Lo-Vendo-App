@@ -33,13 +33,13 @@ To get it working, simply
 
 `npm install` and then `bower install`
 
-Then setting up your environment (ex: `gulp env-dev`)
+Then set up your environment (ex: `gulp env-dev`)
 And finally: `gulp serve`
 
 To run all commands at once, simply use `npm start`
 
 ## Environment
-The settings folder contain files for every possible app environment. In this files we can global values specific for each environment.
+The settings folder contain files for every possible app environment. In this files we can set global values for each environment.
 (ex: api_url)
 
 ## Client
