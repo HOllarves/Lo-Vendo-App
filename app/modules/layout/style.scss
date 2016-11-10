@@ -1,0 +1,275 @@
+/* -- Body -- */
+body{
+    overflow: hidden;
+}
+/* -- Modal -- */
+#myModal{
+    overflow: hidden;
+}
+.modal{
+    label{
+        &:focus{
+            color: #e4e4e4;
+        }
+        font-size: 1.4rem;
+    }
+    input[type=email],
+    input[type=password] {
+        font-size: 14px;
+    }
+    input[type=email]:focus:not([readonly]),
+    input[type=password]:focus:not([readonly]) {
+        border-bottom: 1px solid #e4e4e4;
+        box-shadow: 0 1px 0 0 #e4e4e4;
+        font-size: 13px;
+    }
+    input[type=email]:focus:not([readonly])+label {
+        color: #9e9e9e;
+    }
+    .form-group{
+        &:first-child{
+            padding-top: 15px;
+        }
+        margin-bottom: 0;
+        padding: 15px;
+        padding-top: 0;
+    }
+    .modal-content{
+        padding: 0;
+        height: 265px;
+    }
+    .modal-body{
+        .sign-in-button{
+            width: 100%;
+            position: absolute;
+            bottom:0;
+            border-radius: 0;
+            background-color: #48AD98;
+        }
+        a {
+            color:#48AD98;
+            text-decoration: underline;
+        }
+        padding: 0;
+        margin: 0;
+        height: 265px;
+    }
+    .modal-footer{
+        background-color: #FFF;
+    }
+    .close-button{
+        &:hover{
+            box-shadow: none;
+            background-color: transparent;
+            color:#000;
+        }
+        &:focus{
+            box-shadow: none;
+            background-color: transparent;
+        }
+        position: absolute;
+        top:0;
+        right:0;
+        z-index: 99999;
+        border: none;
+        color: #E4E4E4;
+        font-size: 20px;
+        font-weight: 200;
+    }
+    .modal-sign-up{
+        height: 355px;
+    }
+    max-height: 80%;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+/* -- Helper classes -- */
+.pd10 {
+    padding-top: 10px;
+}
+.btn{
+    box-shadow: none;
+}
+input[type=text]:focus:not([readonly]){
+    border-bottom: 1px solid #e4e4e4;
+    box-shadow: 0 1px 0 0 #e4e4e4;
+    font-size: 13px;
+}
+/* -- Main Navbar -- */
+nav{
+    ul a{
+        font-size: 15px;
+    }
+    line-height: 0;
+}
+.main-nav {
+    .navbar-nav > li > a {
+        color: #000;
+    }
+    input[type=text]{
+        font-size: 13px;
+    }
+    .search-bar {
+        &:focus {
+            box-shadow: none;
+        }
+        width: 30vw !important;
+        border: solid #FFF 1px;
+        box-shadow: none;
+    }
+    .search-button {
+        &:hover {
+            background-color:#FFF;
+            color: #000;    
+        }
+        border-style: none !important;
+        color: rgb(212,212,212);
+    }
+    .rent:hover {
+        border-bottom: 4px solid rgba(56,167,133,1);
+    }
+    .navbar-brand {
+        &:hover {
+            background-color: rgba(56,167,133,1) !important;
+        }
+        .brand-text {
+            font-size: 30px;
+            font-weight: 900;
+        }
+        background-color: rgba(56,167,133,1);
+        color: #FFF !important;
+        height: 64px;
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+    letter-spacing: 0.08em;
+    font-size: 14px;
+    border:none;
+    background-color: #FFF;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  border-bottom: 4px solid rgba(56,167,133,1);
+  background-color: #FFF;
+}
+.form-control.hover {
+  border-style: none !important;
+}
+.collapse {
+  padding-top: 10px;
+}
+
+/* --- Sub Navbar -- */
+.sub-navbar {
+    .sub-menu-button {
+        &:focus {
+            border-bottom: 2px solid rgba(56,167,133, 1);
+        }
+        &:hover{
+            border-bottom: 2px solid rgba(56,167,133, 1);
+        }
+        font-size: 12px !important;
+        height: 40px;
+        border-radius: none !important;
+        background-color: #e4e4e4;
+    }
+    .btn{
+        &:focus{
+            outline: 0;
+        }
+        &:hover{
+            box-shadow: none;
+        }
+        border-radius: 0;
+        color:#000;
+        text-transform: inherit;
+    }
+    .btn-group>.btn:first-child {
+        margin-left: 0;
+        padding: 0;
+    }
+    .sub-btn {
+        &:hover { 
+            background-color: rgb(99,99,99);
+        }
+        background-color: #E4E4E4;
+        height: 40px;
+        width: 4vw;
+        border-radius: none !important;
+    }
+    .return-search {
+        &:focus{
+            outline:0;
+        }
+        width: auto; 
+        background-color: rgba(56,167,133,1); 
+        color: #FFF; 
+        margin-top: 5px;
+        float: left;
+        display: inline-block;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        margin-top: 6.5px;
+        margin-right: 5px;
+        border:none;
+    }
+    .vertical-rule{
+        float: right;
+        height: 20px;
+        width: 1px;
+        background-color: #FFF;
+        margin-left: 10px;
+    }
+    small {
+        font-size: 65%;
+        vertical-align: middle;
+    }
+    background-color: rgb(228,228,228);
+    height: 40px;
+    width: 100vw;
+    position: absolute;
+    left: 0px;
+    opacity: 0.85;
+}
+
+/* --- Side menu -- */
+
+.side-menu {
+    .side-menu-box {
+        border: solid rgba(10,10,10,0.2) .5px; 
+        margin-top: 120px; 
+        padding-left: 0px !important; 
+        padding-right: 0px !important;
+    }
+    .side-menu-price {
+        color: white;
+        margin-left: 5px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .glyphicon {
+        color: #FFF;
+    }
+    .side-menu-description {
+        height: 30px;
+    }
+    .down-button {
+        width: 100%;
+        background-color: #35a785;
+        height: 3.5vh;
+        bottom: 0pc;
+    }
+    .side-menu-image {
+        height: 120px; 
+        padding-bottom: 5px
+    }
+    background-color: white; 
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    z-index: 2;
+}

@@ -1,0 +1,73 @@
+<!-- Main NavBar -->
+<nav role="navigation" class="navbar navbar-default navbar-fixed-top main-nav">
+    <div class="container-fluid">
+        <div class="navbar-header">
+        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand text-center">
+            <p class="brand-text"> LoVendo
+            <p><h6>Real State for Sale</h6></p> 
+        </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                <div class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default search-button">
+                        <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control search-bar" placeholder="Buscar por dirección, vecindario o código postal"></input>
+                    </div>
+                </div>
+                </div>
+                </li>
+            </ul>  
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active buy" ng-hide="$rootScope.isAuthorized">
+                    <a href="#">Comprar</a>
+                </li>
+                <li>
+                    <a class="rent" href="#">Rentar</a>
+                </li>
+                <li ng-hide="$rootScope.isAuthorized">
+                    <a data-toggle="modal" data-target="#Modal" href="#">
+                        <strong>Log in</strong>
+                    </a>
+                </li>
+                <li class="dropdown pull-left" ng-hide="$rootScope.isAuthorized">
+                    <a ng-show="isConnected" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        {{name}}<span class="caret"></span>
+                    </a>
+                </li>
+                <ul ng-show="$rootScope.isAuthorized" class="dropdown-menu">
+                    <li>
+                        <a href="#">Búsquedas Guadadas</a>
+                    </li>
+                    <li>
+                        <a href="#">Casas Guardadas</a>
+                    </li>
+                    <li>
+                        <a href="#">LOG OUT</a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+        <sub-navbar></sub-navbar>
+</nav>
+<!-- End of Main NavBar -->
+
+<!-- Side Menu -->
+<side-menu></side-menu>
+<!-- End of side menu -->
+
+<!-- Injecting views -->
+<div ui-view="content"></div>
+<!-- End injecting views -->
