@@ -7,7 +7,9 @@
     "angular-underscore-module": "latest",
     "angular-ui-router": "latest",
     "Materialize": "materialize#~0.97.5",
-    "angular-sanitize": "latest"
+    "angular-sanitize": "latest",
+    "angular-messages": "^1.5.8",
+    "angular-jwt": "^0.1.8"
   },
   "devDependencies": {
     "angular": "~1.5.8",

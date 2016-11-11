@@ -9,7 +9,7 @@
 var passport = require('passport'),
     mongoose = require('mongoose'),
     rfr = require('rfr'),
-    User = rfr('models/User.js'),
+    User = rfr('server/models/User.js'),
     LocalStrategy = require('passport-local').Strategy;
 
 /**

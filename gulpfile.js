@@ -38,8 +38,8 @@ lr = require('tiny-lr'),
 lrserver = lr(),
 mongoose = require('mongoose'),
 bodyParser = require('body-parser'),
-auth = require('./routes/auth.js'),
-saved_data = require('./routes/saved_data.js')
+auth = require('./server/routes/auth.js'),
+saved_data = require('./server/routes/saved_data.js')
 livereloadport = 35729;
 
 
@@ -54,7 +54,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended:false}));
 
 //Initializing passport
-require('./routes/config/passport')(server);
+require('./server/routes/config/passport')(server);
 //Initializing auth routes
 server.use('/auth', auth);
 //Intializing saved houses routes

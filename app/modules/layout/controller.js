@@ -1,12 +1,13 @@
 (function(){
 
 angular.module('LoVendoApp.controllers')
-    .controller('LayoutCtrl', ['$scope', LayoutCtrl]);
+    .controller('LayoutCtrl', ['$scope', '$rootScope', LayoutCtrl]);
 
-    function LayoutCtrl($scope){
+    function LayoutCtrl($scope, $rootScope){
         var layout = this;
         console.log('LayoutCtrl');
         $scope.signUp = true;
+        console.log('Layout rootScope', $rootScope);
 
         /**
         * Switch which form to show

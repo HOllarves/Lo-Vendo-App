@@ -1,14 +1,21 @@
 /* -- Body -- */
-body{
+
+body {
     overflow: hidden;
 }
+
+
 /* -- Modal -- */
-#myModal{
+
+#Modal {
     overflow: hidden;
+    max-height: 100%;
+    height: 100%;
 }
-.modal{
-    label{
-        &:focus{
+
+.modal {
+    label {
+        &:focus {
             color: #e4e4e4;
         }
         font-size: 1.4rem;
@@ -26,44 +33,47 @@ body{
     input[type=email]:focus:not([readonly])+label {
         color: #9e9e9e;
     }
-    .form-group{
-        &:first-child{
+    .form-group {
+        &:first-child {
             padding-top: 15px;
         }
         margin-bottom: 0;
         padding: 15px;
         padding-top: 0;
     }
-    .modal-content{
+    .modal-content {
         padding: 0;
-        height: 265px;
+        max-height: 100%;
+        height: 100%;
     }
-    .modal-body{
-        .sign-in-button{
+    .modal-body {
+        .sign-in-button {
             width: 100%;
             position: absolute;
-            bottom:0;
+            bottom: 0;
             border-radius: 0;
-            background-color: #48AD98;
+            background-color: #38A785 !important;
+            color: white !important;
         }
         a {
-            color:#48AD98;
+            color: #48AD98;
             text-decoration: underline;
         }
         padding: 0;
         margin: 0;
-        height: 265px;
+        max-height: 100%;
+        height:100%;
     }
-    .modal-footer{
+    .modal-footer {
         background-color: #FFF;
     }
-    .close-button{
-        &:hover{
+    .close-button {
+        &:hover {
             box-shadow: none;
             background-color: transparent;
-            color:#000;
+            color: #000;
         }
-        &:focus{
+        &:focus {
             box-shadow: none;
             background-color: transparent;
         }
@@ -76,37 +86,46 @@ body{
         font-size: 20px;
         font-weight: 200;
     }
-    .modal-sign-up{
-        height: 355px;
+    .form-switch {
+        padding-bottom: 50px;
     }
-    max-height: 80%;
+    max-height: 100%;
     background-color: transparent !important;
     box-shadow: none !important;
 }
+
+
 /* -- Helper classes -- */
+
 .pd10 {
     padding-top: 10px;
 }
-.btn{
+
+.btn {
     box-shadow: none;
 }
-input[type=text]:focus:not([readonly]){
+
+input[type=text]:focus:not([readonly]) {
     border-bottom: 1px solid #e4e4e4;
     box-shadow: 0 1px 0 0 #e4e4e4;
     font-size: 13px;
 }
+
+
 /* -- Main Navbar -- */
-nav{
-    ul a{
+
+nav {
+    ul a {
         font-size: 15px;
     }
     line-height: 0;
 }
+
 .main-nav {
-    .navbar-nav > li > a {
+    .navbar-nav>li>a {
         color: #000;
     }
-    input[type=text]{
+    input[type=text] {
         font-size: 13px;
     }
     .search-bar {
@@ -119,24 +138,24 @@ nav{
     }
     .search-button {
         &:hover {
-            background-color:#FFF;
-            color: #000;    
+            background-color: #FFF;
+            color: #000;
         }
         border-style: none !important;
-        color: rgb(212,212,212);
+        color: rgb(212, 212, 212);
     }
     .rent:hover {
-        border-bottom: 4px solid rgba(56,167,133,1);
+        border-bottom: 4px solid rgba(56, 167, 133, 1);
     }
     .navbar-brand {
         &:hover {
-            background-color: rgba(56,167,133,1) !important;
+            background-color: rgba(56, 167, 133, 1) !important;
         }
         .brand-text {
             font-size: 30px;
             font-weight: 900;
         }
-        background-color: rgba(56,167,133,1);
+        background-color: rgba(56, 167, 133, 1);
         color: #FFF !important;
         height: 64px;
         padding-right: 30px;
@@ -147,38 +166,43 @@ nav{
     border:none;
     background-color: #FFF;
 }
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-  border-bottom: 4px solid rgba(56,167,133,1);
-  background-color: #FFF;
-}
-.form-control.hover {
-  border-style: none !important;
-}
-.collapse {
-  padding-top: 10px;
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+    border-bottom: 4px solid rgba(56, 167, 133, 1);
+    background-color: #FFF;
 }
 
+.form-control.hover {
+    border-style: none !important;
+}
+
+.collapse {
+    padding-top: 10px;
+}
+
+
 /* --- Sub Navbar -- */
+
 .sub-navbar {
     .sub-menu-button {
         &:focus {
-            border-bottom: 2px solid rgba(56,167,133, 1);
+            border-bottom: 2px solid rgba(56, 167, 133, 1);
         }
-        &:hover{
-            border-bottom: 2px solid rgba(56,167,133, 1);
+        &:hover {
+            border-bottom: 2px solid rgba(56, 167, 133, 1);
         }
         font-size: 12px !important;
         height: 40px;
         border-radius: none !important;
         background-color: #e4e4e4;
     }
-    .btn{
-        &:focus{
+    .btn {
+        &:focus {
             outline: 0;
         }
-        &:hover{
+        &:hover {
             box-shadow: none;
         }
         border-radius: 0;
@@ -190,8 +214,8 @@ nav{
         padding: 0;
     }
     .sub-btn {
-        &:hover { 
-            background-color: rgb(99,99,99);
+        &:hover {
+            background-color: rgb(99, 99, 99);
         }
         background-color: #E4E4E4;
         height: 40px;
@@ -199,12 +223,12 @@ nav{
         border-radius: none !important;
     }
     .return-search {
-        &:focus{
-            outline:0;
+        &:focus {
+            outline: 0;
         }
-        width: auto; 
-        background-color: rgba(56,167,133,1); 
-        color: #FFF; 
+        width: auto;
+        background-color: rgba(56, 167, 133, 1);
+        color: #FFF;
         margin-top: 5px;
         float: left;
         display: inline-block;
@@ -217,7 +241,7 @@ nav{
         margin-right: 5px;
         border:none;
     }
-    .vertical-rule{
+    .vertical-rule {
         float: right;
         height: 20px;
         width: 1px;
@@ -228,7 +252,7 @@ nav{
         font-size: 65%;
         vertical-align: middle;
     }
-    background-color: rgb(228,228,228);
+    background-color: rgb(228, 228, 228);
     height: 40px;
     width: 100vw;
     position: absolute;
@@ -236,13 +260,14 @@ nav{
     opacity: 0.85;
 }
 
+
 /* --- Side menu -- */
 
 .side-menu {
     .side-menu-box {
-        border: solid rgba(10,10,10,0.2) .5px; 
-        margin-top: 120px; 
-        padding-left: 0px !important; 
+        border: solid rgba(10, 10, 10, 0.2) .5px;
+        margin-top: 120px;
+        padding-left: 0px !important;
         padding-right: 0px !important;
     }
     .side-menu-price {
@@ -264,10 +289,10 @@ nav{
         bottom: 0pc;
     }
     .side-menu-image {
-        height: 120px; 
+        height: 120px;
         padding-bottom: 5px
     }
-    background-color: white; 
+    background-color: white;
     height: 100%;
     overflow: auto;
     position: absolute;

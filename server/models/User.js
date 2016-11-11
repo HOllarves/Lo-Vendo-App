@@ -8,7 +8,7 @@
 
 var mongoose = require('mongoose'),
   rfr = require('rfr'),
-  passwordHelper = rfr('helpers/password.js'),
+  passwordHelper = rfr('server/helpers/password.js'),
   Schema = mongoose.Schema,
   _ = require('lodash');
 

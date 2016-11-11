@@ -8,7 +8,7 @@
 
 var passport = require('passport'),
     rfr = require('rfr'),
-    User = rfr('models/User.js');
+    User = rfr('server/models/User.js');
 
 /**
  * 

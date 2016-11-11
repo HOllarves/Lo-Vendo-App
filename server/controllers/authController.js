@@ -8,8 +8,8 @@
 
 var passport = require('passport'),
   rfr = require('rfr'),
-  s = rfr('routes/config/jwt_config.js'),
-  User = rfr('models/User.js'),
+  s = rfr('server/routes/config/jwt_config.js'),
+  User = rfr('server/models/User.js'),
   _ = require('lodash'),
   jwt = require('jsonwebtoken');
 
@@ -71,22 +71,17 @@ function signUpUser(req, res, next) {
   User.register(userData, function (err, user) {
     if (err && (11000 === err.code || 11001 === err.code)) {
       res.json({
-        status: 401,
+        status: 400,
         message: 'Email already in use'
       });
-    }
-    if (err) {
-      res.json({
-        status: 500,
-        message: 'Internal Server Error'
+    } else {
+      req.logIn(user, function (err) {
+        res.json({
+          status: 201,
+          message: 'User signed up',
+          user: user
+        });
       });
     }
-    req.logIn(user, function (err) {
-      res.json({
-        status: 201,
-        message: 'User signed up',
-        user: user
-      });
-    });
   });
 }

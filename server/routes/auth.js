@@ -9,7 +9,7 @@
 var express = require('express'),
   authRouter = express.Router(),
   rfr = require('rfr'),
-  authCtrl = rfr('controllers/authController.js');
+  authCtrl = rfr('server/controllers/authController.js');
 
 
 

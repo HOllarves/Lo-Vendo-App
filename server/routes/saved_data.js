@@ -10,8 +10,8 @@ var express = require('express'),
     savedDataRouter = express.Router(),
     mongoose = require('mongoose'),
     rfr = require('rfr'),
-    s = rfr('routes/config/jwt_config.js'),
-    User = rfr('models/User.js'),
+    s = rfr('server/routes/config/jwt_config.js'),
+    User = rfr('server/models/User.js'),
     jwt = require('jsonwebtoken');
 
 /**
