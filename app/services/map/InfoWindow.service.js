@@ -6,18 +6,16 @@ angular.module('LoVendoApp.services')
     /**
     * Constructs Info Window in DOM
     *
-    * 
     */
 
     function InfoWindowService(){
         return {
             getContent: function (data){
-                console.log(data);
                 return '<div id="iw_container">' +
                             '<div class="col-xs-5">' +
                                 '<img align="center" class="col-xs-6 text-center" src='+ data.photos[0] + '>' +
                             '</div>' +
-                            '<div class="col-xs-4 pd10">' +
+                            '<div class="col-xs-4">' +
                                 '<div class="iw_title">' + data.address.full + '</div>' +
                                 '<div class="iw_title sub">' + data.address.city + '</div>' +
                                 '<div class="iw_price"> $' + data.listPrice + '</div>' +

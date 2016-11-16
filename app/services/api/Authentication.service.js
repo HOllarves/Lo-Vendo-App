@@ -27,7 +27,7 @@
                 //Storing user data in sessionStorage
                 $window.sessionStorage["userInfo"] = JSON.stringify(user);
                 //Assigning user to global object
-                $rootScope.currentUser = user;
+                $rootScope.credentials = user;
                 //Resolving data
                 deferred.resolve(data);
             }
@@ -68,7 +68,7 @@
                 //Storing user data in sessionStorage
                 $window.sessionStorage["userInfo"] = JSON.stringify(user);
                 //Assigning user to global object
-                $rootScope.currentUser = user;
+                $rootScope.credentials = user;
                 //Resolving data
                 deferred.resolve(data);
             }

@@ -29,6 +29,10 @@ var UserSchema = new Schema({
     required: true,
     select: false
   },
+  name: {
+    type: String,
+    required: true
+  },
   passwordSalt: {
     type: String,
     required: true,

@@ -24,10 +24,10 @@
                             <div class="input-group">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default search-button">
-                                    <i class="glyphicon glyphicon-search"></i>
+                                    <i class="glyphicon glyphicon-search" ng-click="layout.search()"></i>
                                     </button>
                                 </span>
-                                <input type="text" class="form-control search-bar" placeholder="Buscar por dirección, vecindario o código postal"/>
+                                <input ng-model="$root.requestObj.q" type="text" class="form-control search-bar" placeholder="Buscar por dirección, vecindario o código postal" />
                             </div>
                         </div>
                     </div>
@@ -42,28 +42,29 @@
                 </li>
                 <li ng-if="!$root.isAuthenticated">
                     <a data-toggle="modal" data-target="#Modal" href="#">
-                        <strong>Log in</strong>
+                        <strong>Iniciar sesi&oacuten</strong>
                     </a>
                 </li>
-                <li class="dropdown pull-left" ng-show="$root.isAuthenticated">
+                <li class="dropdown pull-left" ng-if="$root.isAuthenticated">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span>{{$root.currentUser.user.email}}</span><span class="caret"></span>
+                        <span>{{$root.credentials.user.name}}</span><span class="caret"></span>
                     </a>
+                    <ul ng-if="$root.isAuthenticated" class="dropdown-menu">
+                        <li>
+                            <a href="#">B&uacutesquedas guadadas</a>
+                        </li>
+                        <li>
+                            <a href="#">Casas guardadas</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="layout.logout()">Salir de la sesi&oacuten</a>
+                        </li>
+                    </ul>
                 </li>
-                <ul ng-if="$root.isAuthenticated" class="dropdown-menu">
-                    <li>
-                        <a href="#">Búsquedas Guadadas</a>
-                    </li>
-                    <li>
-                        <a href="#">Casas Guardadas</a>
-                    </li>
-                    <li>
-                        <a href="#">LOG OUT</a>
-                    </li>
-                </ul>
             </ul>
         </div>
         <sub-navbar></sub-navbar>
+    </div>
 </nav>
 <span></span>
 <!-- End of Main NavBar -->
@@ -73,3 +74,6 @@
 <!-- Injecting views -->
 <div ui-view="content"></div>
 <!-- End injecting views -->
+<!-- House detail Modal -->
+<div id="ModalDetail" class="modal fade" role="dialog" modal-detail></div>
+<!-- End House detail -->

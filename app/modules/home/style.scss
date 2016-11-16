@@ -1,19 +1,112 @@
-.map{
+/* -- Modal -- */
+
+#Modal {
+    overflow: hidden;
+    max-height: 100%;
+    height: 100%;
+}
+
+.modal {
+    label {
+        &:focus {
+            color: #e4e4e4;
+        }
+        font-size: 1.4rem;
+    }
+    input[type=email],
+    input[type=text],
+    input[type=password] {
+        font-size: 14px;
+    }
+    input[type=email]:focus:not([readonly]),
+    input[type=password]:focus:not([readonly]) {
+        border-bottom: 1px solid #e4e4e4;
+        box-shadow: 0 1px 0 0 #e4e4e4;
+        font-size: 13px;
+    }
+    input[type=email]:focus:not([readonly])+label {
+        color: #9e9e9e;
+    }
+    .form-group {
+        &:first-child {
+            padding-top: 15px;
+        }
+        margin-bottom: 0;
+        padding: 15px;
+        padding-top: 0;
+    }
+    .modal-content {
+        padding: 0;
+        max-height: 100%;
+        height: 100%;
+    }
+    .modal-body {
+        .sign-in-button {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            border-radius: 0;
+            background-color: #38A785 !important;
+            color: white !important;
+        }
+        a {
+            color: #48AD98;
+            text-decoration: underline;
+        }
+        padding: 0;
+        margin: 0;
+        max-height: 100%;
+        height:100%;
+    }
+    .modal-footer {
+        background-color: #FFF;
+    }
+    .close-button {
+        &:hover {
+            box-shadow: none;
+            background-color: transparent;
+            color: #000;
+        }
+        &:focus {
+            box-shadow: none;
+            background-color: transparent;
+            outline: none !important;
+        }
+        position: absolute;
+        top:0;
+        right:0;
+        z-index: 99999;
+        border: none;
+        color: #E4E4E4;
+        font-size: 30px;
+        font-weight: 200;
+    }
+    .form-switch {
+        padding-bottom: 50px;
+    }
+    max-height: 100%;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* -- Map -- */
+
+.map {
     height: 1080px;
 }
-.gm-style-iw{
+
+.gm-style-iw {
     img {
         width: 200px;
         height: 150px;
         padding: 0;
     }
-    #iw_container{
-        .iw_price{
+    #iw_container {
+        .iw_price {
             font-weight: bold;
             color: black;
             padding: 10px;
-            font-size:18px;
-
+            font-size: 18px;
         }
         .iw_title {
             font-family: 'Open Sans Condensed', sans-serif;
@@ -23,11 +116,12 @@
             background-color: #35A785;
             color: white;
             margin: -1px;
-            border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
+            border-radius: 2px 2px 0 0;
+            /* In accordance with the rounding of the default infowindow corners. */
         }
-        .sub{
+        .sub {
             font-size: 12px;
-            float:none;
+            float: none;
         }
         li {
             border-bottom: 1px solid black;

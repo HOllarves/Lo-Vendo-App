@@ -1,39 +1,5 @@
 <!-- Side Menu -->
 <div class="col-xs-2 col-xs-offset-10 side-menu" ng-show="showSubMenu">
-    <div class="col-xs-12 side-menu-box">
-    <div class="text-center">
-        <div>
-            <strong>Here's the title</strong>
-        </div>
-        <div class="side-menu-image">
-            <div class="side-menu-price text-left"></div>
-        </div>
-        <div class="text-center side-menu-description">
-            <small>
-                Here's the description
-            </small> 
-        </div>
-        <div ng-show="showMenuDown">
-        <p>
-            <small>
-                Aditional information
-            </small>
-        </p> 
-        <a href="">
-            <small>
-                Mostrar más
-            </small> 
-        </a>
-        <br><br>
-        </div>
-        <a ng-click="showMenuDown = !showMenuDown">          
-        <div class="down-button">
-            <small>
-            <i class="glyphicon glyphicon-triangle-bottom" style="color: white;"></i>
-            </small>
-        </div>
-        </a>
-    </div>
-    </div>
+    <side-menu-box ng-repeat="home in layout.homes track by home.mlsId"></side-menu-box>
 </div>
 <!-- End of Side Menu -->

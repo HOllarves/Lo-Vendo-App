@@ -67,19 +67,27 @@ function signInUser(req, res, next) {
  */
 
 function signUpUser(req, res, next) {
+  //Creating user object
   var userData = _.pick(req.body, 'name', 'email', 'password');
   User.register(userData, function (err, user) {
     if (err && (11000 === err.code || 11001 === err.code)) {
+      //Email in use
       res.json({
         status: 400,
         message: 'Email already in use'
       });
     } else {
+      //Loggin in newly created user
       req.logIn(user, function (err) {
+        var token = jwt.sign(user, s.SECRET, {
+          expiresIn: '1440m' //Expires in 24 hours
+        });
+        //Response
         res.json({
           status: 201,
           message: 'User signed up',
-          user: user
+          user: user,
+          token: token
         });
       });
     }

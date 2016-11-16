@@ -7,15 +7,22 @@
                 <div ng-switch-when="true">
                     <form name="signUpForm" ng-submit="home.signUp(user)" method="post" novalidate>
                         <div class="form-group" ng-class="{ 'has-error' : signUpForm.email.$invalid && !signUpForm.email.$touched }">
+                            <label for="Name">Introduzca su nombre</label>
+                            <input type="text" name="name" id="_name" ng-model="user.name" ng-required="true"/>
+                            <div class="help-block" ng-messages="signUpForm.name.$error" ng-show="signUpForm.name.$touched">
+                                <div ng-messages-include="./modules/validation/messages.html"></div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : signUpForm.email.$invalid && !signUpForm.email.$touched }">
                             <label for="Email">Introduzca su email</label>
-                            <input type="email" name="email" id="_email" ng-model="user.email" ng-required="true" required/>
+                            <input type="email" name="email" id="_email" ng-model="user.email" ng-required="true"/>
                             <div class="help-block" ng-messages="signUpForm.email.$error" ng-show="signUpForm.email.$touched">
                                 <div ng-messages-include="./modules/validation/messages.html"></div>
                             </div>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : signUpForm.password.$invalid && !signUpForm.password.$touched }">
                             <label for="Password">Introduzca contraseña</label>
-                            <input type="password" name="password" id="_password" ng-model="user.password" ng-required="true" ng-minlength="6" required/>
+                            <input type="password" name="password" id="_password" ng-model="user.password" ng-required="true" ng-minlength="6"/>
                             <div class="help-block" ng-messages="signUpForm.password.$error" ng-show="signUpForm.password.$touched">
                                 <div ng-messages-include="./modules/validation/messages.html"></div>
                             </div>
@@ -23,7 +30,7 @@
                         <div class="form-group" ng-class="{ 'has-error' : signUpForm.password_confirm.$invalid && !signUpForm.password_confirm.$touched }">
                             <label for="Password">Confirmar contraseña</label>
                             <input type="password" name="password_confirm" id="_password_confirm" ng-model="user.confirm_password" ng-required="true"
-                                ng-minlength="6" required/>
+                                ng-minlength="6"/>
                             <div class="help-block" ng-messages="signUpForm.password_confirm.$error" ng-show="signUpForm.password_confirm.$touched">
                                 <div ng-messages-include="./modules/validation/messages.html"></div>
                             </div>
@@ -38,14 +45,14 @@
                     <form name="signInForm" ng-submit="home.signIn(user)" method="post" novalidate>
                         <div class="form-group" ng-class="{ 'has-error' : signInForm.email.$invalid && !signInForm.email.$touched }">
                             <label for="Email">Email</label>
-                            <input type="email" name="email" id="_email" ng-model="user.email" ng-required="true" required/>
+                            <input type="email" name="email" id="_email" ng-model="user.email" ng-required="true"/>
                             <div class="help-block" ng-messages="signInForm.email.$error" ng-show="signInForm.email.$touched">
                                 <div ng-messages-include="./modules/validation/messages.html"></div>
                             </div>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : signInForm.password.$invalid && !signInForm.password.$touched }">
                             <label for="Password">Contraseña</label>
-                            <input type="password" name="password" id="_password" ng-model="user.password" ng-required="true" ng-minlength="6" required/>
+                            <input type="password" name="password" id="_password" ng-model="user.password" ng-required="true" ng-minlength="6"/>
                             <div class="help-block" ng-messages="signInForm.password.$error" ng-show="signInForm.password.$touched">
                                 <div ng-messages-include="./modules/validation/messages.html"></div>
                             </div>

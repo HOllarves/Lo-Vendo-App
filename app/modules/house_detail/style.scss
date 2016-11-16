@@ -1,0 +1,114 @@
+/* -- Modal Detail -- */
+
+.full-screen {
+    .close-button {
+        .detail-button {
+            background-color: #F8F9FB;
+        }
+    }
+    .vertical-rule {
+        float: left;
+        height: 25px;
+        width: 3px;
+        background-color: #35a785;
+        margin-right: 10px;
+    }
+    .modal-dialog {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .modal-content {
+        .title {
+            h1 {
+                font-weight: bolder;
+            }
+            margin-top: 15px;
+        }
+        .price {
+            p {
+                font-size: 40px;
+                font-weight: 100;
+            }
+            margin-top: 15px;
+        }
+        .details {
+            .row {
+                margin: 0;
+            }
+            .breaks {
+                border-bottom: 1px solid #35a785;
+                padding: 0;
+                color: #35a785;
+                font-weight: bold;
+                font-size: 15px;
+            }
+            .detail {
+                padding: 0;
+            }
+            display: inline-block;
+            width: 100%;
+        }
+        .info-description {
+            h2 {
+                color: #35a785;
+                font-weight: 100;
+            }
+            margin-top: 15px;
+        }
+        .characteristics {
+            h2 {
+                color: #35a785;
+                font-weight: 100;
+            }
+            ul li {
+                float: left;
+                width: 45%;
+                list-style-type: disc;
+                margin-left: 30px;
+            }
+            ul {
+                list-style-type: disc;
+                margin-left: 1vw;
+            }
+        }
+        .virtual-tour {
+            .glyphicon {
+                color: #35a785;
+                font-size: 20px;
+            }
+            a {
+                &:hover {
+                    text-decoration: underline;
+                }
+                font-size:30px;
+                color: #35a785;
+                text-decoration: none;
+            }
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .similar-houses {
+            h2 {
+                color: #35a785;
+            }
+            margin-top: 15px;
+        }
+        .description {
+            padding-left: 55px;
+            padding-right: 40px;
+            padding-top: 25px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-color: #F8F9FB;
+        }
+        height: auto;
+        min-height: 100%;
+        border-radius: 0;
+        background-color: transparent;
+    }
+    width:100%;
+}

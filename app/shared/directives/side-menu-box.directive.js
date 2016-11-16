@@ -1,11 +1,11 @@
 (function () {
 
     angular.module('LoVendoApp.directives')
-        .directive('sideMenu', function () {
+        .directive('sideMenuBox', function () {
             return {
                 restrict: 'E',
-                templateUrl: './modules/layout/navbar/side-menu.html',
-                link: function (scope, el, attrs) {},
+                templateUrl: './modules/layout/navbar/side-menu-box.html',
+                link: function () {},
                 controller: function () {}
             }
         })

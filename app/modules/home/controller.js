@@ -19,17 +19,19 @@
          */
 
         home.type = ["rental", "residential"];
-        home.minprice = 15000;
-        home.maxprice = 50000;
+        home.minprice;
+        home.maxprice;
         home.status;
-        home.limit = "10";
+        home.q;
+        home.limit = "200";
 
-        $scope.requestObj = {
+        $rootScope.requestObj = {
             "status": home.status,
             "type": home.type,
             "minprice": home.minprice,
             "maxprice": home.maxprice,
-            "limit": home.limit
+            "limit": home.limit,
+            "q": home.q
         };
 
         /**
@@ -40,10 +42,8 @@
          */
 
         home.signIn = function (user) {
-            console.log('home', user);
             home.submitted = true;
             Authentication.login(user).then(function (data) {
-                console.log('data', data);
                 if (data.status == 200) {
                     //Dismissing modal
                     $scope.dismiss();
@@ -65,6 +65,7 @@
             console.log(user);
             if (user.password == user.confirm_password) {
                 var valid_user = {
+                    name: user.name,
                     email: user.email,
                     password: user.password
                 }
@@ -85,13 +86,13 @@
         // log him in again
         if ($window.sessionStorage["userInfo"]) {
             var credentials = JSON.parse($window.sessionStorage["userInfo"]);
-            console.log(jwtHelper.isTokenExpired(credentials.token));
+            console.log(credentials);
             if (jwtHelper.isTokenExpired(credentials.token)) {
                 Session.destroy();
-                $rootScope.currentUser = null;
+                $rootScope.credentials = null;
                 home.currentUser = null;
             } else {
-                $rootScope.currentUser = credentials;
+                $rootScope.credentials = credentials;
                 home.currentUser = credentials;
                 Session.create(home.currentUser.user, home.currentUser.token);
                 $rootScope.isAuthenticated = Authentication.isAuthenticated();
@@ -104,32 +105,42 @@
          */
 
         function setCurrentUser() {
-            console.log('set current user', $rootScope);
-            home.currentUser = $rootScope.currentUser;
+            home.currentUser = $rootScope.credentials;
             Session.create(home.currentUser.user, home.currentUser.token);
             $rootScope.isAuthenticated = Authentication.isAuthenticated();
         }
 
         /**
-         * Logs out user.
+         * Logouts user
          * 
          */
-        function logout() {
-            home.currentUser = null;
-            Session.destroy();
+
+        function logoutSuccess() {
+            if ($rootScope.isAuthenticated) {
+                Session.destroy();
+                $rootScope.credentials = null;
+                home.currentUser = null;
+            } else {
+                $rootScope.credentials = null;
+                home.currentUser = null;
+            }
+            $window.sessionStorage.removeItem("userInfo");
+            $rootScope.isAuthenticated = Authentication.isAuthenticated();
         }
 
-        function sessionTimeout() {
-            console.log('Hey!');
-        }
+        /**
+         * Sign up function
+         *
+         * @param {String} query
+         * 
+         */
 
         function notAuthenticated() {
             console.log('not authenticated');
         }
 
         $scope.$on(AUTH_EVENTS.notAuthenticated, notAuthenticated);
-        $scope.$on(AUTH_EVENTS.sessionTimeout, sessionTimeout);
-        $scope.$on(AUTH_EVENTS.logoutSuccess, logout);
+        $scope.$on(AUTH_EVENTS.logoutSuccess, logoutSuccess);
         $scope.$on(AUTH_EVENTS.loginSuccess, setCurrentUser);
     }
 })();

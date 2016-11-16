@@ -1,0 +1,45 @@
+<div class="col-xs-12 side-menu-box" ng-class="{firstBox:$first}">
+    <div class="well address">
+        <strong>{{home.address.full}}</strong>
+    </div>
+    <div class="col-xs-12">
+        <div class="side-menu-price">${{home.listPrice}}</div>
+    </div>
+    <div class="col-xs-12 side-menu-image">
+        <img class="img-responsive" src="{{home.photos[0]}}" />
+    </div>
+    <div class="col-xs-12 well text-center side-menu-description">
+        <div class="col-xs-4">
+            <p>{{home.property.bedrooms}} cuartos</p>
+        </div>
+        <div class="col-xs-4">
+            <p>{{home.property.bathsFull}} baños</p>
+        </div>
+        <div class="col-xs-4">
+            <p>{{home.property.area}} pies</p>
+        </div>
+    </div>
+    <div class="col-xs-12 side-menu-detail animate-show" ng-show="showMenuDown">
+        <p>
+            <strong>Detalles</strong>
+        </p>
+        <p>
+            <strong>Calefaccion: </strong> {{home.property.heating}}
+        </p>
+        <p>
+            <strong>Estilo: </strong> {{home.property.style}}
+        </p>
+        <p>
+            <strong>Caracteristicas: </strong> {{home.property.interiorFeatures}}
+        </p>
+        <p>
+            <strong>Informaci&oacuten extra: </strong> {{home.privateRemarks}}
+        </p>
+        <div class="text-center show-more">
+            <a href="#" ng-click="layout.openComponentModal(home)"> Mostrar más </a>
+        </div>
+    </div>
+    <button class="down-button" ng-click="showMenuDown = !showMenuDown">
+        <small> <i class="glyphicon glyphicon-triangle-bottom"></i> </small>
+    </button>
+</div>
