@@ -1,15 +1,19 @@
+;
 (function () {
-    angular.module('LoVendoApp.controllers')
-        .controller('HouseDetailCtrl', ['home', '$scope', '$uibModalInstance', '_', HouseDetailCtrl]);
+    "use strict";
 
-    function HouseDetailCtrl(home, $scope, $uibModalInstance, _) {
+    angular.module('LoVendoApp.controllers')
+        .controller('HouseDetailCtrl', ['home', '$scope', '$rootScope', '$uibModalInstance', '_', 'UserMeta', HouseDetailCtrl]);
+
+    function HouseDetailCtrl(home, $scope, $rootScope, $uibModalInstance, _, UserMeta) {
 
         var $ctrl = this;
         $ctrl.home = pruneEmpty(home);
         console.log('detail object', $ctrl.home);
 
         /**
-         * Removes 'bad' values from object
+         * Removes 'bad' values from object and replace them
+         * with No Disponible
          * @param {Object} obj
          * 
          */
@@ -42,6 +46,30 @@
         $scope.closeModal = function () {
             $uibModalInstance.close();
         }
+
+        /**
+         * Saves house to the database
+         * @param {Object} house
+         * 
+         */
+
+        $ctrl.saveHouse = function (house) {
+            var house_obj = {
+                mlsId: house.mlsId,
+                addressFull: house.address.full,
+                bedrooms: house.property.bedrooms,
+                listPrice: house.listPrice,
+                photo: house.photos[0],
+                bathrooms: house.property.bathsFull,
+                sqft: house.property.area
+            }
+
+            UserMeta.postSavedHouse(house_obj).then(function (res) {
+                console.log(res);
+            });
+        }
+
+        console.log($rootScope.globalHousesData);
 
     }
 

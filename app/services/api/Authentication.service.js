@@ -1,4 +1,6 @@
+;
 (function () {
+    "use strict";
 
     angular.module('LoVendoApp.services')
         .factory('Authentication', ['$http', '$q', '$window', '$rootScope', 'Session', Authentication]);
@@ -13,7 +15,7 @@
          */
 
         function login(user) {
-            var url = AppSettings.api_url + '/auth/signIn';
+            var url = 'https://warm-lowlands-68974.herokuapp.com' + '/auth/signIn';
             var deferred = $q.defer();
             $http.post(url, user).success(loggedIn, authError).error(httpError);
             //Authentication success
@@ -24,7 +26,7 @@
                         user: data.user,
                         token: data.token
                     }
-                //Storing user data in sessionStorage
+                    //Storing user data in sessionStorage
                 $window.sessionStorage["userInfo"] = JSON.stringify(user);
                 //Assigning user to global object
                 $rootScope.credentials = user;
@@ -51,7 +53,7 @@
 
         function signUp(user) {
             console.log('Signing up');
-            var url = AppSettings.api_url + '/auth/signUp';
+            var url = 'https://warm-lowlands-68974.herokuapp.com' + '/auth/signUp';
             var deferred = $q.defer();
 
             //Http POST request
@@ -65,7 +67,7 @@
                         user: data.user,
                         token: data.token
                     }
-                //Storing user data in sessionStorage
+                    //Storing user data in sessionStorage
                 $window.sessionStorage["userInfo"] = JSON.stringify(user);
                 //Assigning user to global object
                 $rootScope.credentials = user;

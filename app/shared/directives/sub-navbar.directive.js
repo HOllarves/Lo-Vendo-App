@@ -1,4 +1,6 @@
+;
 (function () {
+    "use strict";
 
     angular.module('LoVendoApp.directives')
         .directive('subNavbar', function () {

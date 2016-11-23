@@ -1,51 +1,70 @@
 <!DOCTYPE html>
 <html ng-app="LoVendoApp" ng-strict-di>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
-        <!-- Materialize CSS -->
-        <link href="assets/css/materialize.min.css" rel="stylesheet"/>
-        <!-- Slide animations -->
-        <link rel="stylesheet" href="assets/css/slide-down-animations.css"/>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Materialize icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-        <!-- compiled css output -->
-        <link href="css/app.min.css" rel="stylesheet"/>
-        <!-- App Settings file (source located under app_settings). Copied by gulp's env-dev/env-staging tasks -->
-        <script src="settings.js"></script>
-        <!-- JQuery -->
-        <script src="lib/jquery/dist/jquery.min.js"></script>
-        <!-- Materialize scripts -->
-        <script src="lib/Materialize/dist/js/materialize.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <!-- Angular -->
-        <script src="lib/angular/angular.min.js"></script>
-        <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
-        <!-- Angular UI -->
-        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <!-- Angular Animate -->
-        <script src="lib/angular-animate/angular-animate.min.js"></script>
-        <!-- Angular Messages -->
-        <script src="lib/angular-messages/angular-messages.min.js"></script>
-        <!-- Angular JWT -->
-        <script src="lib/angular-jwt/dist/angular-jwt.min.js"></script>
-        <!-- LoDash -->
-        <script src="lib/lodash/dist/lodash.min.js"></script>
-        <script src="lib/angular-lodash-module/angular-lodash-module.js"></script>
-        <!-- Router -->
-        <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
-        <!-- Google maps -->
-        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj07qhVC9wn2Qs90TyBqWDpVVv42bx2FM"></script>
-        <!-- inject:js -->
-        <!-- endinject -->
-        <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
-        <title ng-bind="title">Title</title>
-    </head>
-    <body>
-        <div ui-view="root-view"></div>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+    <!-- Materialize CSS -->
+    <link href="assets/css/materialize.min.css" rel="stylesheet" />
+    <!-- Slide animations -->
+    <link rel="stylesheet" href="assets/css/slide-down-animations.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Slick carousel CSS -->
+    <link rel="stylesheet" href="lib/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="lib/slick-carousel/slick/slick-theme.css">
+    <!-- Angular loading bar CSS -->
+    <link rel="stylesheet" href="lib/angular-loading-bar/build/loading-bar.min.css">
+    <!-- compiled css output -->
+    <link href="css/app.min.css" rel="stylesheet" />
+    <!-- App Settings file (source located under app_settings). Copied by gulp's env-dev/env-staging tasks -->
+    <script src="settings.js"></script>
+    <!-- JQuery -->
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <!-- Materialize scripts -->
+    <script src="lib/Materialize/dist/js/materialize.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <!-- Angular -->
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <!-- Angular UI -->
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!-- Angular Animate -->
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <!-- Angular Grid -->
+    <script src="assets/js/angular-grid.min.js"></script>
+    <!-- Angular Slick Carousel -->
+    <script src="lib/slick-carousel/slick/slick.min.js"></script>
+    <script src="lib/angular-slick-carousel/dist/angular-slick.min.js"></script>
+    <!-- Angular loading bar -->
+    <script src="lib/angular-loading-bar/build/loading-bar.min.js"></script>
+    <!-- Angular Messages -->
+    <script src="lib/angular-messages/angular-messages.min.js"></script>
+    <!-- Angular JWT -->
+    <script src="lib/angular-jwt/dist/angular-jwt.min.js"></script>
+    <!-- MomentJS -->
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/moment/locale/es.js"></script>
+    <!-- Angular Moment -->
+    <script src="lib/angular-moment/angular-moment.min.js"></script>
+    <!-- LoDash -->
+    <script src="lib/lodash/dist/lodash.min.js"></script>
+    <script src="lib/angular-lodash-module/angular-lodash-module.js"></script>
+    <!-- Router -->
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <!-- Google maps -->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj07qhVC9wn2Qs90TyBqWDpVVv42bx2FM"></script>
+    <!-- inject:js -->
+    <!-- endinject -->
+    <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+    <title ng-bind="title">Title</title>
+</head>
+
+<body>
+    <div ui-view="root-view"></div>
+</body>
 </html>

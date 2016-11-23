@@ -1,4 +1,6 @@
+;
 (function () {
+    "use strict";
 
     angular.module('LoVendoApp.services')
         .factory("ModalOptions", [ModalOptions]);
@@ -11,23 +13,25 @@
      */
 
     function ModalOptions() {
-        return {
-            getOptions: function (home) {
-                return {
-                    animation: true,
-                    ariaLabelledBy: 'modal-title',
-                    ariaDescribedBy: 'modal-body',
-                    templateUrl: './modules/house_detail/modal-detail.html',
-                    windowClass: 'full-screen',
-                    controller: 'HouseDetailCtrl',
-                    controllerAs: '$ctrl',
-                    resolve: {
-                        home: function () {
-                            return home;
-                        }
+        function getHouseDetailOptions(home) {
+            return {
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: './modules/house_detail/house-detail-modal.html',
+                windowClass: 'full-screen',
+                controller: 'HouseDetailCtrl',
+                controllerAs: '$ctrl',
+                resolve: {
+                    home: function () {
+                        return home;
                     }
                 }
             }
+        }
+
+        return {
+            getHouseDetailOptions: getHouseDetailOptions
         }
     }
 

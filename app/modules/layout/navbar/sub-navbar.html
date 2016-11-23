@@ -1,23 +1,122 @@
 <div class="sub-navbar">
-    <button class="btn sub-btn pull-left filter-button">
-        <i class="glyphicon glyphicon-tasks"></i>
-    </button>
+    <div class="filters pull-left">
+        <button class="btn sub-btn pull-left filter-button" ng-click="showFilters = !showFilters">
+            <i class="glyphicon glyphicon-tasks"></i>
+        </button>
+        <div class="filter-list animate-hide-left" ng-show="showFilters">
+            <div class="dropdown house-type">
+                <button class="btn" data-toggle="dropdown"> Tipo de vivienda <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li class="type-filter" ng-repeat="houseType in layout.houseTypes">
+                        <label for="{{houseType.name}}">
+                            {{houseType.displayName}}
+                            <input type="checkbox" class="pull-left" ng-click="layout.select()" ng-model="houseType.selected">
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown price">
+                <button class="btn" data-toggle="dropdown"> Precios <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Min</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="price-min input-filter" ng-model="$root.requestObj.minprice" ng-blur="layout.filterChanged()" type="number"
+                            />
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Max</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="price-max input-filter" ng-model="$root.requestObj.maxprice" ng-blur="layout.filterChanged()" type="number"
+                            />
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="dropdown beds">
+                <button class="btn" data-toggle="dropdown"> Cuartos <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Min</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="bed-min input-filter" ng-model="$root.requestObj.minbeds" ng-blur="layout.filterChanged()" type="number" />
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Max</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="bed-max input-filter" ng-model="$root.requestObj.maxbeds" ng-blur="layout.filterChanged()" type="number" />
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="dropdown baths">
+                <button class="btn" data-toggle="dropdown"> Baños <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Min</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="bath-min input-filter" ng-model="$root.requestObj.minbaths" ng-blur="layout.filterChanged()" type="number"
+                            />
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Max</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="bath-max input-filter" ng-model="$root.requestObj.maxbaths" ng-blur="layout.filterChanged()" type="number"
+                            />
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="dropdown area">
+                <button class="btn" data-toggle="dropdown"> Pies cuadrados <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Min</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="sqft-min input-filter" ng-model="$root.requestObj.minarea" ng-blur="layout.filterChanged()" type="number" />
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-heading panel-heading-navbar">Max</div>
+                        <div class="panel-body panel-body-navbar">
+                            <input class="sqft-max input-filter" ng-model="$root.requestObj.maxarea" ng-blur="layout.filterChanged()" type="number" />
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="btn-group pull-right">
-        <button class="btn sub-menu-button" ng-if="$root.isAuthenticated">
-            <span class="vertical-rule first-one" style="float:left; margin-right:10px;"></span>
-            Busquedas Guardadas <small><</small>
-            <span class="vertical-rule"></span>
+        <button class="btn sub-menu-button" ng-click="layout.showSavedSearches()" ng-if="$root.isAuthenticated">
+            Busquedas Guardadas
         </button>
-        <button class="btn sub-menu-button" ng-if="$root.isAuthenticated">
-            Casas Guardadas <small><</small>
-            <span class="vertical-rule"></span>
+        <button class="btn sub-menu-button" ng-click="layout.showSavedHouses()" ng-if="$root.isAuthenticated">
+            Casas Guardadas
         </button>
-        <button class="return-search" ng-if="$root.isAuthenticated">
+        <button class="btn return-search fade-in-out" ng-show="inUserWindow" ng-click="layout.backToSearch()"  ng-if="$root.isAuthenticated">
              Volver a la búsqueda 
         </button>
         <button class="btn sub-btn"><i class="glyphicon glyphicon-map-marker"></i></button>
-        <button class="btn sub-btn" ng-click="showSubMenu = !showSubMenu">
+        <button class="btn sub-btn" ng-click="layout.handleSideMenu()">
             <i class="glyphicon glyphicon-th-large"></i>
         </button>
+    </div>
+    <div class="dropdown pull-right animate-hide-right" ng-show="activeFilters">
+        <div class="tags">
+            <button class="btn" data-toggle="dropdown"> Filtros Activos <span class="caret"></span></button>
+            <ul class="dropdown-menu" dropdown-no-close>
+                <div class="tag-box" ng-repeat="tag in layout.tags track by tag.id">
+                    <span>{{tag.name}}: {{tag.value}}</span>
+                    <span class="remove-tag badge" ng-click="layout.removeTag(tag)">X</span>
+                    <hr ng-class="{'last-rule':$last}">
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div class="dropdown pull-right animate-hide-right" ng-show="activeSearch">
+        <button class="save-search-btn btn" ng-if="$root.isAuthenticated" ng-click="layout.saveSearch($root.requestObj.q)"> Guardar Busqueda </button>
     </div>
 </div>

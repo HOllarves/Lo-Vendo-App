@@ -1,4 +1,7 @@
+;
 (function () {
+    "use strict";
+
     angular.module('LoVendoApp.services')
         .factory('SimpleRETS', ['$http', '$q', '$httpParamSerializer', SimpleRETS]);
 
@@ -75,8 +78,41 @@
             }
             return deferred.promise;
         }
+        /**
+         * Gets specific house using its
+         * mlsId
+         * 
+         * @param {String} id - mlsId
+         * 
+         */
+
+        function getHouse(id) {
+            var deferred = $q.defer();
+
+            $http({
+                    method: 'GET',
+                    url: simpleRetsUrl + 'properties/' + id,
+                    headers: {
+                        'Authorization': 'Basic ' + credentials
+                    }
+                })
+                .then(propsReceived)
+                .catch(httpError);
+
+            //Properties received
+            function propsReceived(data) {
+                deferred.resolve(data);
+            }
+            //Http error
+            function httpError(error) {
+                deferred.reject('Http error' + error);
+            }
+
+            return deferred.promise;
+        }
         return {
             getProperties: getProperties,
+            getHouse: getHouse,
             requestHandler: requestHandler
         }
     }

@@ -1,5 +1,5 @@
 <div class="col-xs-12 side-menu-box" ng-class="{firstBox:$first}">
-    <div class="well address">
+    <div ng-click="layout.openComponentModal(home)" class="well address">
         <strong>{{home.address.full}}</strong>
     </div>
     <div class="col-xs-12">
@@ -10,13 +10,13 @@
     </div>
     <div class="col-xs-12 well text-center side-menu-description">
         <div class="col-xs-4">
-            <p>{{home.property.bedrooms}} cuartos</p>
+            <p>{{home.property.bedrooms}} HA</p>
         </div>
         <div class="col-xs-4">
-            <p>{{home.property.bathsFull}} baños</p>
+            <p>{{home.property.bathsFull}} BA</p>
         </div>
         <div class="col-xs-4">
-            <p>{{home.property.area}} pies</p>
+            <p>{{home.property.area}} M<sup>2</sup></p>
         </div>
     </div>
     <div class="col-xs-12 side-menu-detail animate-show" ng-show="showMenuDown">

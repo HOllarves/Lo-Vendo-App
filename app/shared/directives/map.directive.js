@@ -1,8 +1,10 @@
+;
 (function () {
+    "use strict";
 
     angular.module('LoVendoApp.directives')
-        .directive('map', ['SimpleRETS', 'InfoWindowService', 'McOptions', 'ModalOptions', '$rootScope', '$parse', '$uibModal',
-            function (SimpleRETS, InfoWindowService, McOptions, ModalOptions, $rootScope, $parse, $uibModal) {
+        .directive('map', ['SimpleRETS', 'InfoWindowService', 'McOptions', 'ModalOptions', '$rootScope', '$parse', '$uibModal', '$timeout', 'SafetyFilter',
+            function (SimpleRETS, InfoWindowService, McOptions, ModalOptions, $rootScope, $parse, $uibModal, $timeout, SafetyFilter) {
                 return {
                     restrict: 'A',
                     scope: {
@@ -17,6 +19,11 @@
                             },
                             zoom: 8
                         });
+
+                        //Markers array
+                        var markers = [];
+                        var markers_relay = [];
+                        console.log('on init = ', markers.length);
 
                         /**
                          * Creates new google maps
@@ -50,7 +57,7 @@
                                             .on("click", modalListener);
                                         //Opens modal when click is listened
                                         function modalListener() {
-                                            var modalOptions = ModalOptions.getOptions(param._data);
+                                            var modalOptions = ModalOptions.getHouseDetailOptions(param._data);
                                             var modalInstance = $uibModal.open(modalOptions);
                                         }
                                     });
@@ -60,24 +67,22 @@
                             return r;
                         }
                         //Handling request with SimpleRETS service factory
-                        scope.$on('refreshMap', function () {
+                        scope.$on('loadMap', function () {
                             SimpleRETS.requestHandler(scope.requestObj).then(dataReceived, dataError);
-                            var options = McOptions.getOptions;
 
                             function dataReceived(res) {
-                                var markers = [];
-                                for (var i = 0; i < res.length; i++) {
-                                    var marker = _newGoogleMapsMarker({
-                                        _map: map,
-                                        _icon: 'assets/images/icon.png',
-                                        _lat: res[i].geo.lat,
-                                        _lng: res[i].geo.lng,
-                                        _head: '|' + new google.maps.LatLng(res[i].geo.lat, res[i].geo.lng),
-                                        _data: res[i]
-                                    });
-                                    markers.push(marker);
+                                if (markers.length > 0) {
+                                    for (var k = 0; k > markers.length; k++) {
+                                        markers[k].setMap(null);
+                                        console.log('removing! #', k);
+                                    }
+                                    markers = [];
+                                    console.log('removed!');
                                 }
-                                markerCluster = new MarkerClusterer(map, markers, options);
+                                var results = res.filter(SafetyFilter.filterData);
+                                $rootScope.globalHousesData = results;
+                                if (markers.length == 0)
+                                    $timeout(loadMarkers(results), 1000);
                             }
 
                             function dataError(error) {
@@ -89,7 +94,25 @@
                         function randomPos() {
                             return Math.random() * (0.0001 - 0.00005) + 0.00005;
                         }
-                        scope.$broadcast('refreshMap');
+
+                        function loadMarkers(results) {
+                            // Fetching marker options from service
+                            var options = McOptions.getOptions;
+                            for (var i = 0; i < results.length; i++) {
+                                var marker = _newGoogleMapsMarker({
+                                    _map: map,
+                                    _icon: 'assets/images/icon.png',
+                                    _lat: results[i].geo.lat,
+                                    _lng: results[i].geo.lng,
+                                    _head: '|' + new google.maps.LatLng(results[i].geo.lat, results[i].geo.lng),
+                                    _data: results[i]
+                                });
+                                markers.push(marker);
+                            }
+                            var markerCluster = new MarkerClusterer(map, markers, options);
+                        }
+                        //Initializes event to load m
+                        scope.$broadcast('loadMap');
                     }
                 }
             }

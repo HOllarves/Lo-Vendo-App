@@ -2,7 +2,11 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-6 images">
-            Photos
+            <ul angular-grid="$ctrl.home.photos">
+                <li data-ng-repeat="photo in $ctrl.home.photos" class="grid">
+                    <img ng-src="{{photo}}" class="grid-img img-responsive" data-actual-width="{{photo.actualWidth}}" data-actual-height="{{photo.actualHeight}}"/>
+                </li>
+            </ul>
         </div>
         <div class="col-xs-6 description">
             <div class="title col-xs-12">
@@ -63,6 +67,37 @@
             </div>
             <div class="similar-houses col-xs-12">
                 <h2>Casas Similares</h2>
+                <slick infinite=true slides-to-show=3 slides-to-scroll=1>
+                    <div class="similar-houses-box" ng-repeat="house in $root.globalHousesData | limitTo: 20">
+                        <div class="similar-houses-title">
+                            <div class="well">
+                                {{house.address.full}}
+                            </div>
+                        </div>
+                        <div class="similar-houses-price">
+                            <h4>$ {{house.listPrice}}</h4>
+                        </div>
+                        <div class="similar-houses-img">
+                            <img class="img-responsive" ng-src="{{house.photos[0]}}" alt="House photo" />
+                        </div>
+                        <div class="similar-houses-desc col-xs-12">
+                            <p class="col-xs-4 pull-left">
+                                {{house.property.bedrooms}} BA
+                                <span class="vertical-rule"></span>
+                            </p>
+                            <p class="col-xs-4 pull-left">
+                                {{house.property.bathsFull}} HA
+                                <span class="vertical-rule"></span>
+                            </p>
+                            <p class="col-xs-4 pull-left">
+                                {{house.property.area}} M<sup>2</sup>
+                            </p>
+                        </div>
+                    </div>
+                </slick>
+            </div>
+            <div class="save-house">
+                <button class="btn house-save pull-right" ng-if="$root.isAuthenticated" ng-click="$ctrl.saveHouse($ctrl.home)">Guardar Propiedad</button>
             </div>
         </div>
     </div>

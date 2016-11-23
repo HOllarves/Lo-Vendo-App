@@ -1,12 +1,14 @@
+;
 (function () {
+    "use strict";
 
     angular.module('LoVendoApp.controllers')
         .controller('HomeCtrl', ['$scope', '$rootScope', 'SimpleRETS',
             'Authentication', 'AUTH_EVENTS', '$window',
-            'Session', 'jwtHelper', HomeCtrl
+            'Session', 'jwtHelper', 'ModalOptions', '$uibModal', HomeCtrl
         ]);
 
-    function HomeCtrl($scope, $rootScope, SimpleRETS, Authentication, AUTH_EVENTS, $window, Session, jwtHelper) {
+    function HomeCtrl($scope, $rootScope, SimpleRETS, Authentication, AUTH_EVENTS, $window, Session, jwtHelper, ModalOptions, $uibModal) {
 
         //Setting visual model
         var home = this;
@@ -18,18 +20,30 @@
          * 
          */
 
-        home.type = ["rental", "residential"];
+        home.type = [];
         home.minprice;
         home.maxprice;
+        home.minbeds;
+        home.maxbeds;
+        home.minbaths;
+        home.maxbaths;
+        home.minarea;
+        home.maxarea;
         home.status;
         home.q;
-        home.limit = "200";
+        home.limit = "5";
 
         $rootScope.requestObj = {
             "status": home.status,
             "type": home.type,
             "minprice": home.minprice,
             "maxprice": home.maxprice,
+            "minbeds": home.minbeds,
+            "maxbeds": home.maxbeds,
+            "minbaths": home.minbaths,
+            "maxbaths": home.maxbaths,
+            "minarea": home.minarea,
+            "maxarea": home.maxarea,
             "limit": home.limit,
             "q": home.q
         };
@@ -70,11 +84,10 @@
                     password: user.password
                 }
                 Authentication.signUp(valid_user).then(function (data) {
-                    console.log('data received!', data);
                     if (data.user && data.status == 201) {
                         //Dismissing modal
                         $scope.dismiss();
-                        //Assigning currentUser
+                        //Assigning credentials
                         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     }
                 });
@@ -138,6 +151,65 @@
         function notAuthenticated() {
             console.log('not authenticated');
         }
+
+
+        /**
+         * Opens saved houses window
+         * 
+         */
+        $scope.showSavedHouses = false;
+        $scope.$on('openSavedHouses', function () {
+            if ($scope.showSavedSearches)
+                $scope.showSavedSearches = false;
+            if ($scope.showSavedHouses)
+                $scope.showSavedHouses = false;
+            else
+                $scope.showSavedHouses = true;
+        });
+
+        /**
+         * Open saved searches window
+         * 
+         */
+
+        $scope.showSavedSearches = false;
+        $scope.$on('openSavedSearches', function () {
+            if ($scope.showSavedHouses)
+                $scope.showSavedHouses = false;
+            if ($scope.showSavedSearches)
+                $scope.showSavedSearches = false;
+            else
+                $scope.showSavedSearches = true;
+        });
+
+        /**
+         * Closes user windows
+         * 
+         */
+        $scope.$on('closeUserWindows', function () {
+            if ($scope.showSavedSearches) {
+                $scope.showSavedSearches = false;
+            }
+            if ($scope.showSavedHouses) {
+                $scope.showSavedHouses = false;
+            }
+        })
+
+        /**
+         *
+         * House Detail Modal Instance
+         *
+         */
+
+        home.openComponentModal = function (home) {
+            let modalOptions = ModalOptions.getHouseDetailOptions(home);
+            var modalInstance = $uibModal.open(modalOptions);
+        };
+
+        /**
+         * Auth Events
+         * 
+         */
 
         $scope.$on(AUTH_EVENTS.notAuthenticated, notAuthenticated);
         $scope.$on(AUTH_EVENTS.logoutSuccess, logoutSuccess);

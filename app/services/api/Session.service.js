@@ -1,4 +1,6 @@
+;
 (function () {
+    "use strict";
 
     angular.module('LoVendoApp.services')
         .service('Session', ['$rootScope', Session])

@@ -27,7 +27,8 @@
                                     <i class="glyphicon glyphicon-search" ng-click="layout.search()"></i>
                                     </button>
                                 </span>
-                                <input ng-model="$root.requestObj.q" type="text" class="form-control search-bar" placeholder="Buscar por dirección, vecindario o código postal" />
+                                <input ng-model="$root.requestObj.q" type="text" ng-blur="layout.filterChanged()" class="form-control search-bar" placeholder="Buscar por dirección, vecindario o código postal"
+                                />
                             </div>
                         </div>
                     </div>
@@ -35,10 +36,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active buy">
-                    <a href="#">Comprar</a>
+                    <a href="#" ng-click="layout.buyMode()">Comprar</a>
                 </li>
                 <li>
-                    <a class="rent" href="#">Rentar</a>
+                    <a class="rent" href="#" ng-click="layout.rentMode()">Rentar</a>
                 </li>
                 <li ng-if="!$root.isAuthenticated">
                     <a data-toggle="modal" data-target="#Modal" href="#">
@@ -51,10 +52,10 @@
                     </a>
                     <ul ng-if="$root.isAuthenticated" class="dropdown-menu">
                         <li>
-                            <a href="#">B&uacutesquedas guadadas</a>
+                            <a href="#" ng-click="layout.showSavedSearches()">B&uacutesquedas guadadas</a>
                         </li>
                         <li>
-                            <a href="#">Casas guardadas</a>
+                            <a href="#" ng-click="layout.showSavedHouses()">Casas guardadas</a>
                         </li>
                         <li>
                             <a href="#" ng-click="layout.logout()">Salir de la sesi&oacuten</a>
@@ -74,6 +75,3 @@
 <!-- Injecting views -->
 <div ui-view="content"></div>
 <!-- End injecting views -->
-<!-- House detail Modal -->
-<div id="ModalDetail" class="modal fade" role="dialog" modal-detail></div>
-<!-- End House detail -->

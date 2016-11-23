@@ -38,14 +38,45 @@ var UserSchema = new Schema({
     required: true,
     select: false
   },
-  meta: {
-    saved_houses: {
-      type: [String]
+  saved_houses: [{
+    mlsId: {
+      type: String
     },
-    saved_searches: {
-      type: [String]
+    addressFull: {
+      type: String
+    },
+    bedrooms: {
+      type: Number
+    },
+    photo: {
+      type: String
+    },
+    listPrice: {
+      type: Number
+    },
+    bathrooms: {
+      type: Number
+    },
+    sqft: {
+      type: Number
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
     }
-  },
+  }],
+  saved_searches: [{
+    search_name: {
+      type: String
+    },
+    filters: {
+      type: [Schema.Types.Mixed]
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   active: {
     type: Boolean,
     default: true
