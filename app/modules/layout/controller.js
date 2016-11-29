@@ -40,7 +40,7 @@
          */
 
         layout.search = function () {
-            $rootScope.$broadcast('loadMap');
+            layout.filterChanged();
         };
 
         /**
@@ -116,7 +116,6 @@
                 }
                 layout.removeTag(maxPriceTag);
             }
-            console.log($rootScope.requestObj);
             layout.filterChanged($rootScope.requestObj);
         }
 
@@ -137,18 +136,8 @@
          */
 
         layout.showSavedHouses = function () {
-            $scope.inUserWindow = true;
+            $rootScope.inUserWindow = true;
             $rootScope.$broadcast('openSavedHouses');
-        }
-
-        /**
-         * Returns user to search mode
-         * 
-         */
-        
-        layout.backToSearch = function(){
-            $scope.inUserWindow = false;
-            $rootScope.$broadcast('closeUserWindows');
         }
 
         /**
@@ -157,12 +146,18 @@
          */
 
         layout.showSavedSearches = function () {
-            $scope.inUserWindow = true;
+            $rootScope.inUserWindow = true;
             $rootScope.$broadcast('openSavedSearches');
         }
 
-        //Tags that will be shown in the filter
-        layout.avTags = UserMeta.avTags();
+        /**
+         * Recenters map in Florida
+         * 
+         */
+
+        layout.centerFlorida = function () {
+            $rootScope.$broadcast('recenter');
+        }
 
         /**
          * Gets triggered when a filter is changed
@@ -173,6 +168,8 @@
             if (!obj) {
                 obj = $rootScope.requestObj;
             }
+            //Tags that will be shown in the filter
+            layout.avTags = UserMeta.avTags();
             Object.keys(obj).forEach(function (objKey) {
                 Object.keys(layout.avTags).forEach(function (tagKey) {
                     if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey != "limit") {
@@ -206,7 +203,6 @@
          */
 
         layout.removeTag = function (tag) {
-            console.log(tag);
             var arr = layout.tags.filter(function (obj, index) {
                 return obj.name != tag.name
             });
@@ -243,7 +239,8 @@
 
         layout.saveSearch = function (search_name) {
             if (!search_name) {
-                search_name = $rootScope.requestObj.q;
+                Materialize.toast('Debes llenar el campo de busqueda', 4000);
+                return false;
             }
             var send_filters = [];
             var filters = layout.tags.filter(function (obj) {
@@ -256,14 +253,13 @@
                 search_name: search_name,
                 filters: send_filters
             }
-            UserMeta.postSavedSearch(search_obj).then(function (data) {
-                console.log(data);
-            });
-
-        }
-
-        layout.saveHouse = function (house) {
-            console.log(house);
+            UserMeta.postSavedSearch(search_obj)
+                .then(function (data) {
+                    Materialize.toast('Busqueda guardada con exito', 4000);
+                })
+                .catch(function () {
+                    Materialize.toast('Ha habido un problema guardando tu busqueda', 4000);
+                });
         }
     }
 })();

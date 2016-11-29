@@ -7,8 +7,6 @@
             return {
                 restrict: 'E',
                 templateUrl: './modules/layout/navbar/side-menu.html',
-                link: function (scope, el, attrs) {},
-                controller: function () {}
             }
         })
 

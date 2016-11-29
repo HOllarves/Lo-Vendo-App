@@ -14,6 +14,8 @@
          */
 
         function filterData(objInstance) {
+            if (!objInstance)
+                return false;
             var ok = true;
             if ($rootScope.requestObj.minprice != undefined) {
                 ok = $rootScope.requestObj.minprice < objInstance.listPrice
@@ -33,25 +35,29 @@
             if ($rootScope.requestObj.maxbaths != undefined) {
                 ok = $rootScope.requestObj.maxbaths >= objInstance.property.bathsFull
             }
-            if ($rootScope.requestObj.type.length == 0) {
-                ok = true;
-            } else {
-                if ($rootScope.requestObj.type.length == 2) {
+            if ($rootScope.requestObj.type) {
+                if ($rootScope.requestObj.type.length == 0) {
                     ok = true;
                 } else {
-                    if ($rootScope.requestObj.type == 'residential' && objInstance.property.type == "RES") {
+                    if ($rootScope.requestObj.type.length == 2) {
                         ok = true;
-                        return ok;
                     } else {
-                        ok = false;
-                    }
-                    if ($rootScope.requestObj.type == 'rental' && objInstance.property.type == "RNT") {
-                        ok = true;
-                        return ok;
-                    } else {
-                        ok = false;
+                        if ($rootScope.requestObj.type == 'residential' && objInstance.property.type == "RES") {
+                            ok = true;
+                            return ok;
+                        } else {
+                            ok = false;
+                        }
+                        if ($rootScope.requestObj.type == 'rental' && objInstance.property.type == "RNT") {
+                            ok = true;
+                            return ok;
+                        } else {
+                            ok = false;
+                        }
                     }
                 }
+            } else {
+                ok = true;
             }
             return ok;
         }

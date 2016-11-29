@@ -13,39 +13,22 @@
         //Setting visual model
         var home = this;
 
-        /**
-         * 
-         * Hard coded request Object
-         * TEMPORARY
-         * 
-         */
-
         home.type = [];
-        home.minprice;
-        home.maxprice;
-        home.minbeds;
-        home.maxbeds;
-        home.minbaths;
-        home.maxbaths;
-        home.minarea;
-        home.maxarea;
-        home.status;
-        home.q;
-        home.limit = "5";
+        home.limit = "500";
 
         $rootScope.requestObj = {
-            "status": home.status,
+            "status": null,
             "type": home.type,
-            "minprice": home.minprice,
-            "maxprice": home.maxprice,
-            "minbeds": home.minbeds,
-            "maxbeds": home.maxbeds,
-            "minbaths": home.minbaths,
-            "maxbaths": home.maxbaths,
-            "minarea": home.minarea,
-            "maxarea": home.maxarea,
+            "minprice": null,
+            "maxprice": null,
+            "minbeds": null,
+            "maxbeds": null,
+            "minbaths": null,
+            "maxbaths": null,
+            "minarea": null,
+            "maxarea": null,
             "limit": home.limit,
-            "q": home.q
+            "q": null
         };
 
         /**
@@ -57,14 +40,20 @@
 
         home.signIn = function (user) {
             home.submitted = true;
-            Authentication.login(user).then(function (data) {
-                if (data.status == 200) {
-                    //Dismissing modal
-                    $scope.dismiss();
-                    //Assigning currentUser
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                }
-            });
+            Authentication.login(user)
+                .then(function (data) {
+                    if (data.status == 200) {
+                        //Dismissing modal
+                        $scope.dismiss();
+                        //Assigning userObj
+                        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    } else {
+                        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                    }
+                })
+                .catch(function () {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                });
         }
 
         /**
@@ -76,7 +65,6 @@
 
         home.signUp = function (user) {
             home.submitted = true;
-            console.log(user);
             if (user.password == user.confirm_password) {
                 var valid_user = {
                     name: user.name,
@@ -99,16 +87,17 @@
         // log him in again
         if ($window.sessionStorage["userInfo"]) {
             var credentials = JSON.parse($window.sessionStorage["userInfo"]);
-            console.log(credentials);
             if (jwtHelper.isTokenExpired(credentials.token)) {
                 Session.destroy();
                 $rootScope.credentials = null;
-                home.currentUser = null;
+                home.userObj = null;
+                Materialize.toast('Debes volver a iniciar sesión', 4000)
             } else {
                 $rootScope.credentials = credentials;
-                home.currentUser = credentials;
-                Session.create(home.currentUser.user, home.currentUser.token);
+                home.userObj = credentials;
+                Session.create(home.userObj.user, home.userObj.token);
                 $rootScope.isAuthenticated = Authentication.isAuthenticated();
+                Materialize.toast('Bienvenido de vuelta. ' + home.userObj.user.name, 4000);
             }
         }
 
@@ -117,10 +106,11 @@
          * 
          */
 
-        function setCurrentUser() {
-            home.currentUser = $rootScope.credentials;
-            Session.create(home.currentUser.user, home.currentUser.token);
+        function setuserObj() {
+            home.userObj = $rootScope.credentials;
+            Session.create(home.userObj.user, home.userObj.token);
             $rootScope.isAuthenticated = Authentication.isAuthenticated();
+            Materialize.toast('¡Bienvenido! ' + home.userObj.user.name, 4000);
         }
 
         /**
@@ -132,26 +122,23 @@
             if ($rootScope.isAuthenticated) {
                 Session.destroy();
                 $rootScope.credentials = null;
-                home.currentUser = null;
+                home.userObj = null;
             } else {
                 $rootScope.credentials = null;
-                home.currentUser = null;
+                home.userObj = null;
             }
             $window.sessionStorage.removeItem("userInfo");
             $rootScope.isAuthenticated = Authentication.isAuthenticated();
         }
 
         /**
-         * Sign up function
-         *
-         * @param {String} query
+         * On login failed
          * 
          */
 
-        function notAuthenticated() {
-            console.log('not authenticated');
+        function loginFailed() {
+            Materialize.toast('Hubo un problema con tus credenciales, intenta de nuevo', 4000);
         }
-
 
         /**
          * Opens saved houses window
@@ -207,12 +194,24 @@
         };
 
         /**
+         * Returns user to search mode
+         * 
+         */
+
+        home.backToSearch = function () {
+            $rootScope.inUserWindow = false;
+            $rootScope.$broadcast('closeUserWindows');
+        }
+
+
+
+        /**
          * Auth Events
          * 
          */
 
-        $scope.$on(AUTH_EVENTS.notAuthenticated, notAuthenticated);
+        $scope.$on(AUTH_EVENTS.loginFailed, loginFailed);
         $scope.$on(AUTH_EVENTS.logoutSuccess, logoutSuccess);
-        $scope.$on(AUTH_EVENTS.loginSuccess, setCurrentUser);
+        $scope.$on(AUTH_EVENTS.loginSuccess, setuserObj);
     }
 })();

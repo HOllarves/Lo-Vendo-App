@@ -265,7 +265,7 @@
                 filter: "type"
             }, {
                 id: 9,
-                name: "Busqueda",
+                name: "Q",
                 filter: "q"
             }];
         }

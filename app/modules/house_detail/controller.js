@@ -3,13 +3,15 @@
     "use strict";
 
     angular.module('LoVendoApp.controllers')
-        .controller('HouseDetailCtrl', ['home', '$scope', '$rootScope', '$uibModalInstance', '_', 'UserMeta', HouseDetailCtrl]);
+        .controller('HouseDetailCtrl', ['home', '$scope', '$rootScope', '$window', '$uibModalInstance', '_', 'UserMeta', HouseDetailCtrl]);
 
-    function HouseDetailCtrl(home, $scope, $rootScope, $uibModalInstance, _, UserMeta) {
+    function HouseDetailCtrl(home, $scope, $rootScope, $window, $uibModalInstance, _, UserMeta) {
 
         var $ctrl = this;
         $ctrl.home = pruneEmpty(home);
-        console.log('detail object', $ctrl.home);
+
+        //Initializing number of tiles in carousel
+        $scope.numberOfTiles = $window.innerWidth > 769 ? 3 : 1;
 
         /**
          * Removes 'bad' values from object and replace them
@@ -64,13 +66,14 @@
                 sqft: house.property.area
             }
 
-            UserMeta.postSavedHouse(house_obj).then(function (res) {
-                console.log(res);
-            });
+            UserMeta.postSavedHouse(house_obj)
+                .then(function (res) {
+                    Materialize.toast('La casa ha sido guardada con éxito', 4000);
+                })
+                .catch(function (error) {
+                    Materialize.toast('Ha habido un problema guardando la casa', 4000)
+                });
         }
-
-        console.log($rootScope.globalHousesData);
-
     }
 
 })();

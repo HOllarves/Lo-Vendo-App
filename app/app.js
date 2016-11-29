@@ -10,6 +10,7 @@
             "LoVendoApp.services",
             //3rd Party Modules
             "ui.router",
+            "ui.bootstrap",
             "slickCarousel",
             "ngSanitize",
             "angularGrid",
@@ -18,7 +19,6 @@
             "ngMessages",
             "angular-jwt",
             "angularMoment",
-            "ui.bootstrap",
             "lodash"
         ])
         //Authentication events
@@ -26,13 +26,12 @@
             loginSuccess: 'auth-login-success',
             loginFailed: 'auth-login-failed',
             logoutSuccess: 'auth-logout-success',
-            notAuthenticated: 'auth-not-authenticated'
         })
         .config(function (cfpLoadingBarProvider) {
             cfpLoadingBarProvider.includeSpinner = false;
         })
-        .run(function (amMoment) {
+        .run(['amMoment', function (amMoment) {
             //Setting moment.js locale to spanish
             amMoment.changeLocale('es');
-        });
+        }]);
 })();

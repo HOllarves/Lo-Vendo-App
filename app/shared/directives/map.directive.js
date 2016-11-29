@@ -14,16 +14,19 @@
                         //Creating map instance with GoogleMaps API
                         var map = new google.maps.Map(el[0], {
                             center: {
-                                lat: 25.7742700,
-                                lng: -80.1936600
+                                lat: 25.7616798,
+                                lng: -80.1917902,
                             },
-                            zoom: 8
+                            zoom: 10,
+                            mapTypeId: google.maps.MapTypeId.HYBRID
                         });
 
                         //Markers array
                         var markers = [];
-                        var markers_relay = [];
-                        console.log('on init = ', markers.length);
+                        //MarkerClusterer Object
+                        var markerCluster
+                            //InfoWindow array
+                        var ibArray = [];
 
                         /**
                          * Creates new google maps
@@ -62,32 +65,36 @@
                                         }
                                     });
                                     this.getMap()._infoWindow.open(this.getMap(), this);
+                                    ibArray.push(this.getMap()._infoWindow);
                                 });
                             }
                             return r;
                         }
-                        //Handling request with SimpleRETS service factory
+
                         scope.$on('loadMap', function () {
+                            //Handling request with SimpleRETS service factory
                             SimpleRETS.requestHandler(scope.requestObj).then(dataReceived, dataError);
 
                             function dataReceived(res) {
-                                if (markers.length > 0) {
-                                    for (var k = 0; k > markers.length; k++) {
-                                        markers[k].setMap(null);
-                                        console.log('removing! #', k);
-                                    }
+
+                                //If a previous Cluster is present
+                                if (markerCluster) {
+                                    markerCluster.clearMarkers();
                                     markers = [];
-                                    console.log('removed!');
                                 }
+                                //Filtering through the data
                                 var results = res.filter(SafetyFilter.filterData);
+                                //Assigning results to global $rootScope
                                 $rootScope.globalHousesData = results;
+                                //If markers are empty we load new ones
                                 if (markers.length == 0)
-                                    $timeout(loadMarkers(results), 1000);
+                                    loadMarkers(results)
                             }
 
                             function dataError(error) {
-                                console.log('mapError', error);
+                                console.error(error);
                             }
+
 
                         });
                         //Randomizes position for matching coordinates
@@ -98,6 +105,8 @@
                         function loadMarkers(results) {
                             // Fetching marker options from service
                             var options = McOptions.getOptions;
+                            // Instantiating map boundaries
+                            var bounds = new google.maps.LatLngBounds();
                             for (var i = 0; i < results.length; i++) {
                                 var marker = _newGoogleMapsMarker({
                                     _map: map,
@@ -107,11 +116,35 @@
                                     _head: '|' + new google.maps.LatLng(results[i].geo.lat, results[i].geo.lng),
                                     _data: results[i]
                                 });
+                                //Extending bounds
+                                bounds.extend(marker.getPosition());
+                                //Pushing to markers array
                                 markers.push(marker);
                             }
-                            var markerCluster = new MarkerClusterer(map, markers, options);
+                            //Creating Cluster
+                            markerCluster = new MarkerClusterer(map, markers, options);
+                            //Hiding preloader when map is loaded
+                            $timeout(function () {
+                                $('.preloader-background')
+                                    .delay(1000)
+                                    .fadeOut('slow');
+                                $('.preloader-wrapper')
+                                    .delay(1000)
+                                    .fadeOut();
+                            }, 500);
                         }
-                        //Initializes event to load m
+
+                        scope.$on('recenter', function () {
+                            map.setCenter(new google.maps.LatLng(25.7616798, -80.1917902));
+                        });
+
+                        google.maps.event.addListener(map, "click", function (event) {
+                            for (var i = 0; i < ibArray.length; i++) {
+                                ibArray[i].close();
+                            }
+                        });
+
+                        //Initializes event to load map
                         scope.$broadcast('loadMap');
                     }
                 }

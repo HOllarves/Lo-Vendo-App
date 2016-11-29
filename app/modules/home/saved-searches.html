@@ -1,13 +1,20 @@
 <div class="col-xs-6 col-xs-offset-6 saved-searches animate-hide-right user-window" ng-show="showSavedSearches">
     <div class="row mt120">
-        <div class="col-xs-12">
-            <h1 class="text-center title">Mis busquedas guardadas</h1>
-            <h3 ng-show="showData">{{$ctrl.savedSearches.length}} Busquedas</h3>
+        <div class="col-xs-8 col-xs-offset-4">
+            <div class="back-to-search">
+                <button class="btn fade-in-out pull-right" ng-show="$root.inUserWindow" ng-click="home.backToSearch()" ng-if="$root.isAuthenticated">
+                     Volver a la búsqueda  
+                </button>
+            </div>
+        </div>
+        <div class="col-xs-12 title">
+            <h1 class="text-center ">Mis busquedas guardadas</h1>
+            <h3 ng-show="showData">{{$savedSearchesCtrl.savedSearches.length}} Busquedas</h3>
             <hr>
         </div>
         <div class="col-xs-12" ng-show="showData">
             <div class="searches-bg">
-                <div class="search-box col-xs-12" ng-repeat="search in $ctrl.savedSearches">
+                <div class="search-box col-xs-12" ng-repeat="search in $savedSearchesCtrl.savedSearches">
                     <div class="search-title col-xs-12">
                         <h1>{{search.search_name}}</h1>
                     </div>
@@ -25,10 +32,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="go-button" ng-click="$ctrl.goSearch(search)">
+                    <div class="go-button" ng-click="$savedSearchesCtrl.goSearch(search)">
                         <span class="glyphicon glyphicon-arrow-right"></span>
                     </div>
-                    <div class="close-button" ng-click="$ctrl.removeSearch(search._id)">X</div>
+                    <div class="close-button" ng-click="$savedSearchesCtrl.removeSearch(search._id)">X</div>
                 </div>
             </div>
         </div>

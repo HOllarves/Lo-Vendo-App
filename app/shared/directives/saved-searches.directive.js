@@ -9,7 +9,7 @@
                 templateUrl: './modules/home/saved-searches.html',
                 link: function () {},
                 controller: function (UserMeta, $rootScope, $scope) {
-                    var $ctrl = this;
+                    var $savedSearchesCtrl = this;
                     //showing data
                     $scope.showData = false;
 
@@ -24,12 +24,12 @@
                         UserMeta.getSavedSearches()
                             .then(function (res) {
                                 //Fetching data from server
-                                $ctrl.savedSearches = res.saved_searches;
+                                $savedSearchesCtrl.savedSearches = res.saved_searches;
                                 //Showing data
                                 $scope.showData = true;
                                 var search_filters = [];
-                                Object.keys($ctrl.savedSearches).forEach(function (objKey) {
-                                    $ctrl.savedSearches[objKey].filters.forEach(function (element) {
+                                Object.keys($savedSearchesCtrl.savedSearches).forEach(function (objKey) {
+                                    $savedSearchesCtrl.savedSearches[objKey].filters.forEach(function (element) {
                                         // I am iterating over the savedSearches array to split it's  value
                                         // into name and value
                                         var filter = {
@@ -47,8 +47,8 @@
                                         })
                                     }, this);
                                     //Lastly I filter the search_filters array to remove duplicates
-                                    //and assign the data to the exposed object $ctrl.savedSearches
-                                    $ctrl.savedSearches[objKey].filters = search_filters.filter(function (elem, pos) {
+                                    //and assign the data to the exposed object $savedSearchesCtrl.savedSearches
+                                    $savedSearchesCtrl.savedSearches[objKey].filters = search_filters.filter(function (elem, pos) {
                                         return search_filters.indexOf(elem) == pos;
                                     });
                                 });
@@ -60,9 +60,9 @@
                      * @param {String} id - Search ID
                      */
 
-                    $ctrl.removeSearch = function (id) {
+                    $savedSearchesCtrl.removeSearch = function (id) {
                         UserMeta.deleteSavedSearch(id).then(function (res) {
-                            $ctrl.savedSearches = res.data.saved_searches;
+                            $savedSearchesCtrl.savedSearches = res.data.saved_searches;
                         })
                     }
 
@@ -71,9 +71,8 @@
                      * Searches using saved parameters
                      * @param {Object} search
                      */
-
-                    $ctrl.goSearch = function (search) {
-                        var base_filters = [];
+                    $savedSearchesCtrl.goSearch = function (search) {
+                        var request = [];
                         //I iterate over the array of filters of
                         //the selected search
                         search.filters.forEach(function (element) {
@@ -85,28 +84,35 @@
                                 }
                                 //I iterate over the avTags array to find matches
                             Object.keys(avTags).forEach(function (tagKey) {
-                                //If it matches, I assign the value to the base_filters array
+                                //If it matches, I assign the value to the request array
                                 if (avTags[tagKey].name == filter.name) {
                                     filter.name = avTags[tagKey].filter;
+                                } else {
+
                                 }
-                                base_filters.push(filter);
-                            })
+                            });
+                            request.push(filter);
                         }, this);
-                        //I filter over the base_filters array to remove duplicates
-                        //and assign it to the request array. This array will populate the
-                        //global requestObject
-                        var request = base_filters.filter(function (elem, pos) {
-                            return base_filters.indexOf(elem) == pos;
-                        });
-                        //We iterate over the global request object
-                        Object.keys($rootScope.requestObj).forEach(function (objKey) {
-                            Object.keys(request).forEach(function (elKey) {
+                        var matches = [];
+                        request.forEach(function (element, index) {
+                            //We iterate over the global request object
+                            Object.keys($rootScope.requestObj).forEach(function (objKey) {
                                 //If the values match with those in the request array
                                 //we assign the value to the global request object
-                                if (objKey == request[elKey].name) {
-                                    $rootScope.requestObj[objKey] = parseInt(request[elKey].value);
+                                if (element.name == objKey) {
+                                    $rootScope.requestObj[objKey] = parseInt(element.value);
+                                    matches.push(element);
+                                } else {
+                                    //If not we check if they do not match with previous matches
+                                    matches.forEach(function (element) {
+                                        if (element.name != objKey && objKey != 'limit') {
+                                            $rootScope.requestObj[objKey] = null;
+                                        }
+                                    }, this);
                                 }
-                            }, this);
+                                //I must find a way to loop through the object without overwriting my previous
+                                //assignments of values on my requestObj properties.
+                            });
                         });
                         //Binding search_name to the global requestObj
                         $rootScope.requestObj.q = search.search_name;
@@ -114,6 +120,7 @@
                         $scope.$parent.layout.filterChanged();
                         //Hiding the activeSearch button to avoid having the user saving the same search
                         $scope.$parent.activeSearch = false;
+                        //Closing user windows
                         $rootScope.$broadcast('closeUserWindows');
 
                     }
@@ -121,7 +128,7 @@
                     //Invokes function when event is triggered
                     $rootScope.$on('openSavedSearches', loadSavedSearches);
                 },
-                controllerAs: '$ctrl'
+                controllerAs: '$savedSearchesCtrl'
             }
         }]);
 

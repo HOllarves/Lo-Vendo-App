@@ -1,3 +1,11 @@
+/* -- Media query vars -- */
+
+$break-small-phone: 320px;
+$break-phone: 375px;
+$break-phablet: 414px;
+$break-tablet: 768px;
+$break-desktop: 1200px;
+
 /* -- Modal -- */
 
 #Modal {
@@ -101,9 +109,12 @@
 
 .gm-style-iw {
     img {
-        width: 200px;
-        height: 150px;
-        padding: 0;
+        max-width: 100% !important;
+        margin-bottom: 5px;
+        @media screen and (max-width:$break-phablet) {
+            width: 100%;
+            height:  auto;
+        }
     }
     #iw_container {
         .iw_price {
@@ -121,6 +132,9 @@
             color: white;
             margin: -1px;
             border-radius: 2px 2px 0 0;
+            @media screen and (max-width:$break-small-phone) {
+                font-size: 14px;
+            }
             /* In accordance with the rounding of the default infowindow corners. */
         }
         .sub {
@@ -150,6 +164,10 @@
     }
     padding-left: 40px;
     padding-right: 40px;
+    @media screen and (max-width: $break-phablet) {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
 
 
@@ -160,6 +178,45 @@
     .sub-title {
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+    .back-to-search {
+        .btn {
+            &:focus {
+                outline: 0;
+            }
+            width: auto;
+            background-color: #2e9373;
+            color: #fff;
+            float: right !important;
+            display: inline-block;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            height: 40px;
+            border: none;
+            @media screen and (max-width: $break-tablet) {
+                font-size: 12px;
+            }
+            @media screen and (max-width: $break-phablet) {
+                font-size: 9px;
+            }
+        }
+        float: right;
+        padding: 0;
+    }
+    .title {
+        h1 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 25px;
+            }
+        }
+        h3 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 15px;
+            }
+        }
     }
     .house-box-container {
         $border-color: #959595;
@@ -185,6 +242,14 @@
             }
             h2 {
                 font-size: 25px;
+                margin-top: 30px;
+                @media screen and (max-width: $break-tablet) {
+                    font-size: 20px;
+                    margin-top: 30px;
+                }
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 15px;
+                }
             }
             cursor: pointer;
             position: relative;
@@ -197,6 +262,10 @@
         .house-block {
             margin-top: 10px;
             margin-bottom: 10px;
+            @media screen and (max-width: $break-small-phone) {
+                padding-left: 0;
+                padding-right: 0;
+            }
         }
         .house-box-price {
             h3 {
@@ -205,6 +274,9 @@
                 border-left: 1px solid $border-color;
                 border-right: 1px solid $border-color;
                 font-weight: bolder;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 15px;
+                }
             }
         }
         .house-box-desc {
@@ -212,16 +284,37 @@
                 margin-top: 10px;
                 text-align: center;
                 color: $text-color;
+                @media screen and (max-width: $break-tablet) {
+                    padding: 0;
+                }
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 9px;
+                }
             }
             .vertical-rule {
                 background-color: #000;
                 margin-left: 20px;
+                @media screen and (max-width: $break-phablet) {
+                    margin-left: 5px;
+                }
+                @media screen and (max-width: $break-phone) {
+                    margin-left: 0;
+                    margin-right: 5px;
+                }
+                @media screen and (max-width: $break-small-phone) {
+                    margin-left: 2px;
+                    margin-right: 2px;
+                }
             }
             display: -webkit-inline-box;
             border-right: 1px solid $border-color;
             border-bottom: 1px solid $border-color;
             border-left: 1px solid $border-color;
             width: 100%;
+            @media screen and (max-width: $break-phablet) {
+                padding-right: 5px;
+                padding-left: 5px;
+            }
         }
         .house-box-contact {
             .btn {
@@ -233,6 +326,12 @@
                 border: 2px solid $border-color;
                 border-radius: 0;
                 font-weight: bolder;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 9px;
+                }
+                @media screen and (max-width: $break-phone) {
+                    font-size: 8px;
+                }
             }
         }
         width: 100%;
@@ -243,6 +342,7 @@
     overflow: auto;
     position: absolute;
     top: 0;
+    overflow-x: hidden;
 }
 
 
@@ -251,6 +351,45 @@
 .saved-searches {
     $border-color: #959595;
     $text-color: #35A785;
+    .back-to-search {
+        .btn {
+            &:focus {
+                outline: 0;
+            }
+            width: auto;
+            background-color: #2e9373;
+            color: #fff;
+            float: right !important;
+            display: inline-block;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            height: 40px;
+            border: none;
+            @media screen and (max-width: $break-tablet) {
+                font-size: 12px;
+            }
+            @media screen and (max-width: $break-phablet) {
+                font-size: 9px;
+            }
+        }
+        float: right;
+        padding: 0;
+    }
+    .title {
+        h1 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 25px;
+            }
+        }
+        h3 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 15px;
+            }
+        }
+    }
     .search-box {
         .search-filters {
             .filter-box {
@@ -271,6 +410,9 @@
             }
             p {
                 margin: 0;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 10px;
+                }
             }
             font-size: 12px;
             color: $text-color
@@ -280,6 +422,9 @@
                 font-weight: bolder;
                 margin-bottom: 0;
                 margin-top: 0;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 18px;
+                }
             }
         }
         .search-date {
@@ -324,6 +469,11 @@
         padding: 20px;
         margin-bottom: 20px;
         position: relative;
+        @media screen and (max-width: $break-small-phone) {
+            border-left: 5px solid #35a785;
+            padding-top: 50px;
+            padding-left: 5px;
+        }
     }
     background-color: #FFF;
     height: 100%;
@@ -331,6 +481,7 @@
     overflow: auto;
     position: absolute;
     top: 0;
+    overflow-x: hidden;
 }
 
 
