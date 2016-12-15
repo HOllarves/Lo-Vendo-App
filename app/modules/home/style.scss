@@ -98,58 +98,112 @@ $break-desktop: 1200px;
 }
 
 
-/* -- Map -- */
-
-.map {
-    height: 1080px;
-}
-
-
 /* -- Info Window -- */
 
 .gm-style-iw {
-    img {
-        max-width: 100% !important;
-        margin-bottom: 5px;
-        @media screen and (max-width:$break-phablet) {
-            width: 100%;
-            height:  auto;
-        }
-    }
+    img {}
     #iw_container {
         .iw_price {
-            font-weight: bold;
             color: black;
-            padding: 10px;
-            font-size: 18px;
+            font-size: 25px;
+            position: absolute;
+            bottom: 20%;
+            @media screen and (max-width: $break-phablet) {
+                right: 0;
+                font-size: 20px;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                font-size: 15px;
+            }
+        }
+        .iw_image {
+            width: 150px;
+            height: 150px;
+            @media screen and (max-width: $break-phablet) {
+                width: 100px;
+                height: 100px;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                display: none;
+            }
+            position: relative;
+            img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
         }
         .iw_title {
             font-family: 'Open Sans Condensed', sans-serif;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 300;
-            padding: 10px;
-            background-color: #35A785;
-            color: white;
+            color: #000;
             margin: -1px;
-            border-radius: 2px 2px 0 0;
+            padding-bottom: 0;
+            padding-top: 0;
+            position: absolute;
+            top: 0;
+            @media screen and (max-width: $break-phablet) {
+                font-size: 10px;
+                left: 45%;
+                top: 5%;
+            }
             @media screen and (max-width:$break-small-phone) {
-                font-size: 14px;
+                font-size: 12px;
+                left: 0;
             }
             /* In accordance with the rounding of the default infowindow corners. */
         }
         .sub {
-            font-size: 12px;
+            font-size: 11px;
             float: none;
+            color: gray;
+            font-weight: bold;
+            position: absolute;
+            top: 15%;
+            @media screen and (max-width: $break-small-phone) {
+                font-size: 11px;
+                top: 25%;
+            }
         }
         li {
-            border-bottom: 1px solid black;
-            padding: 5px;
+            padding: 2px;
         }
         ul {
             padding: 0;
             padding-top: 10px;
-            list-style-type: none
+            list-style-type: none;
+            display: -webkit-inline-box;
         }
+        .iw_information {
+            width: 50%;
+            float: left;
+            margin-left: 5px;
+            @media screen and (max-width: $break-small-phone) {
+                padding: 30px;
+                width: 100%;
+                float: none;
+            }
+        }
+        .description-small {
+            @media screen and (max-width: $break-phablet) {
+                bottom: -10%;
+                right: 0;
+                font-size: 10px;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                font-size: 9px;
+                bottom: -20%;
+            }
+            position: absolute;
+            bottom: 0;
+        }
+        min-width: 400px;
+        overflow: hidden;
     }
 }
 
@@ -160,6 +214,9 @@ $break-desktop: 1200px;
     .no-data {
         .well {
             margin: 50px;
+            @media screen and (max-width: $break-phablet) {
+                margin: 10px;
+            }
         }
     }
     padding-left: 40px;
@@ -178,6 +235,9 @@ $break-desktop: 1200px;
     .sub-title {
         margin-top: 20px;
         margin-bottom: 20px;
+        @media screen and (max-width: $break-phablet) {
+            font-size: 25px;
+        }
     }
     .back-to-search {
         .btn {
@@ -284,6 +344,7 @@ $break-desktop: 1200px;
                 margin-top: 10px;
                 text-align: center;
                 color: $text-color;
+                padding: 0px 5px;
                 @media screen and (max-width: $break-tablet) {
                     padding: 0;
                 }
@@ -291,19 +352,20 @@ $break-desktop: 1200px;
                     font-size: 9px;
                 }
             }
-            .vertical-rule {
-                background-color: #000;
-                margin-left: 20px;
+            span {
+                padding-left: 25px;
+                padding-right: 25px;
+                @media screen and (max-width: $break-tablet) {
+                    padding-left: 17px;
+                    padding-right: 17px;
+                }
                 @media screen and (max-width: $break-phablet) {
-                    margin-left: 5px;
+                    padding-left: 10px;
+                    padding-right: 15px;
                 }
                 @media screen and (max-width: $break-phone) {
-                    margin-left: 0;
-                    margin-right: 5px;
-                }
-                @media screen and (max-width: $break-small-phone) {
-                    margin-left: 2px;
-                    margin-right: 2px;
+                    padding-left: 5px;
+                    padding-right: 0px;
                 }
             }
             display: -webkit-inline-box;
@@ -388,6 +450,11 @@ $break-desktop: 1200px;
             @media screen and (max-width: $break-phablet) {
                 font-size: 15px;
             }
+        }
+    }
+    .sub-title {
+        @media screen and (max-width: $break-phablet) {
+            font-size: 25px;
         }
     }
     .search-box {

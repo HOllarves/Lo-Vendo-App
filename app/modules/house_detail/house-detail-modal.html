@@ -1,104 +1,144 @@
 <button type="button" class="btn btn-default close-button detail-button" ng-click="closeModal()">X</button>
 <div class="modal-body">
-    <div class="row">
-        <div class="col-xs-6 images">
-            <ul angular-grid="$ctrl.home.photos">
-                <li data-ng-repeat="photo in $ctrl.home.photos" class="grid">
-                    <img ng-src="{{photo}}" class="grid-img img-responsive" />
-                </li>
-            </ul>
+    <div class="col-xs-6 images">
+        <ul angular-grid="$ctrl.home.photos">
+            <li data-ng-repeat="photo in $ctrl.home.photos" class="grid">
+                <img ng-src="{{photo}}" class="grid-img img-responsive" />
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-6 description">
+        <div class="save-house">
+            <button ng-disabled="houseIsSaved" ng-class="{'house-saved': houseIsSaved, 'house-save': !houseIsSaved}" class="house-save-button pull-left"
+                ng-if="$root.isAuthenticated" ng-click="$ctrl.saveHouse($ctrl.home)"><span class="glyphicon glyphicon-heart"></span></button>
         </div>
-        <div class="col-xs-6 description">
-            <div class="title col-xs-12">
-                <h1>{{$ctrl.home.address.full}}</h1>
-            </div>
-            <div class="price col-xs-12">
-                <p>$ {{$ctrl.home.listPrice}}</p>
-            </div>
-            <div class="details col-xs-12">
-                <div class="row">
-                    <div class="col-md-8 col-xs-12 breaks">
-                        <div class="col-xs-4 detail">
-                            {{$ctrl.home.property.bedrooms}} HA
-                            <span class="vertical-rule"></span>
-                        </div>
-                        <div class="col-xs-4 detail">
-                            {{$ctrl.home.property.bathsFull}} BA
-                            <span class="vertical-rule"></span>
-                        </div>
-                        <div class="col-xs-4 detail">
-                            {{$ctrl.home.property.area}} M<sup>2</sup>
-                            <span class="vertical-rule"></span>
-                        </div>
-                    </div>
+        <div class="title col-xs-12">
+            <h1>{{$ctrl.home.address.full}}</h1>
+        </div>
+        <div class="price col-xs-12">
+            <p>${{$ctrl.home.listPrice | number}}</p>
+        </div>
+        <div class="details col-xs-12">
+            <div class="col-xs-12 breaks">
+                <div ng-if="$ctrl.home.property.bedrooms" class="col-xs-4 detail">
+                    {{$ctrl.home.property.bedrooms}} HA
+                    <span class="vertical-rule"></span>
+                </div>
+                <div class="not-available" ng-if="!$ctrl.home.property.bedrooms || $ctrl.home.property.bedrooms == ''" class="col-xs-4 detail">
+                    No disponible
+                    <span class="vertical-rule"></span>
+                </div>
+                <div ng-if="$ctrl.home.property.bathsFull" class="col-xs-4 detail">
+                    {{$ctrl.home.property.bathsFull}} BA
+                    <span class="vertical-rule"></span>
+                </div>
+                <div class="not-available" ng-if="!$ctrl.home.property.bathsFull || $ctrl.home.property.bathsFull == ''" class="col-xs-4 detail">
+                    No disponible
+                    <span class="vertical-rule"></span>
+                </div>
+                <div ng-if="$ctrl.home.property.area" class="col-xs-4 detail">
+                    {{$ctrl.home.property.area | number}} ft²
+                    <span class="vertical-rule"></span>
+                </div>
+                <div class="not-available" ng-if="!$ctrl.home.property.area || $ctrl.home.property.area == ''" class="col-xs-4 detail">
+                    No disponible
+                    <span class="vertical-rule"></span>
                 </div>
             </div>
-            <div class="info-description col-xs-12">
-                <h2>Descripci&oacuten</h2>
-                <p>{{$ctrl.home.privateRemarks}}</p>
-            </div>
-            <div class="characteristics col-xs-12">
-                <h2>Caracteristicas</h2>
-                <ul>
-                    <li> <strong>Estilo: </strong>{{$ctrl.home.property.style}} </li>
-                    <li> <strong>Tipo: </strong>{{$ctrl.home.property.type}} </li>
-                    <li> <strong>Techo: </strong>{{$ctrl.home.property.roof}} </li>
-                    <li> <strong>Area: </strong>{{$ctrl.home.property.area}} </li>
-                    <li> <strong>Caracteristicas internas: </strong>{{$ctrl.home.property.interiorFeatures}} </li>
-                    <li> <strong>Caracteristicas externas: </strong>{{$ctrl.home.property.exteriorFeatures}} </li>
-                    <li> <strong>Baños completos: </strong>{{$ctrl.home.property.bathsFull}} </li>
-                    <li> <strong>Baños pequeños: </strong>{{$ctrl.home.property.bathsHalf}} </li>
-                    <li> <strong>Habitaciones: </strong>{{$ctrl.home.property.bedrooms}} </li>
-                    <li> <strong>Garage: </strong>{{$ctrl.home.property.garageSpaces}} </li>
-                    <li> <strong>Tamaño del lote: </strong>{{$ctrl.home.property.lotSize}} </li>
-                    <li> <strong>Construido en: </strong>{{$ctrl.home.property.yearBuilt}} </li>
-                    <li> <strong>Habitaciones adicionales: </strong>{{$ctrl.home.property.additionalRooms}} </li>
-                    <li> <strong>Vista: </strong>{{$ctrl.home.property.view}} </li>
-                    <li> <strong>Subdivisiones: </strong>{{$ctrl.home.property.subdivision}}</li>
-                    <li> <strong>Calefacci&oacuten: </strong>{{$ctrl.home.property.heating}} </li>
-                    <li> <strong>Enfriamiento: </strong>{{$ctrl.home.property.cooling}}</li>
-                    <li> <strong>Lavanderia: </strong>{{$ctrl.home.property.laundryFeatures}}</li>
-                    <li> <strong>MLS#: </strong>{{$ctrl.home.mlsId}} </li>
-                </ul>
-            </div>
-            <div class="virtual-tour col-xs-12">
-                <a href="{{$ctrl.home.virtualTourUrl}}" target="_blank">Virtual Tour</a>
-                <i class="glyphicon glyphicon-link"></i>
-            </div>
-            <div class="similar-houses col-xs-12">
-                <h2>Casas Similares</h2>
-                <slick infinite=true slides-to-show={{numberOfTiles}} slides-to-scroll=1>
-                    <div class="similar-houses-box" ng-repeat="house in $root.globalHousesData | limitTo: 20">
-                        <div class="similar-houses-title">
-                            <div class="well">
-                                {{house.address.full}}
-                            </div>
-                        </div>
-                        <div class="similar-houses-price">
-                            <h4>$ {{house.listPrice}}</h4>
-                        </div>
-                        <div class="similar-houses-img">
-                            <img ng-if="house.photos[0]" class="img-responsive" ng-src="{{house.photos[0]}}" alt="House photo" />
-                            <img ng-if="!house.photos[0]" class="img-responsive" ng-src="assets/images/default-house.jpg" alt="Default photo" />
-                        </div>
-                        <div class="similar-houses-desc col-xs-12">
-                            <p class="col-xs-4 pull-left">
-                                {{house.property.bedrooms}} BA
-                                <span class="vertical-rule"></span>
-                            </p>
-                            <p class="col-xs-4 pull-left">
-                                {{house.property.bathsFull}} HA
-                                <span class="vertical-rule"></span>
-                            </p>
-                            <p class="col-xs-4 pull-left">
-                                {{house.property.area}} M<sup>2</sup>
-                            </p>
+        </div>
+        <div class="info-description col-xs-12">
+            <h2>Descripci&oacuten</h2>
+            <p>{{$ctrl.home.privateRemarks}}</p>
+        </div>
+        <div class="characteristics col-xs-12">
+            <h2>Caracteristicas</h2>
+            <ul>
+                <li> <strong>Estilo: </strong>{{$ctrl.home.property.style}} </li>
+                <li> <strong>Tipo: </strong>{{$ctrl.home.property.type}} </li>
+                <li> <strong>Techo: </strong>{{$ctrl.home.property.roof}} </li>
+                <li> <strong>Area: </strong>{{$ctrl.home.property.area | number}} </li>
+                <li> <strong>Caracteristicas internas: </strong>{{$ctrl.home.property.interiorFeatures}} </li>
+                <li> <strong>Caracteristicas externas: </strong>{{$ctrl.home.property.exteriorFeatures}} </li>
+                <li> <strong>Baños completos: </strong>{{$ctrl.home.property.bathsFull}} </li>
+                <li> <strong>Baños pequeños: </strong>{{$ctrl.home.property.bathsHalf}} </li>
+                <li> <strong>Habitaciones: </strong>{{$ctrl.home.property.bedrooms}} </li>
+                <li> <strong>Garage: </strong>{{$ctrl.home.property.garageSpaces}} </li>
+                <li> <strong>Tamaño del lote: </strong>{{$ctrl.home.property.lotSize}} </li>
+                <li> <strong>Construido en: </strong>{{$ctrl.home.property.yearBuilt | number}} </li>
+                <li> <strong>Habitaciones adicionales: </strong>{{$ctrl.home.property.additionalRooms}} </li>
+                <li> <strong>Vista: </strong>{{$ctrl.home.property.view}} </li>
+                <li> <strong>Subdivisiones: </strong>{{$ctrl.home.property.subdivision}}</li>
+                <li> <strong>Calefacci&oacuten: </strong>{{$ctrl.home.property.heating}} </li>
+                <li> <strong>Enfriamiento: </strong>{{$ctrl.home.property.cooling}}</li>
+                <li> <strong>Lavanderia: </strong>{{$ctrl.home.property.laundryFeatures}}</li>
+                <li> <strong>MLS#: </strong>{{$ctrl.home.mlsId}} </li>
+            </ul>
+        </div>
+        <div class="virtual-tour col-xs-12">
+            <a href="{{$ctrl.home.virtualTourUrl}}" target="_blank">Virtual Tour</a>
+            <i class="glyphicon glyphicon-link"></i>
+        </div>
+        <div class="similar-houses col-xs-12">
+            <h2>Casas Similares</h2>
+            <slick infinite=true slides-to-show={{numberOfTiles}} slides-to-scroll=1>
+                <div class="similar-houses-box" ng-repeat="house in carouselData | limitTo: 20" ng-show="house.mlsId != $ctrl.home.mlsId">
+                    <div class="similar-houses-title">
+                        <div class="well">
+                            {{house.address.full}}
                         </div>
                     </div>
-                </slick>
+                    <div class="similar-houses-price">
+                        <h4>${{house.listPrice | number}}</h4>
+                    </div>
+                    <div class="similar-houses-img">
+                        <img ng-if="house.photos[0]" class="img-responsive" ng-src="{{house.photos[0]}}" alt="House photo" />
+                        <img ng-if="!house.photos[0]" class="img-responsive" ng-src="assets/images/default-house.jpg" alt="Default photo" />
+                    </div>
+                    <div class="similar-houses-desc col-xs-12">
+                        <p ng-if="house.property.bedrooms" class="col-xs-4 pull-left">
+                            {{house.property.bedrooms}} BA <span> | </span>
+                        </p>
+                        <p ng-if="house.property.bathsFull" class="col-xs-4 pull-left">
+                            {{house.property.bathsFull}} HA <span> | </span>
+                        </p>
+                        <p ng-if="house.property.area" class="col-xs-4 pull-left">
+                            {{house.property.area | number}} ft²
+                        </p>
+                    </div>
+                </div>
+            </slick>
+            <div ng-if="noHouses">
+                <p>No hay casas similares cerca</p>
             </div>
-            <div class="save-house">
-                <button class="btn house-save pull-right" ng-if="$root.isAuthenticated" ng-click="$ctrl.saveHouse($ctrl.home)">Guardar Propiedad</button>
+        </div>
+        <div class="schools col-xs-12">
+            <h2>Escuelas cercanas</h2>
+            <div ng-hide="schoolData.length > 0">
+                <h4>No hay escuelas cercanas</h4>
+            </div>
+            <div ng-show="schoolData.length > 0" class="schools-list">
+                <table class="highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th data-field="Rating">Rating</th>
+                            <th data-field="Escuela">Escuela</th>
+                            <th data-field="Distancia">Distancia</th>
+                            <th data-field="Calificaciones">Calificaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="school in schoolData">
+                            <td ng-if="school.parentRating"> {{school.parentRating}}/10 </td>
+                            <td ng-if="!school.parentRating"> N/A </td>
+                            <td> {{school.name}} </td>
+                            <td> {{school.distance}} </td>
+                            <td> {{school.gradeRange}} </td>
+                        </tr>
+                    </tbody>
+                    <p>Informaci&oacuten facilitada por:
+                        <a href="http://www.greatschools.org/" target="_blank"> GreatSchools.org API </a>
+                    </p>
+                </table>
             </div>
         </div>
     </div>

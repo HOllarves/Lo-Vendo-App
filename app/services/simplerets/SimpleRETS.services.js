@@ -3,9 +3,9 @@
     "use strict";
 
     angular.module('LoVendoApp.services')
-        .factory('SimpleRETS', ['$http', '$q', '$httpParamSerializer', SimpleRETS]);
+        .factory('SimpleRETS', ['$http', '$q', '$httpParamSerializer', '$rootScope', 'REQUEST_LIMIT', SimpleRETS]);
 
-    function SimpleRETS($http, $q, $httpParamSerializer) {
+    function SimpleRETS($http, $q, $httpParamSerializer, $rootScope, REQUEST_LIMIT) {
         var simpleRetsUrl = "https://api.simplyrets.com/";
         var credentials = btoa('jeanc_5ruk2905:7ck54he2rcw05433');
 
@@ -51,8 +51,21 @@
          */
 
         function requestHandler(obj) {
+
+            //Creating local instance of the request object
+            var internalObject = angular.copy(obj);
+            //Removing all attributes that should not be sent to SimplyRETS
+            Object.keys(internalObject).forEach(function (key) {
+                if (key != 'limit' && key != 'offset' && key != 'cities') {
+                    internalObject[key] = null;
+                } else {
+                    if (key == 'limit') {
+                        internalObject[key] = REQUEST_LIMIT.simplyRETS;
+                    }
+                }
+            });
             //Serializing object
-            var queryString = $httpParamSerializer(obj);
+            var queryString = $httpParamSerializer(internalObject);
             console.log('Query = ', simpleRetsUrl + 'properties?' + queryString);
             //Starting async request
             var deferred = $q.defer();
@@ -65,7 +78,8 @@
                 }
             }).success(propsReceived, propsError).error(httpError);
             //Properties received
-            function propsReceived(data) {
+            function propsReceived(data, status, headers) {
+                $rootScope.totalCount = headers()["x-total-count"];
                 deferred.resolve(data);
             }
             //Properties error

@@ -3,20 +3,24 @@
         <strong>{{home.address.full}}</strong>
     </div>
     <div class="col-xs-12">
-        <div class="side-menu-price">${{home.listPrice}}</div>
+        <div class="side-menu-price">${{home.listPrice | number}}</div>
     </div>
     <div class="col-xs-12 side-menu-image">
-        <img class="img-responsive" src="{{home.photos[0]}}" />
+        <img ng-if="home.photos[0]" class="img-responsive" ng-src="{{home.photos[0]}}" />
+        <img ng-if="!home.photos[0]" class="img-responsive" ng-src="assets/images/default-house.jpg" />
     </div>
     <div class="col-xs-12 well text-center side-menu-description">
         <div class="col-xs-4">
-            <p>{{home.property.bedrooms}} HA</p>
+            <p ng-if="home.property.bedrooms">{{home.property.bedrooms}} HA</p>
+            <p class="not-available" ng-if="!home.property.bedrooms">No disponible</p>
         </div>
         <div class="col-xs-4">
-            <p>{{home.property.bathsFull}} BA</p>
+            <p ng-if="home.property.bathsFull">{{home.property.bathsFull}} BA</p>
+            <p class="not-available" ng-if="!home.property.bathsFull">No disponible</p>
         </div>
         <div class="col-xs-4">
-            <p>{{home.property.area}} M<sup>2</sup></p>
+            <p ng-if="home.property.area">{{home.property.area | number}} ft²</p>
+            <p class="not-available" ng-if="!home.property.area"> </p>
         </div>
     </div>
     <div class="col-xs-12 side-menu-detail animate-show" ng-show="showMenuDown">

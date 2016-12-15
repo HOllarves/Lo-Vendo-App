@@ -4,11 +4,13 @@
 
     angular.module('LoVendoApp.controllers')
         .controller('LayoutCtrl', ['$scope', '$rootScope', 'Session', 'AUTH_EVENTS',
-            'SimpleRETS', '$uibModal', '$filter', 'ModalOptions', 'SafetyFilter', '_', 'UserMeta', LayoutCtrl
+            'SimpleRETS', '$uibModal', '$filter', 'ModalOptions', 'SafetyFilter', '_', 'UserMeta', 'REQUEST_LIMIT', LayoutCtrl
         ]);
 
-    function LayoutCtrl($scope, $rootScope, Session, AUTH_EVENTS, SimpleRETS, $uibModal, $filter, ModalOptions, SafetyFilter, _, UserMeta) {
+    function LayoutCtrl($scope, $rootScope, Session, AUTH_EVENTS, SimpleRETS, $uibModal, $filter, ModalOptions, SafetyFilter, _, UserMeta, REQUEST_LIMIT) {
+        //Setting controller
         var layout = this;
+        //Sets signup as first form
         $scope.signUp = true;
 
         /**
@@ -50,6 +52,10 @@
          */
 
         layout.openComponentModal = function (home) {
+            //Checking types
+            home.listPrice = parseInt(home.listPrice);
+            home.property.area = parseInt(home.property.area);
+            //Opening modal
             let modalOptions = ModalOptions.getHouseDetailOptions(home);
             var modalInstance = $uibModal.open(modalOptions);
         };
@@ -76,11 +82,11 @@
         $scope.showFilters = false;
         layout.houseTypes = [{
             displayName: "Casa",
-            name: "residential",
+            name: "Casas",
             selected: false
         }, {
             displayName: "Apartamento",
-            name: "rental",
+            name: "Apartamentos",
             selected: false
         }];
 
@@ -107,15 +113,19 @@
          */
 
         layout.buyMode = function () {
-            $rootScope.requestObj.minprice = 20000;
-            if ($rootScope.requestObj.maxprice <= 20000) {
-                $rootScope.requestObj.maxprice = null;
+            if ($scope.rentActive) {
+                $scope.rentActive = false;
+            }
+            if ($rootScope.requestObj.rentmode) {
+                $rootScope.requestObj.rentmode = false;
                 var maxPriceTag = {
                     name: "Precio Max",
                     filter: "maxprice"
                 }
                 layout.removeTag(maxPriceTag);
             }
+            $scope.buyActive = true;
+            $rootScope.requestObj.buymode = true;
             layout.filterChanged($rootScope.requestObj);
         }
 
@@ -125,8 +135,14 @@
          */
 
         layout.rentMode = function () {
-            $rootScope.requestObj.minprice = null;
-            $rootScope.requestObj.maxprice = 20000;
+            if ($scope.buyActive) {
+                $scope.buyActive = false;
+            }
+            if ($rootScope.requestObj.buymode) {
+                $rootScope.requestObj.buymode = false;
+            }
+            $scope.rentActive = true;
+            $rootScope.requestObj.rentmode = true;
             layout.filterChanged($rootScope.requestObj);
         }
 
@@ -156,7 +172,9 @@
          */
 
         layout.centerFlorida = function () {
-            $rootScope.$broadcast('recenter');
+            $rootScope.$broadcast('recenter', {
+                home: true
+            });
         }
 
         /**
@@ -172,7 +190,7 @@
             layout.avTags = UserMeta.avTags();
             Object.keys(obj).forEach(function (objKey) {
                 Object.keys(layout.avTags).forEach(function (tagKey) {
-                    if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey != "limit") {
+                    if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey != "limit" && objKey != "cities" && objKey != "q") {
                         layout.avTags[tagKey].value = obj[objKey];
                     }
                     if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey == "type") {
@@ -182,27 +200,55 @@
                                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                             });
                     }
+                    if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey == "buymode") {
+                        if ($scope.rentActive) {
+                            $scope.rentActive = false;
+                        }
+                        $scope.buyActive = true;
+                        layout.avTags[tagKey].value = "Compra";
+                    }
+                    if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey == "rentmode") {
+                        if ($scope.buyActive) {
+                            $scope.buyActive = false;
+                        }
+                        $scope.rentActive = true;
+                        layout.avTags[tagKey].value = "Renta";
+                    }
                 });
             });
+            //Filtering tags that have a value assigned
             layout.tags = layout.avTags.filter(function (obj) {
                 return obj.value;
             });
+            //Showing active filters dropdown
             if (layout.tags.length > 0) {
                 $scope.activeFilters = true;
             }
+            //Allowing the user to save search
             if (!$scope.activeSearch) {
                 $scope.activeSearch = true;
             }
-            $rootScope.$broadcast('loadMap');
+            //Activating local filters in map
+            $rootScope.$broadcast('localFilter');
         }
 
 
         /**
-         * Removes a tag from tags array and requestObj when the user deletes it
-         * 
+         * Removes a tag from tags array and requestObj 
+         * when the user deletes it
+         * @param {Object} tag
          */
 
         layout.removeTag = function (tag) {
+            if (!layout.tags) {
+                layout.tags = UserMeta.avTags();
+            }
+            if (tag.filter == "rentmode") {
+                $scope.rentActive = false;
+            }
+            if (tag.filter == "buymode") {
+                $scope.buyActive = false;
+            }
             var arr = layout.tags.filter(function (obj, index) {
                 return obj.name != tag.name
             });
@@ -222,23 +268,36 @@
                 $scope.activeSearch = false;
             }
             //If a search is not present in the tagsArray
-            layout.tags.forEach(function (element) {
+            layout.tags.forEach(function (element, index, array) {
                 $scope.activeSearch = false;
-                if (element.id == 9) {
+                if (index == array.length - 1) {
                     $scope.activeSearch = true;
                 }
             }, this);
             //Refreshing map
-            $rootScope.$broadcast('loadMap');
+            $rootScope.$broadcast('localFilter');
+        }
+
+        /**
+         * Reloads map with new results from city
+         * 
+         */
+
+        layout.loadCity = function () {
+            $rootScope.requestObj.cities = $rootScope.requestObj.cities.split(",")[0];
+            $rootScope.requestObj.limit = REQUEST_LIMIT.simplyRETS;
+            $rootScope.$broadcast('cancelAllRequests');
         }
 
         /**
          * Saves current search to the database
+         * @param {String} search_name
          * 
          */
 
         layout.saveSearch = function (search_name) {
-            if (!search_name) {
+            console.log(search_name);
+            if (!search_name || search_name.length == 0) {
                 Materialize.toast('Debes llenar el campo de busqueda', 4000);
                 return false;
             }
@@ -261,5 +320,21 @@
                     Materialize.toast('Ha habido un problema guardando tu busqueda', 4000);
                 });
         }
+
+        /**
+         * Cleans the global requestObj
+         * 
+         */
+
+        $scope.$on('cleanRequestObj', function (evt, args) {
+            //Reseting requestObj
+            Object.keys($rootScope.requestObj).forEach(function (key) {
+                if (key != 'limit') {
+                    $rootScope.requestObj[key] = null;
+                } else {
+                    $rootScope.requestObj[key] = REQUEST_LIMIT.simplyRETS;
+                }
+            });
+        })
     }
 })();

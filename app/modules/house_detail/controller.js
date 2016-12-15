@@ -3,15 +3,35 @@
     "use strict";
 
     angular.module('LoVendoApp.controllers')
-        .controller('HouseDetailCtrl', ['home', '$scope', '$rootScope', '$window', '$uibModalInstance', '_', 'UserMeta', HouseDetailCtrl]);
+        .controller('HouseDetailCtrl', ['home', 'carouselData', 'schoolData', '$scope', '$rootScope', '$window', '$uibModalInstance', '_', 'UserMeta', 'Authentication', 'SimpleRETS', HouseDetailCtrl]);
 
-    function HouseDetailCtrl(home, $scope, $rootScope, $window, $uibModalInstance, _, UserMeta) {
+    function HouseDetailCtrl(home, carouselData, schoolData, $scope, $rootScope, $window, $uibModalInstance, _, UserMeta, Authentication, SimpleRETS) {
 
+        //Controller
         var $ctrl = this;
+
+
+        //No houses flag
+        $scope.noHouses = false;
+        if (home.length == 0) {
+            $scope.noHouses = true;
+        }
+
+        //Cleaning null values
         $ctrl.home = pruneEmpty(home);
 
         //Initializing number of tiles in carousel
         $scope.numberOfTiles = $window.innerWidth > 769 ? 3 : 1;
+
+        //Initializing carouselData
+        $scope.carouselData = carouselData;
+
+        //Initializing schoolData
+        if (schoolData == null || schoolData == '' || schoolData == 'Bad-Request') {
+            $scope.schoolData = null;
+        } else {
+            $scope.schoolData = schoolData.schools.school;
+        }
 
         /**
          * Removes 'bad' values from object and replace them
@@ -27,7 +47,7 @@
                         (_.isString(value) && _.isEmpty(value)) ||
                         (_.isObject(value) && _.isEmpty(prune(value)))) {
 
-                        current[key] = "No Disponible"
+                        current[key] = ""
                     }
                 });
                 // remove any leftover undefined values from the delete 
@@ -69,9 +89,30 @@
             UserMeta.postSavedHouse(house_obj)
                 .then(function (res) {
                     Materialize.toast('La casa ha sido guardada con éxito', 4000);
+                    $scope.houseIsSaved = true;
                 })
                 .catch(function (error) {
                     Materialize.toast('Ha habido un problema guardando la casa', 4000)
+                });
+        }
+
+        /**
+         * Fetch users save houses to check if house
+         * is already saved
+         * 
+         */
+
+        if (Authentication.isAuthenticated()) {
+            UserMeta.getSavedHouses()
+                .then(function (res) {
+                    res.saved_houses.forEach(function (element) {
+                        if (home.mlsId == parseInt(element.mlsId)) {
+                            $scope.houseIsSaved = true;
+                        }
+                    }, this);
+                })
+                .catch(function () {
+                    Materialize.toast('Ha habido un error, intente más tarde', 4000)
                 });
         }
     }

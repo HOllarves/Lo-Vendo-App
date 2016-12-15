@@ -27,7 +27,7 @@
                             <div class="filters pull-left" ng-repeat="filter in search.filters">
                                 <p>
                                     {{filter}}
-                                    <span class="vertical-rule" ng-class="{'first-rule': $first, 'last-rule': $last}"></span>
+                                    <span class="hidden-xs vertical-rule" ng-class="{'first-rule': $first, 'last-rule': $last}"></span>
                                 </p>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center no-data" ng-show="!showData">
+        <div class="text-center no-data" ng-show="!showData || $savedSearchesCtrl.savedSearches.length == 0">
             <h2 class="sub-title">No hay busquedas disponibles</h2>
             <div class="well">
                 <h3>¡No te lo pierdas!</h3>

@@ -31,7 +31,6 @@
 
             //Recieved data and resolves promise
             function dataReceived(res) {
-                console.log(res);
                 return deferred.resolve(res.data[0]);
             }
             //If error, rejects promise
@@ -65,12 +64,10 @@
                 .catch(houseError);
 
             function houseSaved(response) {
-                console.log(response);
                 deferred.resolve(response)
             }
 
             function houseError(err) {
-                console.log('Error = ', err);
                 deferred.reject(err);
             }
 
@@ -102,12 +99,10 @@
                 .catch(houseError);
 
             function houseDeleted(response) {
-                console.log(response);
                 deferred.resolve(response)
             }
 
             function houseError(err) {
-                console.log('Error = ', err);
                 deferred.reject(err);
             }
 
@@ -137,7 +132,6 @@
                 .catch(dataError);
             //Recieved data and resolves promise
             function dataReceived(res) {
-                console.log(res);
                 return deferred.resolve(res.data[0]);
             }
             //If error, rejects promise
@@ -172,12 +166,10 @@
                 .catch(searchError);
 
             function searchSaved(response) {
-                console.log(response);
                 deferred.resolve(response)
             }
 
             function searchError(err) {
-                console.log('Error = ', err);
                 deferred.reject(err);
             }
 
@@ -209,12 +201,10 @@
                 .catch(searchError);
 
             function searchDeleted(response) {
-                console.log(response);
                 deferred.resolve(response)
             }
 
             function searchError(err) {
-                console.log('Error = ', err);
                 deferred.reject(err);
             }
 
@@ -265,8 +255,12 @@
                 filter: "type"
             }, {
                 id: 9,
-                name: "Q",
-                filter: "q"
+                name: "Modo",
+                filter: "buymode"
+            }, {
+                id: 10,
+                name: "Modo",
+                filter: "rentmode"
             }];
         }
 

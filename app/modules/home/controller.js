@@ -4,20 +4,20 @@
 
     angular.module('LoVendoApp.controllers')
         .controller('HomeCtrl', ['$scope', '$rootScope', 'SimpleRETS',
-            'Authentication', 'AUTH_EVENTS', '$window',
+            'Authentication', 'AUTH_EVENTS', 'REQUEST_LIMIT', '$window',
             'Session', 'jwtHelper', 'ModalOptions', '$uibModal', HomeCtrl
         ]);
 
-    function HomeCtrl($scope, $rootScope, SimpleRETS, Authentication, AUTH_EVENTS, $window, Session, jwtHelper, ModalOptions, $uibModal) {
+    function HomeCtrl($scope, $rootScope, SimpleRETS, Authentication, AUTH_EVENTS, REQUEST_LIMIT, $window, Session, jwtHelper, ModalOptions, $uibModal) {
 
-        //Setting visual model
+        //Controller
         var home = this;
 
         home.type = [];
-        home.limit = "500";
+        home.limit = REQUEST_LIMIT.simplyRETS;
+        home.cities = [];
 
         $rootScope.requestObj = {
-            "status": null,
             "type": home.type,
             "minprice": null,
             "maxprice": null,
@@ -27,7 +27,11 @@
             "maxbaths": null,
             "minarea": null,
             "maxarea": null,
+            "buymode": false,
+            "rentmode": false,
             "limit": home.limit,
+            "offset": 0,
+            "cities": home.cities,
             "q": null
         };
 
@@ -77,6 +81,9 @@
                         $scope.dismiss();
                         //Assigning credentials
                         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    }
+                    if (data.status == 400 && data.message == "Email already in use") {
+                        Materialize.toast('Este correo ya está en uso.', 4000);
                     }
                 });
             }
@@ -144,6 +151,7 @@
          * Opens saved houses window
          * 
          */
+
         $scope.showSavedHouses = false;
         $scope.$on('openSavedHouses', function () {
             if ($scope.showSavedSearches)
@@ -173,6 +181,7 @@
          * Closes user windows
          * 
          */
+
         $scope.$on('closeUserWindows', function () {
             if ($scope.showSavedSearches) {
                 $scope.showSavedSearches = false;

@@ -9,60 +9,117 @@
 
         /**
          * It filters data to avoid bad results from SimpleRETS API
-         * @param {Array} - The array is iterated over inside the function
+         * @param {Array} - Instace of the object passed in the filter function
          * 
          */
 
         function filterData(objInstance) {
+
+            // 'this' will be any custom parameter passed to the filter function
+            var customFilter = this;
+
+            var filters;
+            //If no instance, return false
             if (!objInstance)
                 return false;
+
             var ok = true;
-            if ($rootScope.requestObj.minprice != undefined) {
-                ok = $rootScope.requestObj.minprice < objInstance.listPrice
+            if (!customFilter) {
+                filters = $rootScope.requestObj;
+            } else {
+                filters = customFilter
             }
-            if ($rootScope.requestObj.maxprice != undefined) {
-                ok = $rootScope.requestObj.maxprice >= objInstance.listPrice
+
+
+            //Checking if object have coordinates
+            if (!objInstance.geo.lat || !objInstance.geo.lng || objInstance.geo.lat == null || objInstance.geo.lng == null) {
+                ok = false;
             }
-            if ($rootScope.requestObj.minbeds != undefined) {
-                ok = $rootScope.requestObj.minbeds < objInstance.property.bedrooms
+
+            //Comparing with requestObj
+            if (filters.minprice != undefined) {
+                if (ok)
+                    ok = filters.minprice < objInstance.listPrice
             }
-            if ($rootScope.requestObj.maxbeds != undefined) {
-                ok = $rootScope.requestObj.maxbeds >= objInstance.property.bedrooms
+            if (filters.maxprice != undefined) {
+                if (ok)
+                    ok = filters.maxprice >= objInstance.listPrice
             }
-            if ($rootScope.requestObj.minbaths != undefined) {
-                ok = $rootScope.requestObj.minbaths < objInstance.property.bathsFull
+            if (filters.minbeds != undefined) {
+                if (ok)
+                    ok = filters.minbeds < objInstance.property.bedrooms
             }
-            if ($rootScope.requestObj.maxbaths != undefined) {
-                ok = $rootScope.requestObj.maxbaths >= objInstance.property.bathsFull
+            if (filters.maxbeds != undefined) {
+                if (ok)
+                    ok = filters.maxbeds >= objInstance.property.bedrooms
             }
-            if ($rootScope.requestObj.type) {
-                if ($rootScope.requestObj.type.length == 0) {
-                    ok = true;
+            if (filters.minbaths != undefined) {
+                if (ok)
+                    ok = filters.minbaths < objInstance.property.bathsFull
+            }
+            if (filters.minarea != undefined) {
+                if (ok)
+                    ok = filters.minarea <= objInstance.property.area
+            }
+            if (filters.maxarea != undefined) {
+                if (ok)
+                    ok = filters.maxarea >= objInstance.property.area
+            }
+            if (filters.maxbaths != undefined) {
+                if (ok)
+                    ok = filters.maxbaths >= objInstance.property.bathsFull
+            }
+            if (filters.rentmode) {
+                if (ok)
+                    ok = objInstance.listPrice < 20000
+            }
+            if (filters.buymode) {
+                if (ok)
+                    ok = objInstance.listPrice > 20000
+            }
+            if (filters.type) {
+                if (filters.type.length == 0) {
+                    if (ok)
+                        return ok;
                 } else {
-                    if ($rootScope.requestObj.type.length == 2) {
-                        ok = true;
+                    if (filters.type.length == 2) {
+                        if (ok)
+                            return ok;
                     } else {
-                        if ($rootScope.requestObj.type == 'residential' && objInstance.property.type == "RES") {
-                            ok = true;
-                            return ok;
-                        } else {
-                            ok = false;
-                        }
-                        if ($rootScope.requestObj.type == 'rental' && objInstance.property.type == "RNT") {
-                            ok = true;
-                            return ok;
-                        } else {
-                            ok = false;
+                        if (filters.type == 'Casas' && filters.type != 'Apartamentos' && objInstance.address.unit == null) {
+                            if (ok)
+                                return ok;
+                        } else if (filters.type == 'Apartamentos' && filters.type != 'Casas' && objInstance.address.unit) {
+                            if (ok)
+                                return ok;
                         }
                     }
                 }
             } else {
-                ok = true;
+                if (ok)
+                    return ok;
             }
+        }
+
+        /**
+         * Makes sure an object contains
+         * geo data
+         * 
+         * @param {Object} objInstance - Instance passed by the filter function
+         */
+
+        function geoData(objInstance) {
+            var ok = true;
+            //Checking if object have coordinates
+            if (objInstance.geo.lat == null || objInstance.geo.lng == null) {
+                ok = false;
+            }
+
             return ok;
         }
         return {
-            filterData: filterData
+            filterData: filterData,
+            geoData: geoData
         }
     }
 

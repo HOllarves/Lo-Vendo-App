@@ -16,25 +16,28 @@
             <ul class="nav navbar-nav navbar-left">
                 <li>
                     <div class="navbar-form navbar-left">
-                        <div class="form-group" data-toggle="collapse" data-target=".navbar-collapse.in">
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default search-button">
-                                    <i class="glyphicon glyphicon-search" ng-click="layout.search()"></i>
-                                    </button>
-                                </span>
-                                <input id="Search_Field" onfocus="window.initializeAutoComplete()" autocomplete="on" ng-model="$root.requestObj.q" type="text" ng-blur="layout.filterChanged()" class="form-control search-bar" placeholder="Buscar por ciudad"  dropdown-no-close/>
+                        <form ng-submit="layout.loadCity()" autocomplete-fix>
+                            <div class="form-group" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default search-button">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                    <input id="Search_Field" onfocus="window.initializeAutoComplete()" autocomplete="on" ng-model="$root.requestObj.cities" type="text"
+                                        class="form-control search-bar" placeholder="Buscar por ciudad" dropdown-no-close/>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li data-toggle="collapse" data-target=".navbar-collapse.in">
-                    <a class="buy" href="#" ng-click="layout.buyMode()">Comprar</a>
+                    <a class="buy" ng-class="{'active' : buyActive }" href="#" ng-click="layout.buyMode()">Comprar</a>
                 </li>
                 <li data-toggle="collapse" data-target=".navbar-collapse.in">
-                    <a class="rent" href="#" ng-click="layout.rentMode()">Rentar</a>
+                    <a class="rent" ng-class="{'active' : rentActive }" href="#" ng-click="layout.rentMode()">Rentar</a>
                 </li>
                 <li ng-if="!$root.isAuthenticated" data-toggle="collapse" data-target=".navbar-collapse.in">
                     <a data-toggle="modal" data-target="#Modal" href="#">
@@ -74,7 +77,7 @@
         </ul>
     </div>
 </div>
-<div class="mobile-save-search visible-xs animate-hide-right"  ng-show="activeSearch"  ng-if="$root.isAuthenticated">
+<div class="mobile-save-search visible-xs animate-hide-left" ng-show="activeSearch" ng-if="$root.isAuthenticated">
     <button ng-click="layout.saveSearch($root.requestObj.q)" class="btn">Guardar busqueda</button>
 </div>
 <!-- End of Main NavBar -->
@@ -82,5 +85,5 @@
 <side-menu></side-menu>
 <!-- End of side menu -->
 <!-- Injecting views -->
-<div ui-view="content"></div>
+<div class="view-injection" ui-view="content"></div>
 <!-- End injecting views -->

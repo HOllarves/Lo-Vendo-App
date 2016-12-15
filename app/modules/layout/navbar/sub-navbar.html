@@ -6,11 +6,12 @@
         <div class="filter-list animate-hide-left " ng-show="showFilters">
             <div class="dropdown house-type">
                 <button class="btn" data-toggle="dropdown"> Tipo de vivienda <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li class="type-filter" ng-repeat="houseType in layout.houseTypes">
-                        <label for="{{houseType.name}}">
+                <ul class="dropdown-menu" dropdown-no-close>
+                    <li class="type-filter" ng-repeat="houseType in layout.houseTypes track by $index">
+                        <input type="checkbox" id="{{houseType.name}}" ng-class="{'house-checkbox': $index == 0, 'apt-checkbox' : $index > 0}" class="pull-left"
+                            ng-click="layout.select()" ng-model="houseType.selected" />
+                        <label ng-class="{'house-label': $index == 0, 'apt-label' : $index > 0}" for="{{houseType.name}}">
                             {{houseType.displayName}}
-                            <input type="checkbox" class="pull-left" ng-click="layout.select()" ng-model="houseType.selected">
                         </label>
                     </li>
                 </ul>
@@ -90,19 +91,13 @@
         </div>
     </div>
     <div class="col-md-5 col-xs-7 btn-group sub-trigger-buttons">
-        <button class="btn sub-btn" ng-click="layout.centerFlorida()"><strong>FL</strong></button>
         <button class="btn sub-btn" ng-click="layout.handleSideMenu()">
             <i class="glyphicon glyphicon-th-large"></i>
         </button>
-        <button class="btn sub-menu-button hidden-xs" ng-click="layout.showSavedSearches()" ng-if="$root.isAuthenticated">
-            B&uacutesquedas
-        </button>
-        <button class="btn sub-menu-button hidden-xs" ng-click="layout.showSavedHouses()" ng-if="$root.isAuthenticated">
-            Casas
-        </button>
+        <button class="btn sub-btn" ng-click="layout.centerFlorida()"><span class="glyphicon glyphicon-home"></span></button>
         <div class=" hidden-xs filter-search-buttons">
             <div class="search-active animate-hide-right" ng-show="activeSearch">
-                <button class="btn save-search-btn" ng-if="$root.isAuthenticated" ng-click="layout.saveSearch($root.requestObj.q)"> Guardar Busqueda </button>
+                <button class="btn save-search-btn" ng-if="$root.isAuthenticated" ng-click="layout.saveSearch($root.requestObj.cities)"> Guardar Busqueda </button>
             </div>
         </div>
     </div>

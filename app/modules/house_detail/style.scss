@@ -24,6 +24,9 @@ $break-desktop: 1200px;
         width: 3px;
         background-color: $text-color;
         margin-right: 10px;
+        @media screen and (max-width: $break-tablet) {
+            height: 18px;
+        }
         @media screen and (max-width: $break-phablet) {
             height: 15px;
             width: 1px;
@@ -66,8 +69,9 @@ $break-desktop: 1200px;
             margin-top: 15px;
         }
         .details {
-            .row {
-                margin: 0;
+            .vertical-rule {
+                margin-left: 0;
+                margin-right: 5px;
             }
             .breaks {
                 border-bottom: 1px solid $text-color;
@@ -132,6 +136,9 @@ $break-desktop: 1200px;
             .glyphicon {
                 color: $text-color;
                 font-size: 20px;
+                @media screen and (max-width: $break-small-phone) {
+                    font-size: 15px;
+                }
             }
             a {
                 &:hover {
@@ -141,11 +148,19 @@ $break-desktop: 1200px;
                 @media screen and (max-width: $break-phablet) {
                     font-size: 20px;
                 }
+                @media screen and (max-width: $break-small-phone) {
+                    font-size: 17px;
+                }
                 color: $text-color;
                 text-decoration: none;
             }
             margin-top: 10px;
             margin-bottom: 10px;
+        }
+        .not-available {
+            @media screen and (max-width: $break-tablet) {
+                display: none;
+            }
         }
         .similar-houses {
             .slick-prev:before,
@@ -154,10 +169,16 @@ $break-desktop: 1200px;
             }
             .similar-houses-title {
                 .well {
+                    min-height: 80px;
+                    padding: 15px;
                     margin-bottom: 0;
+                    text-align: center;
                     font-weight: bold;
-                    @media screen and (max-width: $break-small-phone) {
+                    @media screen and (max-width: 1300px) {
                         font-size: 12px
+                    }
+                    @media screen and (max-width: 1150px) {
+                        font-size: 11px;
                     }
                 }
             }
@@ -184,38 +205,93 @@ $break-desktop: 1200px;
             }
             .similar-houses-desc {
                 p {
-                    margin-bottom: 0;
-                    padding-left: 5px;
-                    padding-right: 5px;
+                    margin: 0;
+                    padding: 0;
                     position: relative;
-                    @media screen and (max-width: $break-phablet) {
+                    @media screen and (max-width: 1500px) {
+                        font-size: 11px;
+                    }
+                    @media screen and (max-width: 1300px) {
                         font-size: 10px;
                     }
-                }
-                .vertical-rule {
-                    position: absolute;
-                    top: 0;
-                    right: -5px;
-                    height: 20px;
+                    @media screen and (max-width: $break-tablet) {
+                        font-size: 13px;
+                        padding-left: 15px;
+                        padding-right: 15px
+                    }
                     @media screen and (max-width: $break-phablet) {
-                        width: 1px;
+                        padding: 0;
+                        font-size: 10px;
+                    }
+                    @media screen and (max-width: $break-small-phone) {
+                        font-size: 8px;
+                    }
+                }
+                span {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    @media screen and (max-width: 1366px) {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                    }
+                    @media screen and (max-width: 1200px) {
+                        margin-left: 1px;
+                        margin-right: 1px;
+                    }
+                    @media screen and (max-width: $break-tablet) {
+                        margin-left: 30px;
+                        margin-right: 40px;
+                        text-align: center;
+                    }
+                    @media screen and (max-width: $break-phablet) {
+                        margin-left: 5px;
+                        margin-right: 5px
                     }
                     @media screen and (max-width: $break-phone) {
-                        right: 0px;
+                        margin-left: 3px;
+                        margin-right: 3px
                     }
                 }
-                padding: 5px;
+                padding-left: 20px;
+                padding-right: 15px;
+                @media screen and (max-width: 1200px) {
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    text-align: center;
+                }
+                @media screen and (max-width: $break-tablet) {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+                @media screen and (max-width: $break-phone) {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+                @media screen and (max-width: $break-small-phone) {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
                 border: 1px solid $border-color;
                 display: inline-block;
             }
             margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .house-saved {
+            color: red !important;
         }
         .house-save {
-            background-color: $text-color;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            &:hover {
+                color: red;
+            }
+        }
+        .house-save-button {
+            background-color: transparent;
+            color: $text-color;
+            border: none;
+            font-size: 30px;
             @media screen and (max-width: $break-phablet) {
-                font-size: 9px;
+                font-size: 20px;
             }
         }
         .description {
@@ -244,6 +320,30 @@ $break-desktop: 1200px;
         position: absolute;
         padding-left: 30px;
         padding-top: 15px;
+    }
+    .schools {
+        h2 {
+            font-size: 20px;
+        }
+        .schools-list {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-bottom: 15px;
+            color: #35a785;
+            padding-top: 15px;
+        }
+        td,
+        th {
+            font-size: 15px !important;
+            padding: 15px 5px !important;
+            @media screen and (max-width: $break-phablet) {
+                font-size: 10px !important;
+            }
+            @media screen and (max-width: $break-phone) {
+                font-size: 9px!important
+            }
+        }
     }
     width:100%;
 }

@@ -3,16 +3,17 @@
     "use strict";
 
     angular.module('LoVendoApp.directives')
-        .directive('savedSearches', ['UserMeta', '$rootScope', function (UserMeta, $rootScope) {
+        .directive('savedSearches', ['UserMeta', '$rootScope', 'SafetyFilter', function (UserMeta, $rootScope, SafetyFilter) {
             return {
                 restrict: 'E',
                 templateUrl: './modules/home/saved-searches.html',
                 link: function () {},
-                controller: function (UserMeta, $rootScope, $scope) {
-                    var $savedSearchesCtrl = this;
-                    //showing data
-                    $scope.showData = false;
+                controller: function (UserMeta, $rootScope, SafetyFilter, $scope) {
 
+                    //Controller
+                    var $savedSearchesCtrl = this;
+                    //Showing data
+                    $scope.showData = false;
                     //Getting all available tags
                     var avTags = UserMeta.avTags();
 
@@ -20,6 +21,7 @@
                      * Fetch saved searches data
                      * 
                      */
+
                     function loadSavedSearches() {
                         UserMeta.getSavedSearches()
                             .then(function (res) {
@@ -27,8 +29,8 @@
                                 $savedSearchesCtrl.savedSearches = res.saved_searches;
                                 //Showing data
                                 $scope.showData = true;
-                                var search_filters = [];
                                 Object.keys($savedSearchesCtrl.savedSearches).forEach(function (objKey) {
+                                    var search_filters = [];
                                     $savedSearchesCtrl.savedSearches[objKey].filters.forEach(function (element) {
                                         // I am iterating over the savedSearches array to split it's  value
                                         // into name and value
@@ -54,6 +56,7 @@
                                 });
                             });
                     }
+
                     /**
                      * Removes a search from DOM and
                      * database
@@ -66,12 +69,42 @@
                         })
                     }
 
+                    /**
+                     * Match values in the
+                     * global request Object
+                     * @param {Object}
+                     */
+
+                    function matchValues(requestObj, requestArr) {
+                        requestArr.forEach(function (element) {
+                            //We iterate over the global request object
+                            Object.keys(requestObj).forEach(function (objKey) {
+                                //If the values match with those in the request array
+                                //we assign the value to the global request object
+                                if (element.name == objKey && objKey == "buymode" && objKey != "rentmode") {
+                                    requestObj[objKey] = true;
+                                    return true;
+                                }
+                                if (element.name == objKey && objKey == "rentmode" && objKey != "buymode") {
+                                    requestObj[objKey] = true;
+                                    return true;
+                                }
+                                if (element.name == objKey) {
+                                    requestObj[objKey] = parseInt(element.value);
+                                }
+                            });
+                        });
+                        return requestObj;
+                    }
 
                     /**
                      * Searches using saved parameters
                      * @param {Object} search
                      */
+
                     $savedSearchesCtrl.goSearch = function (search) {
+                        //First we clean the requestObj
+                        $rootScope.$broadcast('cleanRequestObj');
                         var request = [];
                         //I iterate over the array of filters of
                         //the selected search
@@ -79,45 +112,33 @@
                             //Similar to the prior function, I split the values into
                             //name and value
                             var filter = {
-                                    name: element.split(':')[0],
-                                    value: element.split(':')[1].trim()
-                                }
-                                //I iterate over the avTags array to find matches
+                                name: element.split(':')[0],
+                                value: element.split(':')[1].trim()
+                            };
+                            //I iterate over the avTags array to find matches
                             Object.keys(avTags).forEach(function (tagKey) {
                                 //If it matches, I assign the value to the request array
+                                if (avTags[tagKey].name == filter.name && filter.value == "Renta") {
+                                    filter.name = "rentmode";
+                                    return true;
+                                }
+                                if (avTags[tagKey].name == filter.name && filter.value == "Compra") {
+                                    filter.name = "buymode";
+                                    return true;
+                                }
                                 if (avTags[tagKey].name == filter.name) {
                                     filter.name = avTags[tagKey].filter;
-                                } else {
-
                                 }
+
                             });
                             request.push(filter);
                         }, this);
-                        var matches = [];
-                        request.forEach(function (element, index) {
-                            //We iterate over the global request object
-                            Object.keys($rootScope.requestObj).forEach(function (objKey) {
-                                //If the values match with those in the request array
-                                //we assign the value to the global request object
-                                if (element.name == objKey) {
-                                    $rootScope.requestObj[objKey] = parseInt(element.value);
-                                    matches.push(element);
-                                } else {
-                                    //If not we check if they do not match with previous matches
-                                    matches.forEach(function (element) {
-                                        if (element.name != objKey && objKey != 'limit') {
-                                            $rootScope.requestObj[objKey] = null;
-                                        }
-                                    }, this);
-                                }
-                                //I must find a way to loop through the object without overwriting my previous
-                                //assignments of values on my requestObj properties.
-                            });
-                        });
+                        //Match values
+                        $rootScope.requestObj = matchValues($rootScope.requestObj, request);
                         //Binding search_name to the global requestObj
-                        $rootScope.requestObj.q = search.search_name;
-                        //Calling the filterChanged function that reloads the data and map
-                        $scope.$parent.layout.filterChanged();
+                        $rootScope.requestObj.cities = search.search_name;
+                        //Load city
+                        $scope.$parent.layout.loadCity();
                         //Hiding the activeSearch button to avoid having the user saving the same search
                         $scope.$parent.activeSearch = false;
                         //Closing user windows
