@@ -1,6 +1,6 @@
 {
   "name": "lo-vendo",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Lo Vendo",
   "engines": {
     "node": "6.5.0",
