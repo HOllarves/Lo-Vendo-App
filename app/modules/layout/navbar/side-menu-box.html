@@ -1,0 +1,49 @@
+<div class="col-xs-12 side-menu-box" ng-class="{firstBox:$first}">
+    <div ng-click="layout.openComponentModal(home)" class="well address">
+        <strong>{{home.address.full}}</strong>
+    </div>
+    <div class="col-xs-12">
+        <div class="side-menu-price">${{home.listPrice | number}}</div>
+    </div>
+    <div class="col-xs-12 side-menu-image">
+        <img ng-if="home.photos[0]" class="img-responsive" ng-src="{{home.photos[0]}}" />
+        <img ng-if="!home.photos[0]" class="img-responsive" ng-src="assets/images/default-house.jpg" />
+    </div>
+    <div class="col-xs-12 well text-center side-menu-description">
+        <div class="col-xs-4">
+            <p ng-if="home.property.bedrooms">{{home.property.bedrooms}} HA</p>
+            <p class="not-available" ng-if="!home.property.bedrooms">No disponible</p>
+        </div>
+        <div class="col-xs-4">
+            <p ng-if="home.property.bathsFull">{{home.property.bathsFull}} BA</p>
+            <p class="not-available" ng-if="!home.property.bathsFull">No disponible</p>
+        </div>
+        <div class="col-xs-4">
+            <p ng-if="home.property.area">{{home.property.area | number}} ft²</p>
+            <p class="not-available" ng-if="!home.property.area"> </p>
+        </div>
+    </div>
+    <div class="col-xs-12 side-menu-detail animate-show" ng-show="showMenuDown">
+        <p>
+            <strong>Detalles</strong>
+        </p>
+        <p>
+            <strong>Calefaccion: </strong> {{home.property.heating}}
+        </p>
+        <p>
+            <strong>Estilo: </strong> {{home.property.style}}
+        </p>
+        <p>
+            <strong>Caracteristicas: </strong> {{home.property.interiorFeatures}}
+        </p>
+        <p>
+            <strong>Informaci&oacuten extra: </strong> {{home.privateRemarks}}
+        </p>
+        <div class="text-center show-more">
+            <a href="#" ng-click="layout.openComponentModal(home)"> Mostrar más </a>
+        </div>
+    </div>
+    <button class="down-button" ng-click="showMenuDown = !showMenuDown">
+        <small> <i class="glyphicon glyphicon-triangle-bottom"></i> </small>
+    </button>
+</div>

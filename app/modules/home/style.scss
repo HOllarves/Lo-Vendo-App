@@ -1,0 +1,574 @@
+/* -- Media query vars -- */
+
+$break-small-phone: 320px;
+$break-phone: 375px;
+$break-phablet: 414px;
+$break-tablet: 768px;
+$break-desktop: 1200px;
+
+/* -- Modal -- */
+
+#Modal {
+    overflow: hidden;
+    max-height: 100%;
+    height: 100%;
+}
+
+.modal {
+    label {
+        &:focus {
+            color: #e4e4e4;
+        }
+        font-size: 1.4rem;
+    }
+    input[type=email],
+    input[type=text],
+    input[type=password] {
+        font-size: 14px;
+    }
+    input[type=email]:focus:not([readonly]),
+    input[type=password]:focus:not([readonly]) {
+        border-bottom: 1px solid #e4e4e4;
+        box-shadow: 0 1px 0 0 #e4e4e4;
+        font-size: 13px;
+    }
+    input[type=email]:focus:not([readonly])+label {
+        color: #9e9e9e;
+    }
+    .form-group {
+        &:first-child {
+            padding-top: 15px;
+        }
+        margin-bottom: 0;
+        padding: 15px;
+        padding-top: 0;
+    }
+    .modal-content {
+        padding: 0;
+        max-height: 100%;
+        height: 100%;
+    }
+    .modal-body {
+        .sign-in-button {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            border-radius: 0;
+            background-color: #38A785 !important;
+            color: white !important;
+        }
+        a {
+            color: #48AD98;
+            text-decoration: underline;
+        }
+        padding: 0;
+        margin: 0;
+        max-height: 100%;
+        height:100%;
+    }
+    .modal-footer {
+        background-color: #FFF;
+    }
+    .close-button {
+        &:hover {
+            box-shadow: none;
+            background-color: transparent;
+            color: #000;
+        }
+        &:focus {
+            box-shadow: none;
+            background-color: transparent;
+            outline: none !important;
+        }
+        position: absolute;
+        top:0;
+        right:0;
+        z-index: 99999;
+        border: none;
+        color: #E4E4E4;
+        font-size: 30px;
+        font-weight: 200;
+    }
+    .form-switch {
+        padding-bottom: 50px;
+    }
+    max-height: 100%;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+
+/* -- Info Window -- */
+
+.gm-style-iw {
+    img {}
+    #iw_container {
+        .iw_price {
+            color: black;
+            font-size: 25px;
+            position: absolute;
+            bottom: 20%;
+            @media screen and (max-width: $break-phablet) {
+                right: 0;
+                font-size: 20px;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                font-size: 15px;
+            }
+        }
+        .iw_image {
+            width: 150px;
+            height: 150px;
+            @media screen and (max-width: $break-phablet) {
+                width: 100px;
+                height: 100px;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                display: none;
+            }
+            position: relative;
+            img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        .iw_title {
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: #000;
+            margin: -1px;
+            padding-bottom: 0;
+            padding-top: 0;
+            position: absolute;
+            top: 0;
+            @media screen and (max-width: $break-phablet) {
+                font-size: 10px;
+                left: 45%;
+                top: 5%;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                font-size: 12px;
+                left: 0;
+            }
+            /* In accordance with the rounding of the default infowindow corners. */
+        }
+        .sub {
+            font-size: 11px;
+            float: none;
+            color: gray;
+            font-weight: bold;
+            position: absolute;
+            top: 15%;
+            @media screen and (max-width: $break-small-phone) {
+                font-size: 11px;
+                top: 25%;
+            }
+        }
+        li {
+            padding: 2px;
+        }
+        ul {
+            padding: 0;
+            padding-top: 10px;
+            list-style-type: none;
+            display: -webkit-inline-box;
+        }
+        .iw_information {
+            width: 50%;
+            float: left;
+            margin-left: 5px;
+            @media screen and (max-width: $break-small-phone) {
+                padding: 30px;
+                width: 100%;
+                float: none;
+            }
+        }
+        .description-small {
+            @media screen and (max-width: $break-phablet) {
+                bottom: -10%;
+                right: 0;
+                font-size: 10px;
+            }
+            @media screen and (max-width:$break-small-phone) {
+                font-size: 9px;
+                bottom: -20%;
+            }
+            position: absolute;
+            bottom: 0;
+        }
+        min-width: 400px;
+        overflow: hidden;
+    }
+}
+
+
+/* -- User Windows -- */
+
+.user-window {
+    .no-data {
+        .well {
+            margin: 50px;
+            @media screen and (max-width: $break-phablet) {
+                margin: 10px;
+            }
+        }
+    }
+    padding-left: 40px;
+    padding-right: 40px;
+    @media screen and (max-width: $break-phablet) {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+
+/* -- Saved Houses -- */
+
+.saved-houses {
+    .title,
+    .sub-title {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        @media screen and (max-width: $break-phablet) {
+            font-size: 25px;
+        }
+    }
+    .back-to-search {
+        .btn {
+            &:focus {
+                outline: 0;
+            }
+            width: auto;
+            background-color: #2e9373;
+            color: #fff;
+            float: right !important;
+            display: inline-block;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            height: 40px;
+            border: none;
+            @media screen and (max-width: $break-tablet) {
+                font-size: 12px;
+            }
+            @media screen and (max-width: $break-phablet) {
+                font-size: 9px;
+            }
+        }
+        float: right;
+        padding: 0;
+    }
+    .title {
+        h1 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 25px;
+            }
+        }
+        h3 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 15px;
+            }
+        }
+    }
+    .house-box-container {
+        $border-color: #959595;
+        $text-color: #35A785;
+        .house-box-title {
+            .close-box {
+                &:hover {
+                    -webkit-transition: opacity 200ms linear;
+                    -moz-transition: opacity 200ms linear;
+                    transition: opacity 200ms linear;
+                    color: #F79645;
+                    border: 2px solid #F79645;
+                }
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 10px;
+                border-left: 1px solid $border-color;
+                border-bottom: 1px solid $border-color;
+                color: $border-color;
+                font-weight: bolder;
+                cursor: pointer;
+            }
+            h2 {
+                font-size: 25px;
+                margin-top: 30px;
+                @media screen and (max-width: $break-tablet) {
+                    font-size: 20px;
+                    margin-top: 30px;
+                }
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 15px;
+                }
+            }
+            cursor: pointer;
+            position: relative;
+            padding: 10px;
+            border: 1px solid $border-color;
+        }
+        .house-box-img {
+            border: 1px solid $border-color;
+        }
+        .house-block {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            @media screen and (max-width: $break-small-phone) {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+        .house-box-price {
+            h3 {
+                margin: 0;
+                padding: 10px;
+                border-left: 1px solid $border-color;
+                border-right: 1px solid $border-color;
+                font-weight: bolder;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 15px;
+                }
+            }
+        }
+        .house-box-desc {
+            p {
+                margin-top: 10px;
+                text-align: center;
+                color: $text-color;
+                padding: 0px 5px;
+                @media screen and (max-width: $break-tablet) {
+                    padding: 0;
+                }
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 9px;
+                }
+            }
+            span {
+                padding-left: 25px;
+                padding-right: 25px;
+                @media screen and (max-width: $break-tablet) {
+                    padding-left: 17px;
+                    padding-right: 17px;
+                }
+                @media screen and (max-width: $break-phablet) {
+                    padding-left: 10px;
+                    padding-right: 15px;
+                }
+                @media screen and (max-width: $break-phone) {
+                    padding-left: 5px;
+                    padding-right: 0px;
+                }
+            }
+            display: -webkit-inline-box;
+            border-right: 1px solid $border-color;
+            border-bottom: 1px solid $border-color;
+            border-left: 1px solid $border-color;
+            width: 100%;
+            @media screen and (max-width: $break-phablet) {
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+        }
+        .house-box-contact {
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                background-color: transparent;
+                color: $border-color;
+                border: 2px solid $border-color;
+                border-radius: 0;
+                font-weight: bolder;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 9px;
+                }
+                @media screen and (max-width: $break-phone) {
+                    font-size: 8px;
+                }
+            }
+        }
+        width: 100%;
+    }
+    background-color: #FFF;
+    height: 100%;
+    z-index: 2;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    overflow-x: hidden;
+}
+
+
+/* -- Saved searches -- */
+
+.saved-searches {
+    $border-color: #959595;
+    $text-color: #35A785;
+    .back-to-search {
+        .btn {
+            &:focus {
+                outline: 0;
+            }
+            width: auto;
+            background-color: #2e9373;
+            color: #fff;
+            float: right !important;
+            display: inline-block;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            height: 40px;
+            border: none;
+            @media screen and (max-width: $break-tablet) {
+                font-size: 12px;
+            }
+            @media screen and (max-width: $break-phablet) {
+                font-size: 9px;
+            }
+        }
+        float: right;
+        padding: 0;
+    }
+    .title {
+        h1 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 25px;
+            }
+        }
+        h3 {
+            @media screen and (max-width: $break-phablet) {
+                font-size: 15px;
+            }
+        }
+    }
+    .sub-title {
+        @media screen and (max-width: $break-phablet) {
+            font-size: 25px;
+        }
+    }
+    .search-box {
+        .search-filters {
+            .filter-box {
+                .filters {
+                    margin-left: 5px;
+                }
+                .last-rule {
+                    display: none;
+                }
+                .vertical-rule {
+                    float: right;
+                    height: 15px;
+                    width: 1px;
+                    background-color: $border-color;
+                    margin-left: 5px;
+                }
+                width: 100%;
+            }
+            p {
+                margin: 0;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 10px;
+                }
+            }
+            font-size: 12px;
+            color: $text-color
+        }
+        .search-title {
+            h1 {
+                font-weight: bolder;
+                margin-bottom: 0;
+                margin-top: 0;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 18px;
+                }
+            }
+        }
+        .search-date {
+            p {
+                margin-bottom: 20px;
+            }
+        }
+        .go-button {
+            &:hover {
+                -webkit-transition: opacity 200ms linear;
+                -moz-transition: opacity 200ms linear;
+                transition: opacity 200ms linear;
+                color: $text-color;
+                border: 2px solid $text-color;
+            }
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 10px;
+            border-top: 1px solid;
+            border-left: 1px solid;
+            cursor: pointer;
+        }
+        .close-button {
+            &:hover {
+                -webkit-transition: opacity 200ms linear;
+                -moz-transition: opacity 200ms linear;
+                transition: opacity 200ms linear;
+                color: #F79645;
+                border: 2px solid #F79645;
+            }
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 12px;
+            border-bottom: 1px solid;
+            border-left: 1px solid;
+            cursor: pointer;
+        }
+        border: 1px solid $border-color;
+        border-left: 10px solid $text-color;
+        padding: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        @media screen and (max-width: $break-small-phone) {
+            border-left: 5px solid #35a785;
+            padding-top: 50px;
+            padding-left: 5px;
+        }
+    }
+    background-color: #FFF;
+    height: 100%;
+    z-index: 2;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    overflow-x: hidden;
+}
+
+
+/*-- User Windows Animations -- */
+
+.repeat-animation.ng-enter.ng-enter-active,
+.repeat-animation.ng-leave {
+    opacity: 1;
+    -webkit-transition: opacity 200ms linear;
+    -moz-transition: opacity 200ms linear;
+    transition: opacity 200ms linear;
+}
+
+
+/* Remove animation */
+
+.repeat-animation.ng-leave.ng-leave-active,
+.repeat-animation.ng-enter {
+    opacity: 0;
+    -webkit-transition: opacity 200ms linear;
+    -moz-transition: opacity 200ms linear;
+    transition: opacity 200ms linear;
+}
