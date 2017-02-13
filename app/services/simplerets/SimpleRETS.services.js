@@ -76,7 +76,6 @@
                     'Authorization': 'Basic ' + credentials
                 }
             }).success(propsReceived, propsError).error(httpError);
-            console.log(simpleRetsUrl + queryString);
             //Properties received
             function propsReceived(data, status, headers) {
                 $rootScope.totalCount = headers()["x-total-count"];
