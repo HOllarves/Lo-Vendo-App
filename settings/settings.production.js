@@ -1,3 +1,3 @@
 AppSettings = {
-  api_url: "http://lovendo.com"
+  api_url: "http://www.lovendo.com"
 };
