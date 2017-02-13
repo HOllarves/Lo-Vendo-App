@@ -3,9 +3,9 @@
     "use strict";
 
     angular.module('LoVendoApp.controllers')
-        .controller('HouseDetailCtrl', ['home', 'carouselData', 'schoolData', '$scope', '$rootScope', '$window', '$uibModalInstance', '_', 'UserMeta', 'Authentication', 'SimpleRETS', 'nearbyPlaces', 'McOptions', 'ContactUsService', 'ModalOptions', '$uibModal', HouseDetailCtrl]);
+        .controller('HouseDetailCtrl', ['home', 'carouselData', 'schoolData', '$scope', '$rootScope', '$window', '$uibModalInstance', '_', 'UserMeta', 'Authentication', 'SimpleRETS', 'NearbyPlaces', 'McOptions', 'ContactUsService', 'ModalOptions', '$uibModal', HouseDetailCtrl]);
 
-    function HouseDetailCtrl(home, carouselData, schoolData, $scope, $rootScope, $window, $uibModalInstance, _, UserMeta, Authentication, SimpleRETS, nearbyPlaces, McOptions, ContactUsService, ModalOptions, $uibModal) {
+    function HouseDetailCtrl(home, carouselData, schoolData, $scope, $rootScope, $window, $uibModalInstance, _, UserMeta, Authentication, SimpleRETS, NearbyPlaces, McOptions, ContactUsService, ModalOptions, $uibModal) {
 
         //Controller
         var $ctrl = this;
@@ -104,7 +104,7 @@
             });
 
             //Going through nearby places
-            nearbyPlaces.forEach(function (place) {
+            NearbyPlaces.forEach(function (place) {
                 place.types.forEach(function (type) {
                     if (type == "bank" || type == "finance" || type == "atm") {
                         new google.maps.Marker({
