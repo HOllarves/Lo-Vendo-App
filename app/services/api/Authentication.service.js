@@ -15,7 +15,7 @@
          */
 
         function login(user) {
-            var url = 'https://warm-lowlands-68974.herokuapp.com' + '/auth/signIn';
+            var url = AppSettings.api_url + '/auth/signIn';
             var deferred = $q.defer();
             $http.post(url, user).success(loggedIn, authError).error(httpError);
             //Authentication success
@@ -52,8 +52,7 @@
          */
 
         function signUp(user) {
-            console.log('Signing up');
-            var url = 'https://warm-lowlands-68974.herokuapp.com' + '/auth/signUp';
+            var url = AppSettings.api_url + '/auth/signUp';
             var deferred = $q.defer();
 
             //Http POST request

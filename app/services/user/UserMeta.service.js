@@ -16,7 +16,7 @@
             var deferred = $q.defer();
             var userId = Authentication.isAuthenticated() ? $rootScope.credentials.user._id : null;
             var token = Authentication.isAuthenticated() ? $rootScope.credentials.token : null;
-            var url = "https://warm-lowlands-68974.herokuapp.com" + '/saved/houses';
+            var url = AppSettings.api_url + '/saved/houses';
             $http.get(url, {
                     headers: {
                         "x-access-token": token
@@ -51,7 +51,7 @@
             var deferred = $q.defer();
             data.userId = Authentication.isAuthenticated() ? $rootScope.credentials.user._id : null;
             var token = Authentication.isAuthenticated() ? $rootScope.credentials.token : null;
-            var url = "https://warm-lowlands-68974.herokuapp.com" + '/saved/houses';
+            var url = AppSettings.api_url + '/saved/houses';
             $http({
                     method: 'POST',
                     url: url,
@@ -84,7 +84,7 @@
             var deferred = $q.defer();
             var userId = Authentication.isAuthenticated() ? $rootScope.credentials.user._id : null;
             var token = Authentication.isAuthenticated() ? $rootScope.credentials.token : null;
-            var url = "https://warm-lowlands-68974.herokuapp.com" + '/saved/houses/' + id;
+            var url = AppSettings.api_url + '/saved/houses/' + id;
             $http({
                     method: 'PUT',
                     url: url,
@@ -119,7 +119,7 @@
             var deferred = $q.defer();
             var userId = Authentication.isAuthenticated() ? $rootScope.credentials.user._id : null;
             var token = Authentication.isAuthenticated() ? $rootScope.credentials.token : null;
-            var url = "https://warm-lowlands-68974.herokuapp.com" + '/saved/searches';
+            var url = AppSettings.api_url + '/saved/searches';
             $http.get(url, {
                     headers: {
                         "x-access-token": token
@@ -152,8 +152,7 @@
             var deferred = $q.defer();
             data.userId = Authentication.isAuthenticated() ? $rootScope.credentials.user._id : null;
             var token = Authentication.isAuthenticated() ? $rootScope.credentials.token : null;
-            var url = "https://warm-lowlands-68974.herokuapp.com" + '/saved/searches';
-            console.log(data);
+            var url = AppSettings.api_url + '/saved/searches';
             $http({
                     method: 'POST',
                     url: url,
@@ -186,7 +185,7 @@
             var deferred = $q.defer();
             var userId = Authentication.isAuthenticated() ? $rootScope.credentials.user._id : null;
             var token = Authentication.isAuthenticated() ? $rootScope.credentials.token : null;
-            var url = "https://warm-lowlands-68974.herokuapp.com" + '/saved/searches/' + id;
+            var url = AppSettings.api_url + '/saved/searches/' + id;
             $http({
                     method: 'PUT',
                     url: url,

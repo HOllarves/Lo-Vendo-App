@@ -16,7 +16,7 @@
 
         function getNearbySchools(city, zip) {
             var deferred = $q.defer();
-            var schoolsUrl = "https://warm-lowlands-68974.herokuapp.com" + '/schools';
+            var schoolsUrl = AppSettings.api_url + '/schools';
 
             $http.get(schoolsUrl, {
                 params: {

@@ -15,8 +15,8 @@
 
         function contactUs(newMessage) {
             var deferred = $q.defer();
-            //var url = AppSettings.api_url + '/contact';
-            var url = 'https://warm-lowlands-68974.herokuapp.com' + '/contact';
+            var url = AppSettings.api_url + '/contact';
+
             $http.post(url, newMessage)
                 .then(dataSent)
                 .catch(dataError);
