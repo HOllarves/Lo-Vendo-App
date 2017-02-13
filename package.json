@@ -30,6 +30,7 @@
     "mongoose": "latest",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "request": "^2.79.0",
     "rfr": "^1.2.3",
     "shelljs": "^0.3.0",
     "through2": "^2.0.0",

@@ -56,7 +56,7 @@
             var internalObject = angular.copy(obj);
             //Removing all attributes that should not be sent to SimplyRETS
             Object.keys(internalObject).forEach(function (key) {
-                if (key != 'limit' && key != 'offset' && key != 'cities') {
+                if (key != 'limit' && key != 'offset' && key != 'cities' && key != "type") {
                     internalObject[key] = null;
                 } else {
                     if (key == 'limit') {
@@ -66,7 +66,6 @@
             });
             //Serializing object
             var queryString = $httpParamSerializer(internalObject);
-            console.log('Query = ', simpleRetsUrl + 'properties?' + queryString);
             //Starting async request
             var deferred = $q.defer();
             //Making http request
@@ -77,6 +76,7 @@
                     'Authorization': 'Basic ' + credentials
                 }
             }).success(propsReceived, propsError).error(httpError);
+            console.log(simpleRetsUrl + queryString);
             //Properties received
             function propsReceived(data, status, headers) {
                 $rootScope.totalCount = headers()["x-total-count"];
@@ -102,7 +102,6 @@
 
         function getHouse(id) {
             var deferred = $q.defer();
-
             $http({
                     method: 'GET',
                     url: simpleRetsUrl + 'properties/' + id,
@@ -114,8 +113,8 @@
                 .catch(httpError);
 
             //Properties received
-            function propsReceived(data) {
-                deferred.resolve(data);
+            function propsReceived(res) {
+                deferred.resolve(res.data);
             }
             //Http error
             function httpError(error) {

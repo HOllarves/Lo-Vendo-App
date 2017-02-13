@@ -1,6 +1,6 @@
 /* -- Global vars -- */
 
-$primary-color: #2E9373;
+$primary-color: #35a785;
 
 /* -- Media query vars -- */
 
@@ -145,6 +145,7 @@ html,
     height: 100%;
     margin: 0;
     padding: 0;
+    padding-bottom: 21px;
 }
 
 body {
@@ -244,7 +245,7 @@ nav {
 }
 
 .lovendo-logo {
-    background: url('../assets/images/logo.png') no-repeat center center;
+    background: url('../assets/images/cover-logo.png') no-repeat center center;
     background-size: contain;
     width: 162px;
     height: 50px;
@@ -388,6 +389,8 @@ nav {
     .buy:hover {
         border-bottom: 4px solid $primary-color;
     }
+    position: relative;
+    margin-bottom: 40px;
     letter-spacing: 0.08em;
     font-size: 14px;
     border:none;
@@ -408,6 +411,7 @@ nav {
     padding: 7px;
     background-color: #3AA683;
     height: auto;
+    cursor: pointer;
 }
 
 .form-control.hover {
@@ -439,6 +443,24 @@ nav {
             .dropdown-menu {
                 margin: 0;
                 padding: 0;
+            }
+            .beds,
+            .baths {
+                .dropdown-menu {
+                    min-width: 100px;
+                    @media screen and (max-width: $break-phablet) {
+                        min-width: 150px;
+                    }
+                }
+                .panel {
+                    &:hover {
+                        color: #FFF;
+                        background-color: $primary-color;
+                    }
+                    color: $primary-color;
+                    text-align: center;
+                    cursor: pointer;
+                }
             }
             .type-filter {
                 padding: 5px;
@@ -604,14 +626,6 @@ nav {
 }
 
 
-/* --- Side menu -- */
-
-side-menu-box {
-    .firstBox {
-        margin-top: 120px !important;
-    }
-}
-
 .side-menu {
     .side-menu-box {
         border: solid rgba(10, 10, 10, 0.2) .5px;
@@ -698,4 +712,12 @@ side-menu-box {
     bottom: 0;
     left: 0;
     z-index: 2;
+}
+
+.labels {
+    border: 1px solid $primary-color;
+    background-color: #FFF;
+    color: $primary-color;
+    font-size: 12px;
+    padding: 5px;
 }

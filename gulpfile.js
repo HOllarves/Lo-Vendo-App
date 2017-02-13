@@ -39,7 +39,9 @@ lrserver = lr(),
 mongoose = require('mongoose'),
 bodyParser = require('body-parser'),
 auth = require('./server/routes/auth.js'),
-saved_data = require('./server/routes/saved_data.js')
+saved_data = require('./server/routes/saved_data.js'),
+great_schools = require('./server/routes/great_schools.js'),
+contact_message = require('./server/routes/contact.js')
 livereloadport = 35729;
 
 
@@ -59,6 +61,10 @@ require('./server/routes/config/passport')(server);
 server.use('/auth', auth);
 //Intializing saved houses routes
 server.use('/saved', saved_data);
+//Initialzing great_schools routes
+server.use('/schools', great_schools);
+//Initializing contact_message routes
+server.use('/contact', contact_message);
 
 //Serving express server
 gulp.task('serve', ['build', 'watch'], function() {

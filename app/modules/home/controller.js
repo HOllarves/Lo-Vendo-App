@@ -5,15 +5,15 @@
     angular.module('LoVendoApp.controllers')
         .controller('HomeCtrl', ['$scope', '$rootScope', 'SimpleRETS',
             'Authentication', 'AUTH_EVENTS', 'REQUEST_LIMIT', '$window',
-            'Session', 'jwtHelper', 'ModalOptions', '$uibModal', HomeCtrl
+            'Session', 'jwtHelper', 'ModalOptions', '$uibModal', '$state', '$stateParams', HomeCtrl
         ]);
 
-    function HomeCtrl($scope, $rootScope, SimpleRETS, Authentication, AUTH_EVENTS, REQUEST_LIMIT, $window, Session, jwtHelper, ModalOptions, $uibModal) {
+    function HomeCtrl($scope, $rootScope, SimpleRETS, Authentication, AUTH_EVENTS, REQUEST_LIMIT, $window, Session, jwtHelper, ModalOptions, $uibModal, $state, $stateParams) {
 
         //Controller
         var home = this;
 
-        home.type = [];
+        home.type = ['Res', 'Cnd', 'Rnt'];
         home.limit = REQUEST_LIMIT.simplyRETS;
         home.cities = [];
 
@@ -32,7 +32,8 @@
             "limit": home.limit,
             "offset": 0,
             "cities": home.cities,
-            "q": null
+            "q": null,
+            "houseType": null
         };
 
         /**
@@ -222,5 +223,21 @@
         $scope.$on(AUTH_EVENTS.loginFailed, loginFailed);
         $scope.$on(AUTH_EVENTS.logoutSuccess, logoutSuccess);
         $scope.$on(AUTH_EVENTS.loginSuccess, setuserObj);
+
+
+        /**
+         * Recieves request and loads city from cover page
+         * 
+         */
+
+        $scope.loaded = false;
+        $rootScope.$on('$viewContentLoaded', function (event, viewConfig) {
+            if (!$scope.loaded && $stateParams.city) {
+                $rootScope.requestObj.cities = $stateParams.city.split(",")[0];
+                $rootScope.requestObj.limit = REQUEST_LIMIT.maxResults;
+                $rootScope.$broadcast('cancelAllRequests');
+                $scope.loaded = true;
+            }
+        });
     }
 })();

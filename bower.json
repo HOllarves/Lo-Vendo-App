@@ -2,21 +2,36 @@
   "name": "lo-vendo",
   "private": "true",
   "dependencies": {
-    "angular": "~1.5.8",
-    "angular-ui-router": "latest",
-    "Materialize": "materialize#~0.97.5",
-    "angular-sanitize": "latest",
-    "angular-messages": "^1.5.8",
+    "angular": "1.5.9",
+    "angular-ui-router": "0.3.1",
+    "angular-sanitize": "1.5.9",
+    "angular-messages": "1.5.9",
     "angular-jwt": "^0.1.8",
     "angular-bootstrap": "^2.2.0",
     "angular-lodash-module": "^1.2.0",
-    "angular-animate": "^1.5.8",
-    "angular-masonry": "^0.16.0"
+    "angular-animate": "1.5.9",
+    "angular-moment": "^1.0.0",
+    "angular-slick-carousel": "^3.1.7",
+    "angular-loading-bar": "^0.9.0",
+    "angular-i18n": "1.5.9",
+    "angular-x2js": "^0.2.0",
+    "google-maps-utility-library-v3": "*"
   },
   "devDependencies": {
-    "angular": "~1.5.8",
-    "angular-ui-router": "latest",
-    "Materialize": "materialize#~0.97.5",
-    "angular-sanitize": "latest"
+    "angular": "1.5.9",
+    "angular-ui-router": "0.3.1",
+    "angular-sanitize": "1.5.9",
+    "angular-messages": "1.5.9",
+    "angular-jwt": "^0.1.8",
+    "angular-bootstrap": "^2.2.0",
+    "angular-lodash-module": "^1.2.0",
+    "angular-animate": "1.5.9",
+    "angular-moment": "^1.0.0",
+    "angular-slick-carousel": "^3.1.7",
+    "angular-loading-bar": "^0.9.0",
+    "angular-i18n": "1.5.9"
+  },
+  "resolutions": {
+    "angular": "1.5.9"
   }
 }

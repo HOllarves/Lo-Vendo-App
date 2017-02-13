@@ -16,7 +16,8 @@ $break-desktop: 1200px;
         .detail-button {
             background-color: $background-color;
         }
-        background-color: $background-color;
+        background-color: transparent;
+        z-index: 3 !important;
     }
     .vertical-rule {
         float: left;
@@ -95,21 +96,6 @@ $break-desktop: 1200px;
             display: inline-block;
             width: 100%;
         }
-        .info-description {
-            h2 {
-                color: $text-color;
-                font-weight: 100;
-                @media screen and (max-width: $break-phablet) {
-                    font-size: 20px;
-                }
-            }
-            p {
-                @media screen and (max-width: $break-phablet) {
-                    font-size: 12px;
-                }
-            }
-            margin-top: 15px;
-        }
         .characteristics {
             h2 {
                 color: $text-color;
@@ -129,8 +115,9 @@ $break-desktop: 1200px;
             }
             ul {
                 list-style-type: disc;
-                margin-left: 1vw;
             }
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
         .virtual-tour {
             .glyphicon {
@@ -162,6 +149,26 @@ $break-desktop: 1200px;
                 display: none;
             }
         }
+        .points-of-interest {
+            h2 {
+                margin-bottom: 25px;
+                color: $text-color;
+                @media screen and (max-width: $break-phablet) {
+                    font-size: 20px;
+                }
+            }
+            li {
+                list-style: initial;
+                margin-left: 30px;
+            }
+            .number-of-places {
+                color: $text-color;
+            }
+            #HouseDetailMap {
+                height: 300px;
+                width: 100%;
+            }
+        }
         .similar-houses {
             .slick-prev:before,
             .slick-next:before {
@@ -190,6 +197,8 @@ $break-desktop: 1200px;
                 }
             }
             .similar-houses-box {
+                cursor: pointer;
+                outline: none;
                 margin-left: 10px;
                 margin-right: 10px;
             }
@@ -323,15 +332,25 @@ $break-desktop: 1200px;
     }
     .schools {
         h2 {
-            font-size: 20px;
+            color: $text-color;
+            font-weight: 100;
+            @media screen and (max-width: $break-phablet) {
+                font-size: 20px;
+            }
         }
         .schools-list {
             margin-bottom: 20px;
         }
-        h2 {
-            margin-bottom: 15px;
-            color: #35a785;
-            padding-top: 15px;
+        .school-name {
+            color: $text-color;
+        }
+        .school-parent-rating {
+            .school-rating-star {
+                img {
+                    margin: 0 auto;
+                }
+            }
+            text-align: center;
         }
         td,
         th {
@@ -345,5 +364,91 @@ $break-desktop: 1200px;
             }
         }
     }
+    .contact-us {
+        h2 {
+            color: $text-color;
+            font-weight: 100;
+            @media screen and (max-width: $break-phablet) {
+                font-size: 20px;
+            }
+        }
+        .form-group {
+            padding: 0;
+        }
+        textarea {
+            font-size: 14px;
+        }
+        .contact-us-button {
+            background-color: $text-color;
+            color: $background-color;
+        }
+    }
+    .agent {
+        h2 {
+            color: $text-color;
+            font-weight: 100;
+            @media screen and (max-width: $break-phablet) {
+                font-size: 20px;
+            }
+        }
+        margin-bottom: 15px;
+    }
     width:100%;
+}
+
+.home-photo-background {
+    .carousel-close-button {
+        position: absolute;
+        right: 15px;
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+    }
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #000000;
+    top: 0;
+    opacity: 0.8;
+    z-index: 8 !important;
+}
+
+.home-photo-carousel-container {
+    .home-photo-slideshow {
+        .home-photo-img {
+            height: 100%;
+            margin: 0 auto;
+            @media screen and (max-width: $break-tablet) {
+                width: 80%;
+            }
+        }
+        z-index: 12;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 10%;
+    }
+    .slick-list,
+    .slick-track,
+    .slick-slide {
+        h3 {
+            height: 100%;
+        }
+        outline: none;
+    }
+    .slick-prev,
+    .slick-next {
+        top: 40%;
+        display: block;
+        width: 100px;
+        height: 100px;
+        z-index: 20;
+    }
+    .slick-next {
+        right: 0;
+    }
+    .slick-prev {
+        left: 0;
+    }
+    outline: none;
 }

@@ -89,7 +89,10 @@
                                     requestObj[objKey] = true;
                                     return true;
                                 }
-                                if (element.name == objKey) {
+                                if (element.name == objKey && objKey == "houseType"){
+                                    requestObj[objKey] = element.value;
+                                }
+                                if (element.name == objKey && objKey != "houseType") {
                                     requestObj[objKey] = parseInt(element.value);
                                 }
                             });

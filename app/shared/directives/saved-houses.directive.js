@@ -3,7 +3,7 @@
     "use strict";
 
     angular.module('LoVendoApp.directives')
-        .directive('savedHouses', ['UserMeta', '$rootScope', function (UserMeta, Authentication, $rootScope) {
+        .directive('savedHouses', ['UserMeta', 'SimpleRETS', 'ModalOptions', 'Authentication', '$rootScope', '$uibModal', function (UserMeta, SimpleRETS, ModalOptions, Authentication, $rootScope, $uibModal) {
             return {
                 restrict: 'E',
                 templateUrl: './modules/home/saved-houses.html',
@@ -40,6 +40,22 @@
                         });
 
                     };
+
+                    /**
+                     * Open House Detail modal
+                     * 
+                     */
+
+                    $savedHouseCtrl.openHouseDetailModal = function (house_id) {
+                        SimpleRETS.getHouse(house_id).then(function (res) {
+                            var home = res;
+                            var modalOptions = ModalOptions.getHouseDetailOptions(home);
+                            var modalInstance = $uibModal.open(modalOptions);
+                        }).catch(function () {
+                            Materialize.toast('Esta casa ya no existe', 4000);
+                        });
+                    }
+
                     //Invokes function when event is triggered
                     $rootScope.$on('openSavedHouses', loadSavedHouses);
                 },

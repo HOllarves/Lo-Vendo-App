@@ -76,12 +76,10 @@
             }
             //Authentication error
             function authError(err) {
-                console.log(err);
                 deferred.reject(data);
             }
             //Http error
             function httpError(error) {
-                console.log(error);
                 deferred.reject("Http error" + error);
             }
             return deferred.promise;

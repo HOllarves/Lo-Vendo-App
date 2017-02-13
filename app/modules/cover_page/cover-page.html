@@ -1,0 +1,57 @@
+<nav class="cover-navbar navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="coverPage"><img class="img-responsive" src="assets/images/cover-logo.png" alt="Cover Page logo"></a>
+        </div>
+        <div class="cover-navbar-collapse collapse navbar-collapse">
+            <div class="nav navbar-nav navbar-centre">
+                <h2>DONDE ENCUENTRAS</h2>
+                <h1>TU LUGAR</h1>
+            </div>
+            <!--<ul class="nav navbar-nav navbar-right">
+                <li class="language-flags">
+                    <img class="img-responsive" src="assets/images/american-flag.png" alt="English Language">
+                    <img class="img-responsive" src="assets/images/spanish-flag.png" alt="Spanish Language">
+                </li>
+                <li>
+                    <i class="fa fa-question-circle question-mark"></i>
+                </li>
+            </ul>-->
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="background-image">
+    <div class="cover-search-bar">
+        <form ng-submit="cover.searchCity()" autocomplete-fix>
+            <input type="text" ng-model="city" class="cover-search-bar-input" google-autocomplete placeholder="Buscar por ciudad"
+                autocomplete="on" id="Search_Field" />
+            <button type="submit" class="cover-search-bar-button">Buscar</button>
+        </form>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="copyrights col-md-4 col-xs-3">
+            <p> 2017 LoVendo REALSTATE, C.A. All rights reserved. </p>
+        </div>
+        <div class="footer-links col-xs-6">
+            <ul class="navbar-footer">
+                <li> TERMS & CONDITIONS </li>
+                <li> JOBS </li>
+                <li> AD CHOICE </li>
+                <li> BLOG </li>
+                <li> AGENTES </li>
+                <li> HIPOTECAS </li>
+            </ul>
+        </div>
+        <div class="social-icons col-xs-2">
+            <p> SOCIALIZATE </p>
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+            <i class="fa fa-instagram" aria-hidden="true"></i>
+        </div>
+    </div>
+</footer>

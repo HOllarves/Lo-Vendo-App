@@ -219,20 +219,12 @@
         function avTags() {
             return [{
                 id: 0,
-                name: "Baños Min",
+                name: "Número de baños",
                 filter: "minbaths"
             }, {
-                id: 1,
-                name: "Baños Max",
-                filter: "maxbaths"
-            }, {
                 id: 2,
-                name: "Camas Min",
+                name: "Número de camas",
                 filter: "minbeds"
-            }, {
-                id: 3,
-                name: "Camas Max",
-                filter: "maxbeds"
             }, {
                 id: 4,
                 name: "Precio Min",
@@ -252,7 +244,7 @@
             }, {
                 id: 8,
                 name: "Tipo",
-                filter: "type"
+                filter: "houseType"
             }, {
                 id: 9,
                 name: "Modo",

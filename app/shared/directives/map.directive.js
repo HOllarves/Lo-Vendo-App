@@ -46,12 +46,27 @@
                  */
 
                 function _newGoogleMapsMarker(param) {
+                    //Defining house price
+                    var housePrice = "$" + param._data.listPrice.toLocaleString('en');
+                    //Creating marker
                     var r = new google.maps.Marker({
                         map: param._map,
                         position: new google.maps.LatLng(param._lat, param._lng),
-                        title: param._head,
                         icon: param._icon
                     });
+                    //Creating infobox
+                    var ibLabel;
+                    var ibOptions = {
+                        content: InfoWindowService.getTooltip(housePrice),
+                        boxClass: 'infobox',
+                        disableAutoPan: true,
+                        pixelOffset: new google.maps.Size(-50, 0),
+                        position: r.getPosition(),
+                        closeBoxURL: "",
+                        isHidden: false,
+                        pane: "mapPane",
+                        enableEventPropagation: true
+                    };
                     if (param._data) {
                         google.maps.event.addListener(r, 'click', function () {
                             // this -> the marker on which the onclick event is being attached
@@ -78,6 +93,15 @@
                             this.getMap()._infoWindow.open(this.getMap(), this);
                             ibArray.push(this.getMap()._infoWindow);
                         });
+                        google.maps.event.addListener(r, 'mouseover', function () {
+                            //Initializing InfoBox
+                            ibLabel = new InfoBox(ibOptions);
+                            ibLabel.open(this.getMap());
+                        });
+                        google.maps.event.addListener(r, 'mouseout', function () {
+                            //Closing InfoBox
+                            ibLabel.close();
+                        })
                     }
                     return r;
                 }
@@ -85,8 +109,9 @@
                 /**
                  * Centers map
                  * @param {Object} map - Map object
-                 * @param {Integer} lat - Lat coordinates
-                 * @param {Integer} lng - Lng coordinates
+                 * @param {Float} lat - Lat coordinates
+                 * @param {Float} lng - Lng coordinates
+                 * @param {Integer} zoom - Zoom level
                  * 
                  */
 
@@ -139,7 +164,7 @@
                                 lat: 25.7616798,
                                 lng: -80.1917902,
                             },
-                            zoom: 10,
+                            zoom: 14,
                             mapTypeId: google.maps.MapTypeId.HYBRID,
                             mapTypeControl: true,
                             mapTypeControlOptions: {
@@ -191,7 +216,6 @@
 
                                 hasBackup = false;
                                 scope.$broadcast('localFilter');
-
                                 if (saved_city) {
                                     scope.$parent.$parent.layout.filterChanged();
                                 }
@@ -208,8 +232,9 @@
                                  */
 
                                 scope.$broadcast('setTotalResults');
-                                if (res.length > 0 && maxResults < avResults) {
 
+
+                                if (res.length > 0 && totalResults.length < maxResults && totalResults.length < parseInt(avResults)) {
                                     //Adding offset
                                     offset += res.length;
 
@@ -250,15 +275,22 @@
                                     $timeout(function () {
                                         //Adding one to the query offset in order to fetch more data
                                         $rootScope.requestObj.offset = offset;
-                                        loadMap();
+                                        if (saved_city)
+                                            loadMap(true);
+                                        else
+                                            loadMap();
                                     }, 500);
+
+                                    if (saved_city) {
+                                        scope.$parent.$parent.layout.filterChanged();
+                                    }
 
                                 } else {
                                     //If some results were already loaded
                                     if (res.length > 0) {
                                         //Mergin arrays together
                                         totalResults = $.merge(totalResults, res);
-                                        //Filtering to avoid bad geoData
+                                        //Filtering to avoid bad geoData    
                                         totalResults = totalResults.filter(SafetyFilter.geoData);
                                         //Removing duplicates
                                         totalResults = totalResults.filter(function (value, index, array) {
@@ -364,11 +396,11 @@
                         }
                         //Recenters the map depending on the type of request
                         scope.$on('recenter', function (evt, args) {
-                            if(args && args.home){
+                            if (args && args.home) {
                                 centerMap(map, 25.7616798, -80.1917902, 10);
                             }
                             if (markers && markers.length > 0)
-                                centerMap(map, markers[0].position.lat(), markers[0].position.lng());
+                                centerMap(map, markers[0].position.lat(), markers[0].position.lng(), 14);
                             else
                                 centerMap(map, 25.7616798, -80.1917902);
                         });
@@ -391,12 +423,11 @@
                         //Reloads map and resets variables.
                         //This event is triggered when activating a saved_search
                         scope.$on('reloadMap', function () {
-                            console.log('reloading map');
                             showLoaders();
                             totalResults = [];
                             offset = 0;
                             $rootScope.requestObj.offset = offset;
-                            maxResults = REQUEST_LIMIT.simplyRETS;
+                            maxResults = REQUEST_LIMIT.maxResults;
                             recenter = true;
                             //Passing a boolean to let the function this is being triggered by a saved_city
                             loadMap(true);
@@ -410,14 +441,9 @@
                             }
                             //If there's backup we filter over that backup'
                             if (arrayRelay) {
-
-                                console.log('beforeFilter = ', arrayRelay.length);
                                 totalFilteredResults = arrayRelay.filter(SafetyFilter.filterData);
-                                console.log('After filter = ', totalFilteredResults.length);
-
                                 //Loading new filtered markers
                                 loadMarkers(totalFilteredResults);
-
                             }
                         });
                         //Closes infowindow when clickin on the map (best for mobile)
@@ -427,7 +453,7 @@
                             }
                         });
                         //Initializes event to load map
-                        loadMap();
+                        //loadMap();
                     }
                 }
             }

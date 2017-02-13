@@ -77,19 +77,19 @@
                 if (ok)
                     ok = objInstance.listPrice > 20000
             }
-            if (filters.type) {
-                if (filters.type.length == 0) {
+            if (filters.houseType) {
+                if (filters.houseType.length == 0) {
                     if (ok)
                         return ok;
                 } else {
-                    if (filters.type.length == 2) {
+                    if (filters.houseType.length == 2) {
                         if (ok)
                             return ok;
                     } else {
-                        if (filters.type == 'Casas' && filters.type != 'Apartamentos' && objInstance.address.unit == null) {
+                        if (filters.houseType == 'Casas' && filters.houseType != 'Apartamentos' && objInstance.address.unit == null) {
                             if (ok)
                                 return ok;
-                        } else if (filters.type == 'Apartamentos' && filters.type != 'Casas' && objInstance.address.unit) {
+                        } else if (filters.houseType == 'Apartamentos' && filters.houseType != 'Casas' && objInstance.address.unit) {
                             if (ok)
                                 return ok;
                         }

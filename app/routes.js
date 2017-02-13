@@ -5,29 +5,29 @@
     angular.module('LoVendoApp.routes')
         .config(function ($stateProvider, $urlRouterProvider) {
             $stateProvider
-                .state('login', {
-                    url: '/login',
-                    title: 'Login Page',
+                .state('coverPage', {
+                    url: '/',
                     views: {
-                        'root-view': {
-                            templateUrl: 'modules/login/login.html',
-                            controller: 'LoginCtrl'
+                        'coverPage': {
+                            templateUrl: 'modules/cover_page/cover-page.html',
+                            controller: 'CoverPageCtrl',
+                            controllerAs: 'cover'
                         }
                     }
                 })
-                .state('root', {
+                .state('main', {
                     url: '',
                     abstract: true,
                     views: {
-                        'root-view': {
+                        'main-view': {
                             templateUrl: 'modules/layout/layout.html',
                             controller: 'LayoutCtrl',
                             controllerAs: 'layout'
                         }
                     }
                 })
-                .state('root.home', {
-                    url: '/',
+                .state('main.home', {
+                    url: '/home/:city',
                     abstract: false,
                     views: {
                         'content': {

@@ -16,7 +16,7 @@
             <div class="house-bg">
                 <div class="container house-box-container">
                     <div class="house-box repeat-animation" ng-repeat="house in $savedHouseCtrl.savedHouses">
-                        <div class="col-md-6 col-xs-12 house-block">
+                        <div class="col-md-6 col-xs-12 house-block" ng-click="$savedHouseCtrl.openHouseDetailModal(house.mlsId)">
                             <div class="house-box-title">
                                 <h2>{{house.addressFull}}</h2>
                                 <span class="close-box" ng-click="$savedHouseCtrl.removeHouse(house)">X</span>

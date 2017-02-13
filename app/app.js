@@ -30,7 +30,7 @@
         })
         .constant('REQUEST_LIMIT', {
             "simplyRETS": 500,
-            "maxResults": 1400
+            "maxResults": 4000
         })
         .config(['cfpLoadingBarProvider', '$httpProvider', function (cfpLoadingBarProvider, $httpProvider) {
 
@@ -89,7 +89,6 @@
                     //If no pending requests, just reload the map
                     $rootScope.$broadcast('reloadMap');
                 }
-
             });
 
         }]);

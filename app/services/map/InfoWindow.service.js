@@ -13,7 +13,7 @@
     function InfoWindowService() {
         return {
             getContent: function (data) {
-                
+
                 var img;
                 var listPrice;
                 var area;
@@ -80,6 +80,9 @@
                     '</ul>' +
                     '</div>' +
                     '</div>';
+            },
+            getTooltip: function (price) {
+                return '<p>' + price + '</p>'
             }
         }
     }

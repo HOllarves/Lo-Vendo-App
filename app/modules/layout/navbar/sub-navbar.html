@@ -3,7 +3,7 @@
         <button class="btn sub-btn filter-button" ng-click="showFilters = !showFilters">
             <i class="glyphicon glyphicon-tasks"></i>
         </button>
-        <div class="filter-list animate-hide-left " ng-show="showFilters">
+        <div class="filter-list animate-hide-left " ng-show="!showFilters">
             <div class="dropdown house-type">
                 <button class="btn" data-toggle="dropdown"> Tipo de vivienda <span class="caret"></span></button>
                 <ul class="dropdown-menu" dropdown-no-close>
@@ -39,15 +39,33 @@
                 <button class="btn" data-toggle="dropdown"> Cuartos <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                     <div class="panel panel-default panel-navbar">
-                        <div class="panel-heading panel-heading-navbar">Min</div>
-                        <div class="panel-body panel-body-navbar">
-                            <input class="bed-min input-filter" ng-model="$root.requestObj.minbeds" ng-blur="layout.filterChanged()" type="number" />
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBeds(1)">
+                            <span>+1</span>
                         </div>
                     </div>
                     <div class="panel panel-default panel-navbar">
-                        <div class="panel-heading panel-heading-navbar">Max</div>
-                        <div class="panel-body panel-body-navbar">
-                            <input class="bed-max input-filter" ng-model="$root.requestObj.maxbeds" ng-blur="layout.filterChanged()" type="number" />
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBeds(2)">
+                            <span>+2</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBeds(3)">
+                            <span>+3</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBeds(4)">
+                            <span>+4</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBeds(5)">
+                            <span>+5</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBeds(6)">
+                            <span>+6</span>
                         </div>
                     </div>
                 </ul>
@@ -56,17 +74,33 @@
                 <button class="btn" data-toggle="dropdown"> Baños <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                     <div class="panel panel-default panel-navbar">
-                        <div class="panel-heading panel-heading-navbar">Min</div>
-                        <div class="panel-body panel-body-navbar">
-                            <input class="bath-min input-filter" ng-model="$root.requestObj.minbaths" ng-blur="layout.filterChanged()" type="number"
-                            />
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBaths(1)">
+                            <span>+1</span>
                         </div>
                     </div>
                     <div class="panel panel-default panel-navbar">
-                        <div class="panel-heading panel-heading-navbar">Max</div>
-                        <div class="panel-body panel-body-navbar">
-                            <input class="bath-max input-filter" ng-model="$root.requestObj.maxbaths" ng-blur="layout.filterChanged()" type="number"
-                            />
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBaths(2)">
+                            <span>+2</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBaths(3)">
+                            <span>+3</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBaths(4)">
+                            <span>+4</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBaths(5)">
+                            <span>+5</span>
+                        </div>
+                    </div>
+                    <div class="panel panel-default panel-navbar">
+                        <div class="panel-body panel-body-navbar" ng-click="layout.changeBaths(6)">
+                            <span>+6</span>
                         </div>
                     </div>
                 </ul>

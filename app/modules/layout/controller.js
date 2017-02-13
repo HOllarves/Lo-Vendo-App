@@ -91,13 +91,35 @@
         }];
 
         /**
+         * Changes bath number from filter
+         * @param {Integer} number - number of baths
+         * 
+         */
+
+        layout.changeBaths = function (num) {
+            $rootScope.requestObj.minbaths = num;
+            layout.filterChanged();
+        }
+
+        /**
+         * Changes bed number from filter
+         * @param {Integer} number - number of beds
+         * 
+         */
+
+        layout.changeBeds = function (num) {
+            $rootScope.requestObj.minbeds = num;
+            layout.filterChanged();
+        }
+
+        /**
          * Selects a house type, filters and
          * puts it in the requestObj.type array
          * 
          */
 
         layout.select = function () {
-            $rootScope.requestObj.type = layout.houseTypes
+            $rootScope.requestObj.houseType = layout.houseTypes
                 .filter(function (item) {
                     return item.selected
                 })
@@ -193,12 +215,16 @@
                     if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey != "limit" && objKey != "cities" && objKey != "q") {
                         layout.avTags[tagKey].value = obj[objKey];
                     }
-                    if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey == "type") {
-                        layout.avTags[tagKey].value = obj[objKey]
-                            .join(', ')
-                            .replace(/\w\S*/g, function (txt) {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
+                    if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey == "houseType") {
+                        if (obj[objKey].constructor === Array) {
+                            layout.avTags[tagKey].value = obj[objKey]
+                                .join(', ')
+                                .replace(/\w\S*/g, function (txt) {
+                                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                                });
+                        } else {
+                            layout.avTags[tagKey].value = obj[objKey];
+                        }
                     }
                     if (obj[objKey] && layout.avTags[tagKey].filter == objKey && objKey == "buymode") {
                         if ($scope.rentActive) {
@@ -255,7 +281,7 @@
             layout.tags = arr;
             Object.keys($rootScope.requestObj).forEach(function (key) {
                 if (key == tag.filter) {
-                    if (key == 'type') {
+                    if (key == 'houseType') {
                         $rootScope.requestObj[key] = [];
                     } else {
                         $rootScope.requestObj[key] = null;
@@ -283,10 +309,17 @@
          * 
          */
 
-        layout.loadCity = function () {
-            $rootScope.requestObj.cities = $rootScope.requestObj.cities.split(",")[0];
-            $rootScope.requestObj.limit = REQUEST_LIMIT.simplyRETS;
-            $rootScope.$broadcast('cancelAllRequests');
+        layout.loadCity = function (city, mode) {
+            if(mode && city){
+                $rootScope.requestObj.cities = city;
+            }
+            if ($rootScope.requestObj.cities && $rootScope.requestObj.cities.length > 2) {
+                $rootScope.requestObj.cities = $rootScope.requestObj.cities.split(",")[0];
+                $rootScope.requestObj.limit = REQUEST_LIMIT.maxResults;
+                $rootScope.$broadcast('cancelAllRequests');
+            } else {
+                Materialize.toast('Debe indicar una dirección', 4000);
+            }
         }
 
         /**
@@ -296,7 +329,6 @@
          */
 
         layout.saveSearch = function (search_name) {
-            console.log(search_name);
             if (!search_name || search_name.length == 0) {
                 Materialize.toast('Debes llenar el campo de busqueda', 4000);
                 return false;
@@ -329,10 +361,13 @@
         $scope.$on('cleanRequestObj', function (evt, args) {
             //Reseting requestObj
             Object.keys($rootScope.requestObj).forEach(function (key) {
-                if (key != 'limit') {
+                if (key != 'limit' && key != "type") {
                     $rootScope.requestObj[key] = null;
                 } else {
-                    $rootScope.requestObj[key] = REQUEST_LIMIT.simplyRETS;
+                    if (key == 'limit')
+                        $rootScope.requestObj[key] = REQUEST_LIMIT.simplyRETS;
+                    if (key == 'type')
+                        $rootScope.requestObj[key] = ['Res', 'Cnd', 'Rnt'];
                 }
             });
         })

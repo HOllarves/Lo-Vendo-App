@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Materialize icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Slick carousel CSS -->
     <link rel="stylesheet" href="lib/slick-carousel/slick/slick.css" />
     <link rel="stylesheet" href="lib/slick-carousel/slick/slick-theme.css" />
@@ -72,6 +74,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj07qhVC9wn2Qs90TyBqWDpVVv42bx2FM&libraries=places,geometry"></script>
     <!-- Google AutoComplete -->
     <script type="text/javascript" src="assets/js/google-autocomplete.js"></script>
+    <!-- Google Maps Utilities -->
+    <script type="text/javascript" src="lib/google-maps-utility-library-v3/infobox/src/infobox.js"></script>
+    <!-- Google AdSense -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- OMS -->
     <script type="text/javascript" src="assets/js/oms.min.js"></script>
     <!-- inject:js -->
@@ -81,22 +87,9 @@
 </head>
 
 <body>
-    <div class="preloader-background">
-        <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-green-only">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
+    <div class="view-injection" ui-view="coverPage">
+        <div class="view-injection" ui-view="main-view"></div>
     </div>
-    <div class="view-injection" ui-view="root-view"></div>
 </body>
 
 </html>
