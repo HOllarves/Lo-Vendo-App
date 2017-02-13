@@ -10,9 +10,13 @@
         $scope.city = '';
         cover.searchCity = function (city) {
             $scope.city = city;
-            $state.go('main.home', {
-                city: $scope.city
-            });
+            if ($scope.city) {
+                $state.go('main.home', {
+                    city: $scope.city
+                });
+            } else {
+                Materialize.toast('Por favor introduzca una ciudad', 4000);
+            }
         }
     }
 })();
