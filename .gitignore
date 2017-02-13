@@ -1,0 +1,8 @@
+_Store
+node_modules/
+build/
+settings/secrets/*
+!settings/secrets/secrets.js.example
+.idea/
+npm-debug.log
+
