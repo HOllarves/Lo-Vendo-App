@@ -1,20 +1,20 @@
 //Gulp core files
 var gulp = require('gulp'),
-gutil = require('gulp-util'),
-sass = require('gulp-sass'),
-nano = require('gulp-cssnano'),
-rename = require('gulp-rename'),
-sh = require('shelljs'),
-ngAnnotate = require('gulp-ng-annotate'),
-angularFilesort = require('gulp-angular-filesort'),
-inject = require('gulp-inject'),
-watch = require('gulp-watch'),
-filter = require('gulp-filter'),
-through = require('through2'),
-del = require('del'),
-shell = require('gulp-shell'),
-plumber = require('gulp-plumber');
-    
+    gutil = require('gulp-util'),
+    sass = require('gulp-sass'),
+    nano = require('gulp-cssnano'),
+    rename = require('gulp-rename'),
+    sh = require('shelljs'),
+    ngAnnotate = require('gulp-ng-annotate'),
+    angularFilesort = require('gulp-angular-filesort'),
+    inject = require('gulp-inject'),
+    watch = require('gulp-watch'),
+    filter = require('gulp-filter'),
+    through = require('through2'),
+    del = require('del'),
+    shell = require('gulp-shell'),
+    plumber = require('gulp-plumber');
+
 //Application paths
 var paths = {
     sass: ['app/**/*.scss'],
@@ -26,34 +26,31 @@ var paths = {
 };
 
 /*
-*
-*   EXPRESS
-*
-*/
+ *
+ *   EXPRESS
+ *
+ */
 
 //Express related variables
-var livereload = require('connect-livereload')
-express = require('express'),
-lr = require('tiny-lr'),
-lrserver = lr(),
-mongoose = require('mongoose'),
-bodyParser = require('body-parser'),
-auth = require('./server/routes/auth.js'),
-saved_data = require('./server/routes/saved_data.js'),
-great_schools = require('./server/routes/great_schools.js'),
-contact_message = require('./server/routes/contact.js')
-livereloadport = 35729;
+var express = require('express'),
+    lr = require('tiny-lr'),
+    lrserver = lr(),
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
+    auth = require('./server/routes/auth.js'),
+    saved_data = require('./server/routes/saved_data.js'),
+    great_schools = require('./server/routes/great_schools.js'),
+    contact_message = require('./server/routes/contact.js');
 
 
 //Instantiating express server
 var server = express();
-server.use(livereload({
-  port: livereloadport
-}));
 server.set('port', (process.env.PORT || 3000));
 server.use(express.static('./build'));
 server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({extended:false}));
+server.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 //Initializing passport
 require('./server/routes/config/passport')(server);
@@ -67,18 +64,17 @@ server.use('/schools', great_schools);
 server.use('/contact', contact_message);
 
 //Serving express server
-gulp.task('serve', ['build', 'watch'], function() {
-    server.listen(server.get('port'), function(){
+gulp.task('serve', ['build', 'watch', 'env-production'], function () {
+    server.listen(server.get('port'), function () {
         console.log('App running on port', server.get('port'));
     });
-    lrserver.listen(livereloadport);
-    mongoose.connect('mongodb://lv-user:testing@ds143737.mlab.com:43737/heroku_9fvbqpbv', function(err){
-        if(err) console.log(err);
+    mongoose.connect('mongodb://lv-user:testing@ds143737.mlab.com:43737/heroku_9fvbqpbv', function (err) {
+        if (err) console.log(err);
         else console.log('Successfully conected to DB');
     })
 });
 
-gulp.task("heroku:production", ['env-production', 'serve'], function(){
+gulp.task("heroku:production", ['env-production', 'serve'], function () {
     console.log('Compiling app'); // the task does not need to do anything.
 });
 
@@ -91,7 +87,9 @@ gulp.task('sass', function (done) {
         .on('error', sass.logError)
         .pipe(gulp.dest('./build/css/'))
         .pipe(nano())
-        .pipe(rename({extname: '.min.css'}))
+        .pipe(rename({
+            extname: '.min.css'
+        }))
         .pipe(gulp.dest(paths.build + '/css/'))
         .on('end', done);
 });
@@ -102,26 +100,28 @@ gulp.task('index', function () {
         .pipe(
             inject(
                 gulp.src(paths.js)
-                    .pipe(plumber())
-                    .pipe(angularFilesort()), {relative: true}
+                .pipe(plumber())
+                .pipe(angularFilesort()), {
+                    relative: true
+                }
             )
         )
         .pipe(gulp.dest(paths.build));
 });
 
-function createCopyTasks(taskName, source, dest, customTaskCallback){
-    function baseCopyTask(extendBaseTaskCallback){
+function createCopyTasks(taskName, source, dest, customTaskCallback) {
+    function baseCopyTask(extendBaseTaskCallback) {
         var myFilter = filter(function (file) {
             return file.event === 'unlink';
         });
 
         var baseTask = gulp.src(source);
 
-        if(extendBaseTaskCallback){
+        if (extendBaseTaskCallback) {
             baseTask = extendBaseTaskCallback(baseTask);
         }
 
-        if(customTaskCallback){
+        if (customTaskCallback) {
             baseTask = customTaskCallback(baseTask);
         }
 
@@ -133,18 +133,18 @@ function createCopyTasks(taskName, source, dest, customTaskCallback){
             }));
     }
 
-    gulp.task(taskName, function(){
+    gulp.task(taskName, function () {
         baseCopyTask();
     });
 
-    gulp.task(taskName + "-watch", function(){
-        baseCopyTask(function(task){
+    gulp.task(taskName + "-watch", function () {
+        baseCopyTask(function (task) {
             return task.pipe(watch(source));
         });
     });
 }
 
-createCopyTasks('js', paths.js, paths.build, function(task){
+createCopyTasks('js', paths.js, paths.build, function (task) {
     return task
         .pipe(plumber())
         .pipe(ngAnnotate());
@@ -183,4 +183,5 @@ gulp.task('env-production', function () {
     gulp.src(paths.settings + '/settings.production.js')
         .pipe(rename('settings.js'))
         .pipe(gulp.dest(paths.build));
+        console.log('launching in production mode');
 });
