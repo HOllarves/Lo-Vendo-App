@@ -151,10 +151,11 @@ createCopyTasks('js', paths.js, paths.build, function (task) {
 });
 //Compiling assets
 createCopyTasks('assets', paths.assets, paths.build + "/assets");
+createCopyTasks('favicon', 'app/*.png', paths.build);
 //Templates
 createCopyTasks('templates', paths.templates, paths.build);
 //Build task
-gulp.task('build', ['sass', 'js', 'assets', 'templates', 'index']);
+gulp.task('build', ['sass', 'js', 'assets', 'favicon', 'templates', 'index']);
 //Watch for changes in scripts, sass files and templates
 gulp.task('watch', ['js-watch', 'assets-watch', 'templates-watch'], function () {
     gulp.watch(paths.sass, ['sass']);
