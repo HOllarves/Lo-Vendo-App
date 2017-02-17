@@ -1,7 +1,17 @@
 # Lo Vendo App
 
 ## Tech Stack 
-    - Angular 1.5.8
+    - Angular 1.5.9
+    - Angular UI Router 0.3.1
+    - Angular Sanitize 1.5.9
+    - Angular Message 1.5.9
+    - Angular JWT 0.1.8
+    - Angular Bootstrap 2.2.0
+    - Angular Animate 1.5.9
+    - Angular Slick Carousel 3.1.7
+    - Angular Loading Bar 0.9.0
+    - Angular i18n 1.5.9
+    - Google Maps Utility Library
     - Underscore 1.8.3
     - Bower 1.7.2
     - Express 4.14.0
@@ -12,6 +22,8 @@
     - rfr 1.2.3
     - shelljs 0.3.0
     - through2 2.0.2
+    - request 2.79.0
+    - though2 2.0.0
     - Gulp 3.5.6
         - Sass 2.0.4
         - Concat 2.2.0
@@ -74,7 +86,6 @@ are being used, please refer to the TechStack section.
     | -- settings.production.js
     | -- settings.staging.js
     - bower.json
-    - Dockerfile (containerization maybe?)
     - package.json
     - README.md
 ```
